@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
+import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
+import { Materiaal } from "./models/materiaal";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,9 +11,11 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 })
 export class AppComponent {
   title = 'app';
-  items: FirebaseListObservable<any[]>;
+  items: FirebaseListObservable<Materiaal[]>;
+  
+  images : boolean = true;
 
   constructor(db: AngularFireDatabase) {
-    this.items = db.list('/');
+    this.items = db.list('/materialen');
   }
 }

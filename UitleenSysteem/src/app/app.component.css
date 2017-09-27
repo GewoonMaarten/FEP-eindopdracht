@@ -1,0 +1,21 @@
+.title{
+    width: 100%;
+    position: absolute;
+    bottom: -53px;
+    font-size: 50px;
+    left: 10px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+#login-btn {
+    line-height: 50px;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+#navbar {
+    margin-top: 20px;
+}
