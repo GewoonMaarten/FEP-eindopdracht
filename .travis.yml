@@ -18,8 +18,8 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 before_script:
-- cd UitleenSysteem
-- npm install -g angular-cli
+- cd $TRAVIS_BUILD_DIR/UitleenSysteem
+- npm install -g @angular/cli
 - npm install -g karma
 - npm install
 - ng build
