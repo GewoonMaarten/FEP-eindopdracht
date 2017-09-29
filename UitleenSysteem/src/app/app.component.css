@@ -1,0 +1,46 @@
+.header{
+    margin: 5px 10px;
+}
+
+.background-image {
+    position: fixed;
+    left: -5px;
+    right: 0;
+    top: -4px;
+    z-index: -1;
+    display: block;
+
+    background-image: url("../assets/images/magazijn.jpg");
+
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: blur(3px);
+
+    width: 102%;
+    height: 120px;
+  }
+
+.title{
+    width: 100%;
+    position: absolute;
+    bottom: -53px;
+    left: 10px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+#login-btn {
+    line-height: 35px;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+#navbar {
+    margin-top: 5px;
+    height: 40px;
+    min-height: 40px;
+}
