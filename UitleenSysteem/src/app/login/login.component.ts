@@ -20,8 +20,11 @@ export class LoginComponent {
 
   // admin@admin.nl test123 werkt altijd voor login
   login(email: string, password: string) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password);
-    this.afAuth.authState.subscribe((auth) => auth == null ? this.loginError = true : this.loginError = false);
+    this.afAuth.auth.signInWithEmailAndPassword(email, password).catch((error) => {
+      // var errorCode = error.name;
+      // var errorMessage = error.message;
+      this.loginError = true;
+    });
   }
 
   logout() {
