@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'login',
@@ -13,7 +14,8 @@ export class LoginComponent {
   user: Observable<firebase.User>;
   loginError: boolean;
 
-  constructor(public afAuth: AngularFireAuth) {
+  constructor(public afAuth: AngularFireAuth, 
+    public dialogRef: MdDialogRef<LoginComponent>) {
     this.user = afAuth.authState;
     this.loginError = false;
   }
@@ -29,5 +31,9 @@ export class LoginComponent {
 
   logout() {
     this.afAuth.auth.signOut();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
