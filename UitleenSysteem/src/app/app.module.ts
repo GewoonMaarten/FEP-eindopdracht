@@ -19,7 +19,8 @@ import {
   MatPaginatorModule,
   MatInputModule,
   MatCardModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatDialogModule
 } from '@angular/material';
 
 
@@ -43,7 +44,8 @@ import { MaterialenLijstComponent } from './components/materialen-lijst/material
     MatPaginatorModule,
     MatInputModule,
     MatCardModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule
   ],
   providers: [
     MaterialenService

@@ -1,15 +1,14 @@
-<md-grid-list cols="12" rowHeight="150px">
-  <md-grid-tile>
-    <img src="../assets/images/hu-logo.png" alt="HU logo" width="150" height="150"/>
-  </md-grid-tile>
-  <md-grid-tile colspan="11">
-    <h1 class="mat-display-1 title">Uitleen Systeem</h1>
+<md-grid-list cols="12" rowHeight="100px" gutterSize="10px" class="header">
+  <div class="background-image"></div>
+  <md-grid-tile colspan="7">
+    <img src="../assets/images/hu-logo.svg" alt="HU logo"/>
+    <h1 class="mat-display-1 title" color="primary">Uitleen Bibliotheek</h1>    
   </md-grid-tile>
 </md-grid-list>
 
 <md-toolbar color="primary" id="navbar">
   <span class="spacer"></span>
-  <a id="login-btn" md-button routerLink=".">
+  <a id="login-btn" (click)="openLogin()">
     <md-icon>lock_outline</md-icon>
     Login
   </a>
