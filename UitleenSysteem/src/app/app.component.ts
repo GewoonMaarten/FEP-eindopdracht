@@ -4,6 +4,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
+import { LoginComponent } from './components/login/login.component';
 import { Materiaal } from "./models/materiaal";
 
 @Component({
@@ -22,7 +23,7 @@ export class AppComponent {
   }
 
   public openLogin(): void{
-    let dialogRef = this.dialog.open(LoginComponent/*Logincomponent*/, {
+    let dialogRef = this.dialog.open(LoginComponent, {
       width: '250px',
     });
   }

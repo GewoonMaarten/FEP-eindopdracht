@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -27,6 +26,7 @@ import {
 
 
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
+import { LoginComponent } from "./components/login/login.component";
 
 @NgModule({
   declarations: [
