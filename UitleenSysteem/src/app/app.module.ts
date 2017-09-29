@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 
@@ -29,7 +31,9 @@ import { MaterialenLijstComponent } from './components/materialen-lijst/material
 @NgModule({
   declarations: [
     AppComponent,
-    MaterialenLijstComponent
+    MaterialenLijstComponent,
+    LoginComponent
+
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,8 @@ import { MaterialenLijstComponent } from './components/materialen-lijst/material
     MatDialogModule
   ],
   providers: [
-    MaterialenService
+    MaterialenService,
+    AngularFireAuth
   ],
   bootstrap: [AppComponent]
 })
