@@ -8,6 +8,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { MaterialenService } from './services/materialen.service';
 
@@ -40,6 +41,7 @@ import { LoginComponent } from "./components/login/login.component";
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
+    InfiniteScrollModule,
     //Angular material components
     MatGridListModule,
     MatToolbarModule,

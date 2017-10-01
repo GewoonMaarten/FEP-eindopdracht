@@ -95,3 +95,9 @@
     height: 50%;
     margin-top: 12px;
 }
+
+.page-btn {
+    width: 45px;
+    padding: 0;
+    min-width: 0;
+}

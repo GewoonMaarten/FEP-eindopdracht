@@ -7,7 +7,7 @@
         </div>
 
         <div class="materialen-items">
-            <div *ngFor="let materiaal of materialen | async" class="card">
+            <div *ngFor="let materiaal of materialen" class="card">
                 <h3 class="mat-subheading-2">{{materiaal.naam}}</h3>
                 <img src={{materiaal.afbeelding}} width="100%"/>
                 <p class="mat-body-1 card-omschrijving">
@@ -17,7 +17,7 @@
                 <p class="mat-body-1">beschikbaar: <span>{{materiaal.aantal}}</span></p>
                 <div class="reserveer-materiaal">
                     <md-form-field class="full-width hoeveelheid">
-                        <input mdInput type="number" maxlength="2" min="1" max={{materiaal.aantal}} value="1"/>
+                        <input mdInput type="number" maxlength="2" min="1" max={{materiaal.aantal}} value="1" placeholder="aantal"/>
                     </md-form-field>
                     <button class="full-width toevoegen" md-raised-button color="accent">Toevoegen</button>
                 </div>
@@ -25,10 +25,11 @@
         </div>
 
         <div class="materialen-paginator">
-            <md-paginator [length]="100"
-                [pageSize]="10"
-                [pageSizeOptions]="[5, 10, 25, 100]">
-            </md-paginator>
+            <button md-raised-button color="primary" class="page-btn" (click)="onPrev()" [disabled]="!prevKeys?.length"><</button>
+            <button md-button class="page-btn" *ngFor="let page of pages" [class.mat-primary]="page == activePage" (click)="changePage(page)">
+                {{page}}
+            </button>
+            <button md-raised-button color="primary" class="page-btn" (click)="onNext()" [disabled]="!nextKey">></button>
         </div>
     </div>
 </div>

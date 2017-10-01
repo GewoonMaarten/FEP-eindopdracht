@@ -52,14 +52,6 @@
     object-position: bottom;
     justify-self: center;
     align-self: center;
-} 
-
-.spacer {
-    flex: 1 1 auto;
-}
-
-.spacer-outer {
-    flex: 0.7 1 auto;
 }
 
 #login-btn {
@@ -92,15 +84,13 @@
 }
 
 .tabs{
-    min-height: 100%;
     height: auto;
-    z-index: -1;
     padding: 20px 25%;
     background: white;
 }
 
 
-@media screen 
+@media only screen 
 and (min-device-width: 1200px) 
 and (max-device-width: 1600px) { 
 
@@ -108,7 +98,6 @@ and (max-device-width: 1600px) {
         height: 80px;
         grid-template-columns: 20% auto;
     }
-
 
     .navbar {
         grid-template-columns: 10% 0.5fr 110px 2fr 110px 10%;
