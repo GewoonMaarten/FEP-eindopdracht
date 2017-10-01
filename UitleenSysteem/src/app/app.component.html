@@ -1,18 +1,26 @@
-<md-grid-list cols="12" rowHeight="100px" gutterSize="10px" class="header">
-  <div class="background-image"></div>
-  <md-grid-tile colspan="7">
-    <img src="../assets/images/hu-logo.svg" alt="HU logo"/>
-    <h1 class="mat-display-1 title" color="primary">Uitleen Bibliotheek</h1>    
-  </md-grid-tile>
-</md-grid-list>
+<div class="header-container">
+    <img alt="Magazijn Achtergrond" class="background-image" />
+    <div class="logo-container"></div>
+    <img  src="../assets/images/hu-logo.svg" alt="HU logo" class="logo"/>
+</div>
 
-<md-toolbar color="primary" id="navbar">
-  <span class="spacer"></span>
-  <a id="login-btn" (click)="openLogin()">
-    <md-icon>lock_outline</md-icon>
-    Login
-  </a>
+<md-toolbar color="primary">
+  <div class="navbar">
+    <div></div>
+      <h1 class="mat-display-1 toolbar-title title">Uitleen Bibliotheek</h1>  
+
+      <button md-button id="login-btn" class="login" (click)="openLogin()">
+        <md-icon>lock_outline</md-icon>
+        Login
+      </button>
+  </div>
 </md-toolbar>
+
+<md-tab-group class="tabs">
+  <md-tab label="Materialen"><materialen-lijst [images]="images"></materialen-lijst></md-tab>
+  <md-tab label="Pakketten">Pakketten</md-tab>
+</md-tab-group>
+
+
   
 
-<materialen-lijst [images]="images"></materialen-lijst>

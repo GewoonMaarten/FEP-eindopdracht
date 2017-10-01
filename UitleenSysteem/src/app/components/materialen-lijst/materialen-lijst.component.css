@@ -1,3 +1,97 @@
-#tags {
-    color: rgba(0,0,0,.54);
+.container {
+    display: grid;
+    width: 100%;
+}
+
+.content {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 10%;
+    grid-template-areas: 
+        "items items items"
+        ". paginator .";
+
+    margin-top: 50px;
+}
+
+.materialen-title {
+    grid-area: title;
+}
+
+.materialen-paginator {
+    grid-area: paginator;
+    justify-self: center;
+    padding-top: 30px;
+}
+
+.materialen-items {
+    grid-area: items;
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 10px;
+
+    padding: 0 10px;
+}
+
+.materialen-items > div{
+    -webkit-box-shadow: 3px 0px 15px -4px rgba(0,0,0,0.1);
+    -moz-box-shadow: 3px 0px 15px -4px rgba(0,0,0,0.1);
+    box-shadow: 3px 0px 15px -4px rgba(0,0,0,0.1);
+} 
+
+.card > h3, p{
+    margin-left: 10px;
+}
+
+.card > img {
+    display: block;
+
+    min-height: 160px; 
+    max-width: 100%;
+
+    height: 230px;
+    width: auto;
+
+    margin: auto;
+}
+
+.card > p >span {
+    color: #2196f3;
+}
+
+.loader{
+    grid-column: 2 / 3;
+    grid-row: 1;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.card-omschrijving {
+    text-overflow: ellipsis ellipsis; 
+}
+
+.reserveer-materiaal {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: ". hoeveelheid toevoegen";
+    grid-gap: 10px;
+
+    margin-right: 10px;
+}
+
+.hoeveelheid {
+    grid-area: hoeveelheid;
+}
+
+.toevoegen {
+    grid-area: toevoegen;
+    justify-self: center;
+    height: 50%;
+    margin-top: 12px;
 }

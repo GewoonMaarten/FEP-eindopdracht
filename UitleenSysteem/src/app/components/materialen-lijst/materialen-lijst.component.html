@@ -1,49 +1,34 @@
-<md-grid-list cols="12" rowHeight="100px">
-    <md-grid-tile colspan=8>
-        <h1 class="mat-headline">Materialen</h1>
-    </md-grid-tile>
-    
-    <md-grid-tile colspan=1>
-        <md-form-field>
-            <md-icon mdPrefix>search</md-icon>
-            <input type="text" mdInput placeholder="zoeken">
-        </md-form-field>
-    </md-grid-tile>
+<div class="container">
+    <div class="content">
 
-    <md-grid-tile colspan=3>
-        <md-paginator [length]="100"
-        [pageSize]="10"
-        [pageSizeOptions]="[5, 10, 25, 100]">
-        </md-paginator>
-    </md-grid-tile>
-</md-grid-list>
-<hr />
-
-<md-grid-list cols="12" rowHeight="1:3" >
-
-    <div *ngIf="showSpinner">
-        <md-grid-tile colspan=5></md-grid-tile>
-        <md-grid-tile colspan=2>
+        <div *ngIf="showSpinner" class="loader">
+            <h3 class="mat-subheading-2">Laden...</h3>
             <md-progress-bar mode="indeterminate"></md-progress-bar>            
-        </md-grid-tile>
-    </div>
+        </div>
 
-    <md-grid-tile colspan=2 *ngFor="let materiaal of materialen | async">
-        <md-card>
-            <md-card-header>
-                <md-card-title>{{materiaal.naam}}</md-card-title>
-                <md-card-subtitle>aantal: {{materiaal.aantal}}</md-card-subtitle>
-            </md-card-header>
-            <img md-card-image src={{materiaal.afbeelding}} alt={{materiaal.naam}}>
-            <md-card-content>
-                <p>{{materiaal.omschrijving}}</p>
-                <p id="tags">
-                    Tags: 
-                    <span *ngFor="let tag of materiaal.tags">
-                        {{tag}}, 
-                    </span>
+        <div class="materialen-items">
+            <div *ngFor="let materiaal of materialen | async" class="card">
+                <h3 class="mat-subheading-2">{{materiaal.naam}}</h3>
+                <img src={{materiaal.afbeelding}} width="100%"/>
+                <p class="mat-body-1 card-omschrijving">
+                    <b>Omschrijving:</b><br/>
+                    {{materiaal.omschrijving}}
                 </p>
-            </md-card-content>
-        </md-card>
-    </md-grid-tile>
-</md-grid-list>
+                <p class="mat-body-1">beschikbaar: <span>{{materiaal.aantal}}</span></p>
+                <div class="reserveer-materiaal">
+                    <md-form-field class="full-width hoeveelheid">
+                        <input mdInput type="number" maxlength="2" min="1" max={{materiaal.aantal}} value="1"/>
+                    </md-form-field>
+                    <button class="full-width toevoegen" md-raised-button color="accent">Toevoegen</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="materialen-paginator">
+            <md-paginator [length]="100"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]">
+            </md-paginator>
+        </div>
+    </div>
+</div>

@@ -19,9 +19,9 @@ import {
   MatButtonModule,
   MatPaginatorModule,
   MatInputModule,
-  MatCardModule,
   MatProgressBarModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTabsModule
 } from '@angular/material';
 
 
@@ -47,9 +47,9 @@ import { LoginComponent } from "./components/login/login.component";
     MatButtonModule,
     MatPaginatorModule,
     MatInputModule,
-    MatCardModule,
     MatProgressBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule
   ],
   providers: [
     MaterialenService,
