@@ -7,15 +7,17 @@
         </div>
 
         <div class="materialen-items">
-            <div *ngFor="let materiaal of materialen" class="card">
-                <h3 class="mat-subheading-2">{{materiaal.naam}}</h3>
-                <img src={{materiaal.afbeelding}} width="100%"/>
-                <p class="mat-body-1 card-omschrijving">
-                    <b>Omschrijving:</b><br/>
-                    {{materiaal.omschrijving}}
-                </p>
-                <p class="mat-body-1">beschikbaar: <span>{{materiaal.aantal}}</span></p>
-                <div class="reserveer-materiaal">
+            <div *ngFor="let materiaal of materialen" class="card" id={{materiaal.$key}}>
+                <div (click)="collapse(materiaal.$key)" class="clickable">
+                    <h3 class="mat-subheading-2">{{materiaal.naam}}</h3>
+                    <img src={{materiaal.afbeelding}} width="100%"/>
+                    <p class="mat-body-1 card-omschrijving">
+                        <b>Omschrijving:</b><br/>
+                        {{materiaal.omschrijving}}
+                    </p>
+                    <p class="mat-body-1">beschikbaar: <span>{{materiaal.aantal}}</span></p>
+                </div>
+                <div class="reserveer-materiaal" *ngIf="materiaal.$key == activeMateriaal">
                     <md-form-field class="full-width hoeveelheid">
                         <input mdInput type="number" maxlength="2" min="1" max={{materiaal.aantal}} value="1" placeholder="aantal"/>
                     </md-form-field>
@@ -26,9 +28,10 @@
 
         <div class="materialen-paginator">
             <button md-raised-button color="primary" class="page-btn" (click)="onPrev()" [disabled]="!prevKeys?.length"><</button>
-            <button md-button class="page-btn" *ngFor="let page of pages" [class.mat-primary]="page == activePage" (click)="changePage(page)">
-                {{page}}
-            </button>
+            <a md-button class="page-btn" *ngFor="let page of pages" 
+                [class.mat-primary]="page == activePage" [routerLink]="['/materiaal', page + 1]">
+                {{page + 1}}
+            </a>
             <button md-raised-button color="primary" class="page-btn" (click)="onNext()" [disabled]="!nextKey">></button>
         </div>
     </div>

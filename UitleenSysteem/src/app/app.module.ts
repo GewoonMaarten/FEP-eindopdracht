@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+
+import { routes } from "./app.routes";
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -40,6 +43,10 @@ import { LoginComponent } from "./components/login/login.component";
     BrowserModule,
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase),
+    RouterModule.forRoot(
+      routes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
     BrowserAnimationsModule,
     InfiniteScrollModule,
     //Angular material components

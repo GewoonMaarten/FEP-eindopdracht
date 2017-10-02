@@ -1,10 +1,14 @@
 .container {
     display: grid;
     width: 100%;
+
+    grid-template-columns: 25% auto 25%;
+    grid-template-areas: ". main .";
 }
 
 .content {
     display: grid;
+    grid-area: main;
 
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto 10%;
@@ -100,4 +104,17 @@
     width: 45px;
     padding: 0;
     min-width: 0;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+@media only screen 
+and (min-device-width: 1200px) 
+and (max-device-width: 1600px) { 
+
+    .container {
+        grid-template-columns: 10% auto 10%;
+    }
 }

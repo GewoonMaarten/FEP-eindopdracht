@@ -3,25 +3,31 @@
     <div class="logo-container"></div>
     <img  src="../assets/images/hu-logo.svg" alt="HU logo" class="logo"/>
 </div>
-
-<md-toolbar color="primary">
-  <div class="navbar">
-    <div></div>
-      <h1 class="mat-display-1 toolbar-title title">Uitleen Bibliotheek</h1>  
-
-      <button md-button id="login-btn" class="login" (click)="openLogin()">
-        <md-icon>lock_outline</md-icon>
-        Login
-      </button>
+<div class="content">
+  <div>
+    <md-toolbar color="primary">
+        <div class="navbar">
+          <div></div>
+            <a [routerLink]="['/materiaal', 1]" class="toolbar-title"><h1 class="mat-display-1">Uitleen Bibliotheek</h1>  </a>
+  
+            <button md-button id="login-btn" class="login" (click)="openLogin()">
+              <md-icon>lock_outline</md-icon>
+              Login
+            </button>
+        </div>
+      </md-toolbar>
   </div>
-</md-toolbar>
 
-<md-tab-group class="tabs">
-  <md-tab label="Materialen"><materialen-lijst></materialen-lijst></md-tab>
-  <md-tab label="Pakketten">Pakketten</md-tab>
-  <md-form-field class="example-full-width">
-      <span mdPrefix>+1 &nbsp;</span>
-      <input type="tel" mdInput placeholder="Telephone">
-      <md-icon mdSuffix>mode_edit</md-icon>
-    </md-form-field>
-</md-tab-group>
+  <nav md-tab-nav-bar class="tabs">
+    <a md-tab-link [routerLink]="materiaal" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+      Materiaal
+    </a>
+  </nav>
+
+
+  <router-outlet class="main"></router-outlet>
+
+  <footer class="footer">
+      <h3 class="mat-subheading-2">Uitleen Bibliotheek - 2017</h3>
+  </footer>
+</div>

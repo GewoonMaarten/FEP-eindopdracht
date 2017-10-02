@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FirebaseListObservable } from 'angularfire2/database';
+import { ActivatedRoute } from '@angular/router';
 
 import { Materiaal} from '../../models/materiaal';
 
@@ -24,14 +25,25 @@ export class MaterialenLijstComponent implements OnInit {
   pageSize: number = 12;
   nextKey: any;
   prevKeys: any[] = [];
-  finished = false;
 
+  page: number;
   pages: number[];
   activePage: number;
 
-  constructor(private materialenService: MaterialenService) {}
+  activeMateriaal: number;
+
+  constructor(private materialenService: MaterialenService,
+    private route: ActivatedRoute) {}
 
   ngOnInit() {
+
+    this.route.params.subscribe(params => {
+      this.page = +params['page'] - 1;
+
+      this.changePage(this.page);
+    })
+
+
     this.getMaterialen();
 
     this.materialenService.getMaterialen().subscribe(materialen => {
@@ -54,23 +66,19 @@ export class MaterialenLijstComponent implements OnInit {
 
       this.materialen = _.slice(materialen, 0, this.pageSize);
       this.nextKey = _.get(materialen[this.pageSize], '$key');
-    })
+    });
   }
 
-  
-  onNext(key = 1) {
-    for(let i = 0; i < key; i++){
-      this.prevKeys.push(_.first(this.materialen)['$key']);
-      this.getMaterialen(this.nextKey);
-    }
+  /* Pagination */
+  onNext() {
+    this.prevKeys.push(_.first(this.materialen)['$key']);
+    this.getMaterialen(this.nextKey);
   }
   
-  onPrev(key = 1) {
-    for(let i = 0; i < key; i++){
-      const prevKey = _.last(this.prevKeys);
-      this.prevKeys = _.dropRight(this.prevKeys);
-      this.getMaterialen(prevKey);
-    }
+  onPrev() {
+    const prevKey = _.last(this.prevKeys);
+    this.prevKeys = _.dropRight(this.prevKeys);
+    this.getMaterialen(prevKey);
   }  
 
   changePage(page){
@@ -78,5 +86,11 @@ export class MaterialenLijstComponent implements OnInit {
     this.prevKeys = Array.from(new Array(page),(val,index) => (index * this.pageSize).toString() );
 
     this.getMaterialen(this.nextKey);
+  }
+
+  /* Collapse */
+
+  collapse(id){
+    this.activeMateriaal = this.activeMateriaal == id ? undefined : id;
   }
 }
