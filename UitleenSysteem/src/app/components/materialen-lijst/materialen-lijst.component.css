@@ -46,11 +46,11 @@
     box-shadow: 3px 0px 15px -4px rgba(0,0,0,0.1);
 } 
 
-.card > h3, p{
+.card > div > h3, p{
     margin-left: 10px;
 }
 
-.card > img {
+.card > div > img {
     display: block;
 
     min-height: 160px; 
@@ -62,7 +62,7 @@
     margin: auto;
 }
 
-.card > p >span {
+.beschikbaar >span {
     color: #2196f3;
 }
 

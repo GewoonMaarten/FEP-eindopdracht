@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { FirebaseListObservable } from 'angularfire2/database';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Materiaal} from '../../models/materiaal';
 
@@ -33,15 +33,16 @@ export class MaterialenLijstComponent implements OnInit {
   activeMateriaal: number;
 
   constructor(private materialenService: MaterialenService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit() {
 
     this.route.params.subscribe(params => {
-      this.page = +params['page'] - 1;
+      this.page = +params['page'] - 1 || 0;
 
       this.changePage(this.page);
-    })
+    });
 
 
     this.getMaterialen();
@@ -73,12 +74,16 @@ export class MaterialenLijstComponent implements OnInit {
   onNext() {
     this.prevKeys.push(_.first(this.materialen)['$key']);
     this.getMaterialen(this.nextKey);
+    
+    this.router.navigate(['/materiaal', this.activePage + 2]);
   }
   
   onPrev() {
     const prevKey = _.last(this.prevKeys);
     this.prevKeys = _.dropRight(this.prevKeys);
     this.getMaterialen(prevKey);
+
+    this.router.navigate(['/materiaal', this.activePage]);
   }  
 
   changePage(page){

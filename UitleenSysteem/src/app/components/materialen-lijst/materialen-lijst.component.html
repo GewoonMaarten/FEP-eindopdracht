@@ -15,7 +15,7 @@
                         <b>Omschrijving:</b><br/>
                         {{materiaal.omschrijving}}
                     </p>
-                    <p class="mat-body-1">beschikbaar: <span>{{materiaal.aantal}}</span></p>
+                    <p class="mat-body-1 beschikbaar">beschikbaar: <span>{{materiaal.aantal}}</span></p>
                 </div>
                 <div class="reserveer-materiaal" *ngIf="materiaal.$key == activeMateriaal">
                     <md-form-field class="full-width hoeveelheid">
