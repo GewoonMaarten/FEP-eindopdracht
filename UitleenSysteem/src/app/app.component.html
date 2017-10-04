@@ -1,18 +1,33 @@
-<md-grid-list cols="12" rowHeight="100px" gutterSize="10px" class="header">
-  <div class="background-image"></div>
-  <md-grid-tile colspan="7">
-    <img src="../assets/images/hu-logo.svg" alt="HU logo"/>
-    <h1 class="mat-display-1 title" color="primary">Uitleen Bibliotheek</h1>    
-  </md-grid-tile>
-</md-grid-list>
-
-<md-toolbar color="primary" id="navbar">
-  <span class="spacer"></span>
-  <a id="login-btn" (click)="openLogin()">
-    <md-icon>lock_outline</md-icon>
-    Login
-  </a>
-</md-toolbar>
+<div class="header-container">
+    <img alt="Magazijn Achtergrond" class="background-image" />
+    <div class="logo-container"></div>
+    <img  src="../assets/images/hu-logo.svg" alt="HU logo" class="logo"/>
+</div>
+<div class="content">
+  <div>
+    <md-toolbar color="primary">
+        <div class="navbar">
+          <div></div>
+            <a [routerLink]="['/materiaal', 1]" class="toolbar-title"><h1 class="mat-display-1">Uitleen Bibliotheek</h1>  </a>
   
+            <button md-button id="login-btn" class="login" (click)="openLogin()">
+              <md-icon>lock_outline</md-icon>
+              Login
+            </button>
+        </div>
+      </md-toolbar>
+  </div>
 
-<materialen-lijst [images]="images"></materialen-lijst>
+  <nav md-tab-nav-bar class="tabs">
+    <a md-tab-link [routerLink]="materiaal" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+      Materiaal
+    </a>
+  </nav>
+
+
+  <router-outlet class="main"></router-outlet>
+
+  <footer class="footer">
+      <h3 class="mat-subheading-2">Uitleen Bibliotheek - 2017</h3>
+  </footer>
+</div>
