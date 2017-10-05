@@ -1,3 +1,11 @@
 .login {
   text-align: center;  
 }
+
+.login-title{
+  margin: 0 0 15px;
+}
+
+.divider{
+  margin-bottom: 64px;
+}

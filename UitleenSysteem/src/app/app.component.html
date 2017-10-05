@@ -4,25 +4,25 @@
   <img src="../assets/images/hu-logo.svg" alt="HU logo" class="logo" />
 </div>
 <div class="content">
-  <div>
-    <md-toolbar color="primary">
-      <div class="navbar">
-        <div></div>
-        <a [routerLink]="['/materiaal', 1]" class="toolbar-title">
-          <h1 class="mat-display-1">Uitleen Bibliotheek</h1>
-        </a>
+  <md-toolbar color="primary">
+    <div class="navbar">
 
-        <button *ngIf="!user" id="login-btn" md-button (click)="openDialog()">
-                <md-icon>lock_outline</md-icon>
-                Login
-              </button>
-        <button *ngIf="user != null" id="logout-btn" md-button (click)="logout()">
-                <md-icon>lock_open</md-icon>
-                {{user.email}}
-              </button>
-      </div>
-    </md-toolbar>
-  </div>
+      <a [routerLink]="['/materiaal', 1]" class="toolbar-title">
+        <h1 class="mat-display-1">Uitleen Bibliotheek</h1>
+      </a>
+
+      <button *ngIf="!user" id="login-btn" class="auth-btn" md-button (click)="openDialog()">
+              <md-icon>lock_outline</md-icon>
+              Login
+      </button>
+      <button *ngIf="user != null" id="logout-btn" class="auth-btn" md-button (click)="logout()">
+              <md-icon>lock_open</md-icon>
+              {{user.email}}
+      </button>
+
+    </div>
+  </md-toolbar>
+
 
   <nav md-tab-nav-bar class="tabs">
     <a md-tab-link [routerLink]="materiaal" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
