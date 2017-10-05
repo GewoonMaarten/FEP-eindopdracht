@@ -1,21 +1,27 @@
 <div class="header-container">
-    <img alt="Magazijn Achtergrond" class="background-image" />
-    <div class="logo-container"></div>
-    <img  src="../assets/images/hu-logo.svg" alt="HU logo" class="logo"/>
+  <img alt="Magazijn Achtergrond" class="background-image" />
+  <div class="logo-container"></div>
+  <img src="../assets/images/hu-logo.svg" alt="HU logo" class="logo" />
 </div>
 <div class="content">
   <div>
     <md-toolbar color="primary">
-        <div class="navbar">
-          <div></div>
-            <a [routerLink]="['/materiaal', 1]" class="toolbar-title"><h1 class="mat-display-1">Uitleen Bibliotheek</h1>  </a>
-  
-            <button md-button id="login-btn" class="login" (click)="openLogin()">
-              <md-icon>lock_outline</md-icon>
-              Login
-            </button>
-        </div>
-      </md-toolbar>
+      <div class="navbar">
+        <div></div>
+        <a [routerLink]="['/materiaal', 1]" class="toolbar-title">
+          <h1 class="mat-display-1">Uitleen Bibliotheek</h1>
+        </a>
+
+        <button *ngIf="!user" id="login-btn" md-button (click)="openDialog()">
+                <md-icon>lock_outline</md-icon>
+                Login
+              </button>
+        <button *ngIf="user != null" id="logout-btn" md-button (click)="logout()">
+                <md-icon>lock_open</md-icon>
+                {{user.email}}
+              </button>
+      </div>
+    </md-toolbar>
   </div>
 
   <nav md-tab-nav-bar class="tabs">
@@ -28,6 +34,6 @@
   <router-outlet class="main"></router-outlet>
 
   <footer class="footer">
-      <h3 class="mat-subheading-2">Uitleen Bibliotheek - 2017</h3>
+    <h3 class="mat-subheading-2">Uitleen Bibliotheek - 2017</h3>
   </footer>
 </div>

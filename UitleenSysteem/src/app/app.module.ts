@@ -58,6 +58,9 @@ import { LoginComponent } from "./components/login/login.component";
     MatDialogModule,
     MatTabsModule
   ],
+  entryComponents: [
+    LoginComponent
+  ],
   providers: [
     MaterialenService,
     AngularFireAuth

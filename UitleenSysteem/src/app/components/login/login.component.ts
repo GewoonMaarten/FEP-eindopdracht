@@ -12,7 +12,7 @@ import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 export class LoginComponent {
 
   user: Observable<firebase.User>;
-  loginError: boolean;
+  loginError: boolean;  
 
   constructor(public afAuth: AngularFireAuth, 
     public dialogRef: MdDialogRef<LoginComponent>) {
@@ -22,15 +22,13 @@ export class LoginComponent {
 
   // admin@admin.nl test123 werkt altijd voor login
   login(email: string, password: string) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password).catch((error) => {
+    this.afAuth.auth.signInWithEmailAndPassword(email, password).then((success) => {
+      this.onNoClick();
+    }).catch((error) => {
       // var errorCode = error.name;
       // var errorMessage = error.message;
       this.loginError = true;
     });
-  }
-
-  logout() {
-    this.afAuth.auth.signOut();
   }
 
   onNoClick(): void {
