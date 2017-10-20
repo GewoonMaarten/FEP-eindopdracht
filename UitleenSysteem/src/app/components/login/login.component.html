@@ -1,31 +1,34 @@
-<div class="login">
-    <h1 class="mat-display-1 login-title">
-        Inloggen
-    </h1>
-    <hr class="divider"/>
-    <md-input-container>
-        <input mdInput #email type="email" required/>
-        <md-placeholder>
-            Username
-        </md-placeholder>
-    </md-input-container>
-    <br/>
-    <md-input-container>
-        <input mdInput #password required type="password" />
-        <md-placeholder>
-            Password
-        </md-placeholder>
-    </md-input-container>
-    <br/>
-    <md-hint *ngIf="loginError">
-            Email or password incorrect.
-    </md-hint>
-    <button md-raised-button color="warn" (click)="login(email.value, password.value)">LOGIN</button>
+<div class="container">
+  <div class="login">
+    <div class="content">
+      <img src="../../../assets/images/hu-logo.svg" alt="HU logo" class="logo" />
+      <h1 class="mat-title">Uitleen Bibliotheek</h1>
+
+      <br />
+
+      <form (ngSubmit)="onSubmit(loginForm.value)" [formGroup]="loginForm" novalidate>
+
+        <mat-form-field>
+          <input matInput type="text" placeholder="Email" [formControl]="emailFormControl">
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" [formControl]="passwordFormControl">
+          <mat-error *ngIf="passwordFormControl.hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <br />
+
+        <button mat-raised-button [disabled]="!loginForm.valid">LOGIN</button>
+
+      </form>
+      <p>Form value: {{ loginForm.value | json }}</p>
+    </div>
+  </div>
 </div>
-
-<script>
-    $('.message a').click(function () {
-        $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
-    });
-
-</script>
