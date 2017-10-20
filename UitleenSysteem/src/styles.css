@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 html,
-body {
+body,
+app-root{
     margin: 0;
     overflow-x: hidden;
     height: 100%;
@@ -8,9 +9,11 @@ body {
 }
 /* ng material 2 Toolbar styling*/
 .mat-toolbar{
-    margin-top: -7px !important;
-    height: 40px !important;
-    min-height: 40px !important;
+  position: relative;
+  margin-top: -7px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  z-index: 501;
 }
 
 .mat-toolbar-row {

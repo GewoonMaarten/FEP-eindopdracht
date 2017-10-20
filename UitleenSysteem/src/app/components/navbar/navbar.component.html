@@ -1,0 +1,34 @@
+<!--<div class="header-container" >-->
+  <!--<img alt="Magazijn Achtergrond" class="background-image" />-->
+  <!--<div class="logo-container"></div>-->
+  <!--<img src="../../../assets/images/hu-logo.svg" alt="HU logo" class="logo" />-->
+<!--</div>-->
+<div *ngIf="nav.visible">
+  <header>
+    <div class="background"></div>
+    <div class="logo-container"></div>
+    <div class="logo"></div>
+  </header>
+  <nav>
+    <mat-toolbar color="primary">
+      <p>{{(user | async)?.email}}</p>
+
+      <!--<ng2-dropdown>-->
+        <!--<ng2-dropdown-button>-->
+          <!--{{(user | async)?.email}}-->
+        <!--</ng2-dropdown-button>-->
+        <!--<ng2-dropdown-menu>-->
+          <!--<ng2-menu-item>-->
+            <!--test-->
+          <!--</ng2-menu-item>-->
+
+          <!--<div class='ng2-menu-divider'></div>-->
+
+          <!--<ng2-menu-item>-->
+            <!--With Divider-->
+          <!--</ng2-menu-item>-->
+        <!--</ng2-dropdown-menu>-->
+        <!--</ng2-dropdown>-->
+    </mat-toolbar>
+  </nav>
+</div>

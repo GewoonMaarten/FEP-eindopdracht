@@ -1,5 +1,4 @@
 import { Component, OnInit} from '@angular/core';
-import { FirebaseListObservable } from 'angularfire2/database';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Materiaal} from '../../models/materiaal';
@@ -11,6 +10,7 @@ import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
+import {NavbarService} from "../../services/navbar.service";
 
 @Component({
   selector: 'materialen-lijst',
@@ -34,18 +34,16 @@ export class MaterialenLijstComponent implements OnInit {
 
   constructor(private materialenService: MaterialenService,
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private nav: NavbarService) {}
 
   ngOnInit() {
-
+    this.nav.show();
     this.route.params.subscribe(params => {
       this.page = +params['page'] - 1 || 0;
 
       this.changePage(this.page);
     });
-
-
-    this.getMaterialen();
 
     this.materialenService.getMaterialen().subscribe(materialen => {
       const totalPages = Math.ceil(materialen.length / this.pageSize);
@@ -54,18 +52,16 @@ export class MaterialenLijstComponent implements OnInit {
   }
 
   private getMaterialen(key?) {
-
-    this.materialenService.getMaterialen({
-      orderByKey: true,
-      startAt: key,
-      limitToFirst: this.pageSize + 1
-    })
+    console.log("next: ", this.nextKey);
+    this.materialenService.getMaterialenbyPage(this.pageSize, key)
     .subscribe(materialen => {
       this.showSpinner = false;
 
       this.activePage = this.prevKeys.length;
 
       this.materialen = _.slice(materialen, 0, this.pageSize);
+
+      console.log(this.materialen);
       this.nextKey = _.get(materialen[this.pageSize], '$key');
     });
   }
@@ -74,22 +70,22 @@ export class MaterialenLijstComponent implements OnInit {
   onNext() {
     this.prevKeys.push(_.first(this.materialen)['$key']);
     this.getMaterialen(this.nextKey);
-    
+
     this.router.navigate(['/materiaal', this.activePage + 2]);
   }
-  
+
   onPrev() {
     const prevKey = _.last(this.prevKeys);
     this.prevKeys = _.dropRight(this.prevKeys);
     this.getMaterialen(prevKey);
 
     this.router.navigate(['/materiaal', this.activePage]);
-  }  
+  }
 
   changePage(page){
     this.nextKey = (page * this.pageSize).toString();
     this.prevKeys = Array.from(new Array(page),(val,index) => (index * this.pageSize).toString() );
-
+    console.log("changepage next: ", this.nextKey);
     this.getMaterialen(this.nextKey);
   }
 
