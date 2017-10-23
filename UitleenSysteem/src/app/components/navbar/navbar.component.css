@@ -34,3 +34,7 @@ header>.background {
   background-size: cover;
   z-index: 2;
 }
+
+.spacer {
+  flex: 1 1 auto;
+}

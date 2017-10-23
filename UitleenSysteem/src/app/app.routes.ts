@@ -18,6 +18,6 @@ export const routes: Routes = [
   {
     path: 'materiaal/:page',
     component: MaterialenLijstComponent,
-    canActivate: [AuthGuard, DocentGuard]
+    canActivate: [AuthGuard]
   },
 ];

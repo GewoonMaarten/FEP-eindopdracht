@@ -11,24 +11,15 @@
   </header>
   <nav>
     <mat-toolbar color="primary">
-      <p>{{(user | async)?.email}}</p>
 
-      <!--<ng2-dropdown>-->
-        <!--<ng2-dropdown-button>-->
-          <!--{{(user | async)?.email}}-->
-        <!--</ng2-dropdown-button>-->
-        <!--<ng2-dropdown-menu>-->
-          <!--<ng2-menu-item>-->
-            <!--test-->
-          <!--</ng2-menu-item>-->
-
-          <!--<div class='ng2-menu-divider'></div>-->
-
-          <!--<ng2-menu-item>-->
-            <!--With Divider-->
-          <!--</ng2-menu-item>-->
-        <!--</ng2-dropdown-menu>-->
-        <!--</ng2-dropdown>-->
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+      
+      <p class="mat-body-2">{{(user | async)?.email}}</p>
+      <button mat-button (click)="logout()">Logout</button>
+      <span class="spacer"></span>
     </mat-toolbar>
   </nav>
 </div>

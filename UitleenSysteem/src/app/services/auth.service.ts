@@ -39,13 +39,6 @@ export class AuthService {
 
   }
 
-  // get authenticated(): boolean {
-  //   return this.user !== null;
-  // }
-  //
-  // get currentUser(): User {
-  //   return this.user;
-  // }
 
   login(email: string, password: string) {
 
@@ -61,5 +54,6 @@ export class AuthService {
 
   signOut() {
     this.afAuth.auth.signOut();
+    this.router.navigate(['/login']);
   }
 }
