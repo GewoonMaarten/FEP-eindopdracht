@@ -38,7 +38,9 @@ export class MaterialenLijstComponent implements OnInit {
     private nav: NavbarService) {}
 
   ngOnInit() {
+
     this.nav.show();
+
     this.route.params.subscribe(params => {
       this.page = +params['page'] - 1 || 0;
 
@@ -53,7 +55,7 @@ export class MaterialenLijstComponent implements OnInit {
 
   private getMaterialen(key?) {
     console.log("next: ", this.nextKey);
-    this.materialenService.getMaterialenbyPage(this.pageSize, key)
+    this.materialenService.getMaterialenByPage(this.pageSize, key)
     .subscribe(materialen => {
       this.showSpinner = false;
 

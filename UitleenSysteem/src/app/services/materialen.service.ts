@@ -8,18 +8,46 @@ import { Materiaal } from '../models/materiaal';
 @Injectable()
 export class MaterialenService {
 
-    constructor(private db: AngularFireDatabase){}
+    constructor(private db: AngularFireDatabase){ }
 
     public getMaterialen(): Observable<Materiaal[]> {
-        return this.db
-          .list<Materiaal>('/materialen').valueChanges();
+      return this.db.list('/materialen')
+        .snapshotChanges()
+        .map(action => {
+
+          let materialen = [];
+
+          action.forEach(el => {
+            const $key = el.key;
+            const data = { $key, ...el.payload.val()};
+            materialen.push(data);
+          });
+
+          return materialen;
+
+        });
     }
 
-    public getMaterialenbyPage(page: number, key: string): Observable<Materiaal[]> {
-      return this.db.list<Materiaal>('/materialen', ref =>
+    public getMaterialenByPage(pageSize: number, key: string): Observable<Materiaal[]> {
+
+      return this.db.list('/materialen', ref =>
         ref.orderByKey()
           .startAt(key)
-          .limitToFirst(page + 1)
-        ).valueChanges();
+          .limitToFirst(pageSize + 1)
+        ).snapshotChanges()
+        .map(action => {
+
+          let materialen = [];
+
+          action.forEach(el => {
+          const $key = el.key;
+          const data = { $key, ...el.payload.val()};
+          materialen.push(data);
+        });
+
+        return materialen;
+
+        });
     }
+
 }
