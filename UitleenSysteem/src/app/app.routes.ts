@@ -7,10 +7,6 @@ import {DocentGuard} from "./guards/docent.guard";
 
 
 export const routes: Routes = [
-  // {
-  //   path: '**',
-  //   redirectTo: 'login'
-  // },
   {
     path: 'login',
     component: LoginComponent
@@ -19,5 +15,10 @@ export const routes: Routes = [
     path: 'materiaal/:page',
     component: MaterialenLijstComponent,
     canActivate: [AuthGuard]
+  },
+  /* Moet onderaan blijven */
+  {
+    path: '**',
+    redirectTo: 'login'
   },
 ];

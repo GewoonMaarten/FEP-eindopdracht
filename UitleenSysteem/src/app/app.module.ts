@@ -34,19 +34,20 @@ import {
   MatDialogModule,
   MatTabsModule
 } from '@angular/material';
-import { Ng2DropdownModule } from 'ng2-material-dropdown';
 
 
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MaterialenLijstComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    MateriaalFormComponent
 
   ],
   imports: [

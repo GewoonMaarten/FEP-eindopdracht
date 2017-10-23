@@ -7,6 +7,13 @@
 
         <span class="spacer"></span>
 
+        <button mat-mini-fab
+                color="primary"
+                *ngIf="materialenService.canEdit">
+          <mat-icon class="mat-24">add</mat-icon>
+        </button>
+
+
         <mat-form-field class="margin-10">
           <input matInput placeholder="Zoeken" />
         </mat-form-field>
@@ -35,6 +42,7 @@
 
       <div class="materialen-items">
           <div *ngFor="let materiaal of materialen" class="card" id={{materiaal.$key}}>
+
               <div (click)="collapse(materiaal.$key)" class="clickable">
                   <h3 class="mat-subheading-2">{{materiaal.naam}}</h3>
                   <img src={{materiaal.afbeelding}} width="100%"/>
@@ -44,23 +52,18 @@
                   </p>
                   <p class="mat-body-1 beschikbaar">beschikbaar: <span>{{materiaal.aantal}}</span></p>
               </div>
+
               <div class="reserveer-materiaal" *ngIf="materiaal.$key == activeMateriaal">
                   <mat-form-field class="full-width hoeveelheid">
-                      <input matInput type="number" maxlength="2" min="1" max={{materiaal.aantal}} value="1" placeholder="aantal"/>
+
+                      <input matInput type="number" maxlength="2"
+                             min="1" max={{materiaal.aantal}} value="1" placeholder="aantal"/>
+
                   </mat-form-field>
                   <button class="full-width toevoegen" mat-raised-button color="accent">Toevoegen</button>
               </div>
           </div>
       </div>
-
-        <!--<div class="materialen-paginator">-->
-            <!--<button mat-raised-button color="primary" class="page-btn" (click)="onPrev()" [disabled]="!prevKeys?.length"><</button>-->
-            <!--<a mat-button class="page-btn" *ngFor="let page of pages"-->
-                <!--[class.mat-primary]="page == activePage" [routerLink]="['/materiaal', page + 1]">-->
-                <!--{{page + 1}}-->
-            <!--</a>-->
-            <!--<button mat-raised-button color="primary" class="page-btn" (click)="onNext()" [disabled]="!nextKey">></button>-->
-        <!--</div>-->
 
     </div>
 </div>
