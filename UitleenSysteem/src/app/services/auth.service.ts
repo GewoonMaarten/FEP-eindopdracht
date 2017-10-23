@@ -15,7 +15,7 @@ import {Subject} from "rxjs/Subject";
 export class AuthService {
 
   //private user: User;
-  user: Subject<User> = new Subject();
+  user: BehaviorSubject<User> = new BehaviorSubject(null);
 
   constructor(private afAuth: AngularFireAuth,
               private db: AngularFireDatabase,
@@ -24,9 +24,9 @@ export class AuthService {
     this.afAuth.authState
       .switchMap(auth => {
         if (auth) {
-          return this.db.object<User>('users/' + auth.uid).valueChanges()
+          return this.db.object<User>('users/' + auth.uid).valueChanges();
         } else {
-          return Observable.of(null)
+          return Observable.of(null);
         }
       })
       .subscribe(user => {
@@ -35,7 +35,6 @@ export class AuthService {
         this.user.next(<User> user);
 
       });
-
 
   }
 
