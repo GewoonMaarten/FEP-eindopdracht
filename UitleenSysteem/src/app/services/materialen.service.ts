@@ -52,15 +52,34 @@ export class MaterialenService {
         let materialen = [];
 
         action.forEach(el => {
-        const $key = el.key;
-        const data = { $key, ...el.payload.val()};
-        materialen.push(data);
-      });
+          const $key = el.key;
+          const data = { $key, ...el.payload.val()};
+          materialen.push(data);
+        });
 
       return materialen;
 
       });
   }
+
+  public getMateralenNaam(): Observable<string[]>{
+    return this.db.list<Materiaal[]>('/materialen')
+      .snapshotChanges()
+      .map(action => {
+
+        let namen: string[] = [];
+
+        action.forEach(el => {
+          const materiaal = el.payload.val() as Materiaal;
+          namen.push(materiaal.naam);
+        });
+
+        return namen;
+      });
+  }
+
+  // Authorization
+
 
   get canEdit(): boolean {
     const allowedRoles = ['beheerder'];

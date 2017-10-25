@@ -31,8 +31,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.nav.hide();
 
-    this.authService.signOut();
-
     this.user = this.afAuth.authState;
     this.loginError = false;
 

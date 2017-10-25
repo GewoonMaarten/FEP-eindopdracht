@@ -15,7 +15,7 @@ import {Subject} from "rxjs/Subject";
 export class AuthService {
 
   //private user: User;
-  user: BehaviorSubject<User> = new BehaviorSubject(null);
+  user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
   constructor(private afAuth: AngularFireAuth,
               private db: AngularFireDatabase,
@@ -44,7 +44,6 @@ export class AuthService {
     this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log("Succesfull login!");
         this.router.navigate(['/materiaal/1']);
       })
       .catch(error => console.log(error));

@@ -1,3 +1,24 @@
-<p>
-  materiaal-form works!
-</p>
+<div class="container">
+  <h1 class="mat-title materialen-title">Materialen Toevoegen</h1>
+  <hr />
+
+  <form>
+
+    <mat-form-field>
+      <input type="text" placeholder="Naam" aria-label="Naam" matInput [formControl]="naamControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+
+  </form>
+
+  <button mat-raised-button
+          color="primary"
+          routerLink="/materiaal/1">
+    Back
+  </button>
+</div>

@@ -9,7 +9,8 @@
 
         <button mat-mini-fab
                 color="primary"
-                *ngIf="materialenService.canEdit">
+                *ngIf="materialenService.canEdit"
+                routerLink="/materiaal/form/{{totalMaterialen + 1}}">
           <mat-icon class="mat-24">add</mat-icon>
         </button>
 

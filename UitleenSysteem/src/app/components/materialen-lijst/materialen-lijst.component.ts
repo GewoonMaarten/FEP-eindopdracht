@@ -32,6 +32,8 @@ export class MaterialenLijstComponent implements OnInit {
 
   activeMateriaal: number;
 
+  totalMaterialen: number;
+
   constructor(private materialenService: MaterialenService,
     private route: ActivatedRoute,
     private router: Router,
@@ -48,13 +50,16 @@ export class MaterialenLijstComponent implements OnInit {
     });
 
     this.materialenService.getMaterialen().subscribe(materialen => {
-      const totalPages = Math.ceil(materialen.length / this.pageSize);
+
+      this.totalMaterialen = materialen.length;
+
+      const totalPages = Math.ceil(this.totalMaterialen / this.pageSize);
       this.pages = Array.from(Array(totalPages),(x,i)=>i);
     });
   }
 
   private getMaterialen(key?) {
-    console.log("next: ", this.nextKey);
+
     this.materialenService.getMaterialenByPage(this.pageSize, key)
     .subscribe(materialen => {
       this.showSpinner = false;
@@ -63,7 +68,6 @@ export class MaterialenLijstComponent implements OnInit {
 
       this.materialen = _.slice(materialen, 0, this.pageSize);
 
-      console.log(this.materialen);
       this.nextKey = _.get(materialen[this.pageSize], '$key');
     });
   }
@@ -87,7 +91,6 @@ export class MaterialenLijstComponent implements OnInit {
   changePage(page){
     this.nextKey = (page * this.pageSize).toString();
     this.prevKeys = Array.from(new Array(page),(val,index) => (index * this.pageSize).toString() );
-    console.log("changepage next: ", this.nextKey);
     this.getMaterialen(this.nextKey);
   }
 
