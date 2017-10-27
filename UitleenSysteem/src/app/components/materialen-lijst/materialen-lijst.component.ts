@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Materiaal} from '../../models/materiaal';
@@ -11,13 +11,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
 import {NavbarService} from "../../services/navbar.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'materialen-lijst',
   templateUrl: './materialen-lijst.component.html',
   styleUrls: ['./materialen-lijst.component.css']
 })
-export class MaterialenLijstComponent implements OnInit {
+export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
   showSpinner: boolean = true;
 
@@ -34,12 +35,14 @@ export class MaterialenLijstComponent implements OnInit {
 
   totalMaterialen: number;
 
+  materialenSubscription: Subscription;
+
   constructor(private materialenService: MaterialenService,
     private route: ActivatedRoute,
     private router: Router,
     private nav: NavbarService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.nav.show();
 
@@ -49,13 +52,17 @@ export class MaterialenLijstComponent implements OnInit {
       this.changePage(this.page);
     });
 
-    this.materialenService.getMaterialen().subscribe(materialen => {
+    this.materialenSubscription = this.materialenService.getMaterialen().subscribe(materialen => {
 
       this.totalMaterialen = materialen.length;
 
       const totalPages = Math.ceil(this.totalMaterialen / this.pageSize);
       this.pages = Array.from(Array(totalPages),(x,i)=>i);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.materialenSubscription.unsubscribe();
   }
 
   private getMaterialen(key?) {

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl} from "@angular/forms";
+import {Form, FormControl, FormGroup} from "@angular/forms";
 
 import {MaterialenService} from "../../services/materialen.service";
 
@@ -18,13 +18,26 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
   filteredOptions: Observable<string[]>;
   namen: Subscription;
 
+  materiaalForm: FormGroup;
   naamControl: FormControl;
+  aantalControl: FormControl;
+  fileControl: FormControl;
+  omschrijvingControl: FormControl;
 
   constructor(private materialenService: MaterialenService) { }
 
   ngOnInit():void {
 
     this.naamControl = new FormControl();
+    this.aantalControl = new FormControl();
+    this.fileControl = new FormControl();
+    this.omschrijvingControl = new FormControl();
+
+    this.materiaalForm = new FormGroup({});
+    this.materiaalForm.addControl('naam', this.naamControl);
+    this.materiaalForm.addControl('aantal', this.aantalControl);
+    this.materiaalForm.addControl('file', this.fileControl);
+    this.materiaalForm.addControl('omschrijving', this.omschrijvingControl);
 
     this.namen = this.materialenService.getMateralenNaam()
       .subscribe(namen => {
@@ -44,6 +57,16 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
     return namen.filter(option =>
       option.toLowerCase().indexOf(val.toLowerCase()) === 0
     );
+  }
+
+  fileChange(event): void{
+    const files: FileList = event.target.files;
+
+    if(files.length > 0){
+      const file: File = files[0];
+
+
+    }
   }
 
 }

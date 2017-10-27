@@ -7,17 +7,18 @@
 
         <span class="spacer"></span>
 
-        <button mat-mini-fab
+        <button mat-raised-button
                 color="primary"
+                class="page-btn margin-10"
                 *ngIf="materialenService.canEdit"
                 routerLink="/materiaal/form/{{totalMaterialen + 1}}">
           <mat-icon class="mat-24">add</mat-icon>
         </button>
 
-
         <mat-form-field class="margin-10">
           <input matInput placeholder="Zoeken" />
         </mat-form-field>
+
         <button mat-raised-button color="primary"
                 class="page-btn margin-10"
                 (click)="onPrev()"

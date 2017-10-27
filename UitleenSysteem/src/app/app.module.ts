@@ -24,16 +24,13 @@ import { BeheerderGuard } from "./guards/beheerder.guard";
 
 //Angular material components
 import {
-  MatGridListModule,
   MatToolbarModule,
   MatIconModule,
   MatButtonModule,
-  MatPaginatorModule,
   MatInputModule,
   MatProgressBarModule,
-  MatDialogModule,
-  MatTabsModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatStepperModule
 } from '@angular/material';
 
 
@@ -41,6 +38,7 @@ import { MaterialenLijstComponent } from './components/materialen-lijst/material
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
+import { InputFileComponent } from './components/input-file/input-file.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +46,8 @@ import { MateriaalFormComponent } from './components/materiaal-form/materiaal-fo
     MaterialenLijstComponent,
     LoginComponent,
     NavbarComponent,
-    MateriaalFormComponent
+    MateriaalFormComponent,
+    InputFileComponent
 
   ],
   imports: [
@@ -63,16 +62,13 @@ import { MateriaalFormComponent } from './components/materiaal-form/materiaal-fo
     FormsModule,
     ReactiveFormsModule,
     //Angular material components
-    MatGridListModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatPaginatorModule,
     MatInputModule,
     MatProgressBarModule,
-    MatDialogModule,
-    MatTabsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatStepperModule
   ],
   entryComponents: [
     LoginComponent
