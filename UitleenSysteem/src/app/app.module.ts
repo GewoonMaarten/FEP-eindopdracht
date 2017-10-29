@@ -42,7 +42,6 @@ import { MaterialenLijstComponent } from './components/materialen-lijst/material
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
-import { InputFileComponent } from './components/input-file/input-file.component';
 
 @NgModule({
   declarations: [
@@ -51,8 +50,6 @@ import { InputFileComponent } from './components/input-file/input-file.component
     LoginComponent,
     NavbarComponent,
     MateriaalFormComponent,
-    InputFileComponent
-
   ],
   imports: [
     BrowserModule,
