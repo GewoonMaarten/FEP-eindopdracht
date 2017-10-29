@@ -1,14 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Form, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from '@angular/router';
 
 import {MaterialenService} from "../../services/materialen.service";
+import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/startWith";
 import {Subscription} from "rxjs/Subscription";
 import {Materiaal} from "../../models/materiaal";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Afbeelding} from "../../models/afbeelding";
+import * as firebase from "firebase";
 
 @Component({
   selector: 'app-materiaal-form',
@@ -19,6 +22,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
 
   materiaalId: number;
   naamControlSubscription: Subscription;
+  afbeeldingSubscription: Subscription;
 
   isUpdate: boolean = false;
 
@@ -27,10 +31,10 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
 
   materiaalForm: FormGroup;
 
-  startAt = new BehaviorSubject("");
-  endAt = new BehaviorSubject("");
+  upload: Afbeelding;
 
   constructor(private materialenService: MaterialenService,
+              private firebaseStorageService: FirebaseStorageService,
               private _formBuilder: FormBuilder,
               private router: Router) { }
 
@@ -39,7 +43,10 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
     this.materiaalForm = this._formBuilder.group({
       naam: ['', Validators.required],
       aantal: ['', Validators.required],
-      afbeelding: '',
+      afbeelding: this._formBuilder.group({
+        naam: '',
+        url: ''
+      }),
       omschrijving: ''
     });
 
@@ -62,6 +69,10 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
 
               this.materiaalForm.patchValue({
                 aantal: materiaal.aantal,
+                afbeelding: {
+                  naam: materiaal.afbeelding.naam,
+                  url: materiaal.afbeelding.url
+                },
                 omschrijving: materiaal.omschrijving
               });
             } else {
@@ -69,6 +80,8 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
             }
           });
     });
+
+
 
 
 
@@ -85,6 +98,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.namen.unsubscribe();
     this.naamControlSubscription.unsubscribe();
+    //this.afbeeldingSubscription.unsubscribe();
   }
 
   private filterNames(val: string, namen: string[]): string[]  {
@@ -97,20 +111,56 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
     const files: FileList = event.target.files;
     if(files.length > 0){
       const file: File = files[0];
+
+      if(this.materiaalForm.value.afbeelding.naam != '' && file.name !== this.materiaalForm.value.afbeelding.naam){
+        this.firebaseStorageService.deleteFile(this.materiaalForm.value.afbeelding.naam);
+      }
+
+      this.upload = new Afbeelding(file);
+
+      let uploadTask = this.firebaseStorageService.uploadFile(this.upload);
+
+      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+          snapshot =>  {
+            // upload in progress
+          },
+          error => {
+            // upload failed
+          },
+          () => {
+            // upload success
+            this.upload.url = uploadTask.snapshot.downloadURL;
+            this.upload.naam = this.upload.file.name;
+
+            this.materiaalForm.patchValue({
+              afbeelding: {
+                url: this.upload.url,
+                naam: this.upload.naam
+              }
+            });
+          }
+        );
     }
+  }
+
+  deleteAfbeelding(){
+    this.firebaseStorageService.deleteFile(this.materiaalForm.value.afbeelding.naam);
+    this.materiaalForm.patchValue({
+      afbeelding: {
+        url: '',
+        naam: ''
+      }
+    });
   }
 
  submit(){
     if(this.isUpdate){
-
-      console.log(`Update ${this.materiaalId}, ${this.materiaalForm.value}`);
-
       this.materialenService.updateMateriaal(this.materiaalId, this.materiaalForm.value as Materiaal);
-
       this.router.navigate(['/materiaal/1'])
 
     } else if(!this.isUpdate){
       this.materialenService.addMateriaal(this.materiaalForm.value as Materiaal);
+      this.router.navigate(['/materiaal/1'])
     }
   }
 

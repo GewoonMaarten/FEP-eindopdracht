@@ -30,14 +30,21 @@
                  required/>
         </mat-form-field>
 
+        <div class="form-file">
         <input type="file"
-               formControlName="afbeelding"
                (change)="fileChange($event)"
                placeholder="Bladeren"
                accept="image/*"
-               class="form-file"
         />
 
+          <img class="afbeelding-preview" src="{{materiaalForm.value.afbeelding?.url}}">
+          <button mat-icon-button
+                  color="warn"
+                  (click)="deleteAfbeelding()"
+                  *ngIf="materiaalForm.value.afbeelding.url">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
         <mat-form-field class="form-omschrijving">
         <textarea matInput placeholder="Omschrijving"
                   formControlName="omschrijving"
@@ -78,6 +85,10 @@
         <tr>
           <td class="bevestiging-tabel-leftcol"><b>Omschrijving</b></td>
           <td>{{materiaalForm.value.omschrijving}}</td>
+        </tr>
+        <tr>
+          <td class="bevestiging-tabel-leftcol"><b>Afbeelding</b></td>
+          <td><img src={{materiaalForm.value.afbeelding.url}} class="afbeelding-preview" /></td>
         </tr>
       </table>
 

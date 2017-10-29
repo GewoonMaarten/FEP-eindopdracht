@@ -1,7 +1,9 @@
+import {Afbeelding} from "./afbeelding";
+
 export class Materiaal {
   $key;
   aantal: number;
-  afbeelding: string;
+  afbeelding: Afbeelding;
   naam: string;
   status: string;
   omschrijving: string;

@@ -11,12 +11,16 @@ import { routes } from "./app.routes";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { FirebaseApp } from 'angularfire2';
+
+import 'firebase/storage';
+
 import { environment } from '../environments/environment';
 
 import { MaterialenService } from './services/materialen.service';
 import { AuthService } from './services/auth.service';
 import { NavbarService } from './services/navbar.service';
-
+import { FirebaseStorageService } from './services/firebase-storage.service';
 
 import { AuthGuard } from "./guards/auth.guard";
 import { DocentGuard } from "./guards/docent.guard";
@@ -77,6 +81,7 @@ import { InputFileComponent } from './components/input-file/input-file.component
     MaterialenService,
     AuthService,
     NavbarService,
+    FirebaseStorageService,
     AngularFireAuth,
     AuthGuard,
     DocentGuard,
