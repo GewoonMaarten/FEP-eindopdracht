@@ -1,12 +1,33 @@
 <div class="container">
     <div class="content">
         <div class="header">
-        <h1>Dit is de header</h1>
-        <ul>
-                <li *ngFor="let item of items">
-                   {{ item | json }}
-                </li>
-              </ul>
+            <h1 class="mat-title reservering-title">Reserveringen</h1>
         </div>
+
+        <div class="divider">
+            <hr />
+        </div>
+
+        <div class="reservering-afhandelen">
+            <table class="responstable">
+                <tr class='row'>
+                    <th class='col'>Materiaal</th>
+                    <th class='col'>Hoeveelheid</th>
+                    <th class='col'>Student</th>
+                    <th class='col'>Studentnummer</th>
+                    <th class='col'>Einddatum</th>
+                    <th class='col'>Aangemaakt op</th>
+                </tr>
+                <tr class='row' *ngFor="let reservering of items; let i = index" (click)="selectReservering(reservering)" >
+                    <td class='col'>{{reservering.materiaal_id}}</td>
+                    <td class='col'>{{reservering.aantal}}</td>
+                    <td class='col'>Hier komt een studentnaam</td>
+                    <td class='col'>Hier komt een studnummer</td>
+                    <td class='col'>{{reservering.einddatum}}</td>
+                    <td class='col'>{{reservering.aanmaakdatum}}</td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 </div>

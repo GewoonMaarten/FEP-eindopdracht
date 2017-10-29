@@ -17,10 +17,12 @@ export class ReserveringAfhandelenComponent {
 
   constructor(db: AngularFireDatabase,
     private reserveringService: ReserveringService) {
-
       this.reserveringService.getReserveringen().subscribe(reserveringen => {
         this.items = reserveringen;
-        console.log(this.items);
       });
+  }
+
+  selectReservering(reservering: Reservering) {
+    console.log("We gaan deze reservering ophalen: " + reservering.aanmaakdatum)
   }
 }
