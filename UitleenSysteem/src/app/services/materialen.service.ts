@@ -78,8 +78,33 @@ export class MaterialenService {
       });
   }
 
-  // Authorization
+  public addMateriaal(id: number, materiaal: Materiaal) {
+    this.db.object<Materiaal>(`/materialen/${id}`)
+      .set(materiaal)
+      .then(_ => {return true;})
+      .catch(error => {return false;});
+  }
 
+  public updateMateriaal(id: number, materiaal: Materiaal) {
+    this.db.object<Materiaal>(`/materialen/${id}`)
+      .update(materiaal)
+      .then(_ => {return true;})
+      .catch(error => {return false;});
+  }
+
+  public deleteMateriaal(id: number){
+    this.db.object<Materiaal>(`/materialen/${id}`)
+      .remove()
+      .then(_ => {return true;})
+      .catch(error => {return false;});
+  }
+
+  public getMateriaalById(id: number): Observable<Materiaal>{
+    return this.db.object<Materiaal>(`/materialen/${id}`).valueChanges();
+  }
+
+
+  // Authorization
 
   get canEdit(): boolean {
     const allowedRoles = ['beheerder'];
