@@ -1,1 +1,12 @@
-<h1>Hallllooooooo</h1>
+<div class="container">
+    <div class="content">
+        <div class="header">
+        <h1>Dit is de header</h1>
+        <ul>
+                <li *ngFor="let item of items">
+                   {{ item | json }}
+                </li>
+              </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+.container {
+    display: grid;
+    width: 100%;
+
+    grid-template-columns: 25% auto 25%;
+    grid-template-areas: ". main .";
+}
+
+.content {
+    display: grid;
+    grid-area: main;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 50px 50px auto 10%;
+    grid-template-areas:
+        "header header header"
+        "divider divider divider"
+        "items items items"
+        ". paginator .";
+
+    margin-top: 50px;
+}
+
+.header {
+  grid-area: header;
+  display: flex;
+}

@@ -14,6 +14,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 
 import { MaterialenService } from './services/materialen.service';
+import { ReserveringService } from './services/reservering.service';
 import { AuthService } from './services/auth.service';
 import { NavbarService } from './services/navbar.service';
 
@@ -76,6 +77,7 @@ import { ReserveringAfhandelenComponent } from './components/reservering-afhande
   ],
   providers: [
     MaterialenService,
+    ReserveringService,
     AuthService,
     NavbarService,
     AngularFireAuth,
