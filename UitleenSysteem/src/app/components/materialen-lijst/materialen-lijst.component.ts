@@ -106,4 +106,9 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
   collapse(id){
     this.activeMateriaal = this.activeMateriaal == id ? undefined : id;
   }
+
+  //Delete
+  delete(id: number){
+    this.materialenService.deleteMateriaal(id);
+  }
 }

@@ -83,6 +83,11 @@
     margin: auto;
 }
 
+.delete-btn {
+  margin-top: -6px;
+  margin-left: 140px;
+}
+
 .beschikbaar >span {
     color: #2196f3;
 }

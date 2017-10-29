@@ -39,3 +39,8 @@
   grid-area: 5 / 2 / 5 / 3;
   justify-self: right;
 }
+
+
+.bevestiging-tabel-leftcol {
+  width: 30%;
+}

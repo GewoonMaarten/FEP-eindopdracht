@@ -2,29 +2,36 @@
   <h1 class="mat-title materialen-title">Materialen Toevoegen</h1>
   <hr />
 
-  <mat-horizontal-stepper [linear]="isLinear">
+  <mat-horizontal-stepper [linear]="true">
     <mat-step [stepControl]="materiaalForm">
       <form [formGroup]="materiaalForm" novalidate class="form-materiaal">
 
         <ng-template matStepLabel>Materiaal gegevens</ng-template>
 
         <mat-form-field class="form-naam">
-          <input type="text" placeholder="Naam" aria-label="Naam" matInput [formControl]="naamControl" [matAutocomplete]="auto">
+          <input type="text" placeholder="Naam"
+                 aria-label="Naam"
+                 matInput formControlName="naam"
+                 [matAutocomplete]="auto"
+                 required>
+
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
               {{ option }}
             </mat-option>
           </mat-autocomplete>
+
         </mat-form-field>
 
         <mat-form-field class="form-aantal">
           <input type="number" placeholder="Aantal"
                  aria-label="Aantal" matInput
-                 min="0" [formControl]="aantalControl"/>
+                 min="0" formControlName="aantal"
+                 required/>
         </mat-form-field>
 
         <input type="file"
-               [formControl]="fileControl"
+               formControlName="afbeelding"
                (change)="fileChange($event)"
                placeholder="Bladeren"
                accept="image/*"
@@ -33,7 +40,7 @@
 
         <mat-form-field class="form-omschrijving">
         <textarea matInput placeholder="Omschrijving"
-                  [formControl]="omschrijvingControl"
+                  formControlName="omschrijving"
                   maxlength="150"
                   #omschrijving>
         </textarea>
@@ -57,21 +64,39 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Bevestiging</ng-template>
-      <p>hoi</p>
+
+
+      <table>
+        <tr>
+          <td class="bevestiging-tabel-leftcol"><b>Naam</b></td>
+          <td>{{materiaalForm.value.naam}}</td>
+        </tr>
+        <tr>
+          <td class="bevestiging-tabel-leftcol"><b>Aantal</b></td>
+          <td>{{materiaalForm.value.aantal}}</td>
+        </tr>
+        <tr>
+          <td class="bevestiging-tabel-leftcol"><b>Omschrijving</b></td>
+          <td>{{materiaalForm.value.omschrijving}}</td>
+        </tr>
+      </table>
+
 
       <button mat-raised-button
               matStepperPrevious>
         Terug
       </button>
 
-      <button mat-raised-button (onclick)="submit()">
-        Toevoegen
+      <button mat-raised-button (click)="submit()">
+        <span *ngIf="!isUpdate">Toevoegen</span>
+        <span *ngIf="isUpdate">Update</span>
       </button>
     </mat-step>
 
   </mat-horizontal-stepper>
 
   <p>Form value: {{ materiaalForm.value | json }}</p>
+  <p>Is update: {{isUpdate}}</p>
 
 
 

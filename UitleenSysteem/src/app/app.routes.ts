@@ -15,18 +15,19 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'materiaal/form',
+    component: MateriaalFormComponent,
+    canActivate: [AuthGuard, BeheerderGuard]
+  },
+  {
     path: 'materiaal/:page',
     component: MaterialenLijstComponent,
     canActivate: [AuthGuard]
   },
-  {
-    path: 'materiaal/form/:id',
-    component: MateriaalFormComponent,
-    canActivate: [AuthGuard, BeheerderGuard]
-  },
+
   /* Moet onderaan blijven */
-  {
-    path: '**',
-    redirectTo: 'login'
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: 'login'
+  // },
 ];

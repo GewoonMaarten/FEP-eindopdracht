@@ -6,6 +6,7 @@ import { Materiaal } from '../models/materiaal';
 import {AuthService} from "./auth.service";
 
 import * as _ from 'lodash';
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class MaterialenService {
@@ -25,6 +26,30 @@ export class MaterialenService {
   public getMaterialen(): Observable<Materiaal[]> {
     return this.db.list('/materialen')
       .snapshotChanges()
+      .map(action => {
+
+        let materialen = [];
+
+        action.forEach(el => {
+          const $key = el.key;
+          const data = { $key, ...el.payload.val()};
+          materialen.push(data);
+        });
+
+        return materialen;
+
+      });
+  }
+
+  public searchMaterialen(start: string, end: string): Observable<Materiaal[]>{
+    console.log(start+" "+ end);
+
+    return this.db.list<Materiaal>('/materialen', ref =>
+      ref.orderByChild('naam')
+        .limitToFirst(1)
+        .startAt(start)
+        .endAt(end)
+      ).snapshotChanges()
       .map(action => {
 
         let materialen = [];
@@ -78,11 +103,9 @@ export class MaterialenService {
       });
   }
 
-  public addMateriaal(id: number, materiaal: Materiaal) {
-    this.db.object<Materiaal>(`/materialen/${id}`)
-      .set(materiaal)
-      .then(_ => {return true;})
-      .catch(error => {return false;});
+  public addMateriaal(materiaal: Materiaal) {
+    this.db.list<Materiaal>('/materialen')
+      .push(materiaal);
   }
 
   public updateMateriaal(id: number, materiaal: Materiaal) {
