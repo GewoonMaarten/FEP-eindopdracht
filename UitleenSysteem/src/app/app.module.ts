@@ -17,7 +17,6 @@ import { MaterialenService } from './services/materialen.service';
 import { AuthService } from './services/auth.service';
 import { NavbarService } from './services/navbar.service';
 
-
 import { AuthGuard } from "./guards/auth.guard";
 import { DocentGuard } from "./guards/docent.guard";
 import { BeheerderGuard } from "./guards/beheerder.guard";
@@ -40,14 +39,15 @@ import { Ng2DropdownModule } from 'ng2-material-dropdown';
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MaterialenLijstComponent,
     LoginComponent,
-    NavbarComponent
-
+    NavbarComponent,
+    ReserveringAfhandelenComponent
   ],
   imports: [
     BrowserModule,
