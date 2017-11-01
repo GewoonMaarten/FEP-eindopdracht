@@ -7,6 +7,6 @@ export class Materiaal {
   naam: string;
   status: string;
   omschrijving: string;
-  aanmaakDatum: number;
+  aanmaakDatum: string;
   tags: string[];
 }

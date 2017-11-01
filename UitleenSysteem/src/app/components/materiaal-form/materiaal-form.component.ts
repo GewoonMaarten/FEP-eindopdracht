@@ -56,7 +56,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
       .startWith(null)
       .subscribe(value => {
 
-        this.materialenService.searchMaterialen(value, value+"\uf8ff")
+        this.materialenService.searchMaterialen(value, value+"\uf8ff", "inventaris")
           .take(1)
           .subscribe(materialen => {
             const materiaal = materialen[0] as Materiaal;
@@ -81,7 +81,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
     });
 
     //Auto complete
-    this.namen = this.materialenService.getMateralenNaam()
+    this.namen = this.materialenService.getMateralenNaam("inventaris")
       .subscribe(namen => {
         this.filteredOptions = naamControl.valueChanges
           .startWith(null)
@@ -158,7 +158,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
       this.router.navigate(['/materiaal/1'])
 
     } else if(!this.isUpdate){
-      this.materialenService.addMateriaal(this.materiaalForm.value as Materiaal);
+      this.materialenService.addMateriaal(this.materiaalForm.value as Materiaal, 'inventaris');
       this.router.navigate(['/materiaal/1'])
     }
   }

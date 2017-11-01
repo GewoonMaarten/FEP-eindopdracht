@@ -52,7 +52,7 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
       this.changePage(this.page);
     });
 
-    this.materialenSubscription = this.materialenService.getMaterialen().subscribe(materialen => {
+    this.materialenSubscription = this.materialenService.getMaterialen("inventaris").subscribe(materialen => {
 
       this.totalMaterialen = materialen.length;
 
@@ -67,7 +67,7 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
   private getMaterialen(key?) {
 
-    this.materialenService.getMaterialenByPage(this.pageSize, key)
+    this.materialenService.getMaterialenByPage(this.pageSize, key, "inventaris")
     .subscribe(materialen => {
       this.showSpinner = false;
 
@@ -109,6 +109,6 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
   //Delete
   delete(id: number){
-    this.materialenService.deleteMateriaal(id);
+    this.materialenService.deleteMateriaal(id, "inventaris");
   }
 }

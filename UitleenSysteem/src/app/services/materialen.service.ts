@@ -6,12 +6,13 @@ import { Materiaal } from '../models/materiaal';
 import {AuthService} from "./auth.service";
 
 import * as _ from 'lodash';
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {formatDate} from "../helpers/dateFormater";
 
 @Injectable()
 export class MaterialenService {
 
   userRoles: Array<string>;
+  private rootPath: string = '/materialen';
 
   constructor(private auth: AuthService,
               private db: AngularFireDatabase){
@@ -23,8 +24,8 @@ export class MaterialenService {
     .subscribe();
   }
 
-  public getMaterialen(): Observable<Materiaal[]> {
-    return this.db.list('/materialen')
+  public getMaterialen(status: string): Observable<Materiaal[]> {
+    return this.db.list(`${this.rootPath}/${status}`)
       .snapshotChanges()
       .map(action => {
 
@@ -41,10 +42,10 @@ export class MaterialenService {
       });
   }
 
-  public searchMaterialen(start: string, end: string): Observable<Materiaal[]>{
+  public searchMaterialen(start: string, end: string, status: string): Observable<Materiaal[]>{
     console.log(start+" "+ end);
 
-    return this.db.list<Materiaal>('/materialen', ref =>
+    return this.db.list<Materiaal>(`${this.rootPath}/${status}`, ref =>
       ref.orderByChild('naam')
         .limitToFirst(1)
         .startAt(start)
@@ -65,9 +66,9 @@ export class MaterialenService {
       });
   }
 
-  public getMaterialenByPage(pageSize: number, key: string): Observable<Materiaal[]> {
+  public getMaterialenByPage(pageSize: number, key: string, status: string): Observable<Materiaal[]> {
 
-    return this.db.list('/materialen', ref =>
+    return this.db.list(`${this.rootPath}/${status}`, ref =>
       ref.orderByKey()
         .startAt(key)
         .limitToFirst(pageSize + 1)
@@ -87,8 +88,8 @@ export class MaterialenService {
       });
   }
 
-  public getMateralenNaam(): Observable<string[]>{
-    return this.db.list<Materiaal[]>('/materialen')
+  public getMateralenNaam(status: string): Observable<string[]>{
+    return this.db.list<Materiaal[]>(`${this.rootPath}/${status}`)
       .snapshotChanges()
       .map(action => {
 
@@ -103,32 +104,37 @@ export class MaterialenService {
       });
   }
 
-  public addMateriaal(materiaal: Materiaal) {
+  public addMateriaal(materiaal: Materiaal, status: string) {
 
-    materiaal.aanmaakDatum = Date.now();
+    materiaal.aanmaakDatum = formatDate(new Date);
+    materiaal.status = "inventaris";
 
-    this.db.list<Materiaal>('/materialen')
+    this.db.list<Materiaal>(`${this.rootPath}/${status}`)
       .push(materiaal);
   }
 
   public updateMateriaal(id: number, materiaal: Materiaal) {
-    this.db.object<Materiaal>(`/materialen/${id}`)
+    this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`)
       .update(materiaal)
       .then(_ => {return true;})
       .catch(error => {return false;});
   }
 
-  public deleteMateriaal(id: number){
-    this.db.object<Materiaal>(`/materialen/${id}`)
-      .remove()
-      .then(_ => {return true;})
-      .catch(error => {return false;});
+
+  public deleteMateriaal(id: number, status: string){
+
+    this.db.object<Materiaal>(`${this.rootPath}/catalogus/${id}`)
+      .remove();
+
+    if (status === 'inventaris'){
+      this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`)
+        .remove();
+    }
   }
 
   public getMateriaalById(id: number): Observable<Materiaal>{
-    return this.db.object<Materiaal>(`/materialen/${id}`).valueChanges();
+    return this.db.object<Materiaal>(`${this.rootPath}/${id}`).valueChanges();
   }
-
 
   // Authorization
 
