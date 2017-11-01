@@ -34,7 +34,8 @@ import {
   MatInputModule,
   MatProgressBarModule,
   MatAutocompleteModule,
-  MatStepperModule
+  MatStepperModule,
+  MatSelectModule
 } from '@angular/material';
 
 
@@ -69,7 +70,8 @@ import { MateriaalFormComponent } from './components/materiaal-form/materiaal-fo
     MatInputModule,
     MatProgressBarModule,
     MatAutocompleteModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSelectModule
   ],
   entryComponents: [
     LoginComponent

@@ -7,9 +7,7 @@ import UploadTask = firebase.storage.UploadTask;
 @Injectable()
 export class FirebaseStorageService {
 
-
   constructor(private firebaseApp: FirebaseApp) {}
-
 
   public uploadFile(afbeelding: Afbeelding): UploadTask{
 
@@ -18,9 +16,6 @@ export class FirebaseStorageService {
 
 
     return storageRef.child(`images/${afbeelding.file.name}`).put(afbeelding.file);
-
-    //console.log(uploadTask);
-
   }
 
   public deleteFile(name:string) {

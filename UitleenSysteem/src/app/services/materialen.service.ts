@@ -104,6 +104,9 @@ export class MaterialenService {
   }
 
   public addMateriaal(materiaal: Materiaal) {
+
+    materiaal.aanmaakDatum = Date.now();
+
     this.db.list<Materiaal>('/materialen')
       .push(materiaal);
   }
@@ -129,12 +132,8 @@ export class MaterialenService {
 
   // Authorization
 
-  get canEdit(): boolean {
+  get isBeheerder(): boolean {
     const allowedRoles = ['beheerder'];
     return !_.isEmpty(_.intersection(allowedRoles, this.userRoles));
-  }
-
-  private matchingRole(allowedRoles): boolean {
-    return !_.isEmpty(_.intersection(allowedRoles, this.userRoles))
   }
 }

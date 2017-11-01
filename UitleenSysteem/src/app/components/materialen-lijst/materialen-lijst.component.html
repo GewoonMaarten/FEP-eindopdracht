@@ -7,10 +7,21 @@
 
         <span class="spacer"></span>
 
+        <div class="voorraad-selector">
+          <mat-select placeholder="Voorraad">
+            <mat-option value="catalogus" selected>
+              Catalogus
+            </mat-option>
+            <mat-option value="inventaris">
+              Inventaris
+            </mat-option>
+          </mat-select>
+        </div>
+
         <button mat-raised-button
                 color="primary"
                 class="page-btn margin-10"
-                *ngIf="materialenService.canEdit"
+                *ngIf="materialenService.isBeheerder"
                 routerLink="/materiaal/form">
           <mat-icon class="mat-24">mode_edit</mat-icon>
         </button>
@@ -49,9 +60,12 @@
 
                   <div class="header">
                     <h3 class="mat-subheading-2">{{materiaal.naam}}</h3>
+
+                    <span class="spacer"></span>
+
                     <button mat-icon-button class="delete-btn"
                             (click)="delete(materiaal.$key)"
-                            *ngIf="materialenService.canEdit">
+                            *ngIf="materialenService.isBeheerder">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>

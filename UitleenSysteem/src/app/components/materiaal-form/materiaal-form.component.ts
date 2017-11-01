@@ -9,7 +9,6 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/startWith";
 import {Subscription} from "rxjs/Subscription";
 import {Materiaal} from "../../models/materiaal";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Afbeelding} from "../../models/afbeelding";
 import * as firebase from "firebase";
 
@@ -22,7 +21,6 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
 
   materiaalId: number;
   naamControlSubscription: Subscription;
-  afbeeldingSubscription: Subscription;
 
   isUpdate: boolean = false;
 
@@ -47,7 +45,8 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
         naam: '',
         url: ''
       }),
-      omschrijving: ''
+      omschrijving: '',
+      aangemaaktDatum: this.currentDate()
     });
 
     let naamControl = this.materiaalForm.controls['naam'] as FormControl;
@@ -80,10 +79,6 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
             }
           });
     });
-
-
-
-
 
     //Auto complete
     this.namen = this.materialenService.getMateralenNaam()
@@ -141,6 +136,10 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
           }
         );
     }
+  }
+
+  private currentDate(): Date{
+    return new Date();
   }
 
   deleteAfbeelding(){
