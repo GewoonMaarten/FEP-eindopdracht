@@ -14,9 +14,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 
 import { MaterialenService } from './services/materialen.service';
+import { ReserveringService } from './services/reservering.service';
 import { AuthService } from './services/auth.service';
 import { NavbarService } from './services/navbar.service';
-
 
 import { AuthGuard } from "./guards/auth.guard";
 import { DocentGuard } from "./guards/docent.guard";
@@ -40,6 +40,7 @@ import { Ng2DropdownModule } from 'ng2-material-dropdown';
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
 import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
@@ -48,6 +49,7 @@ import { CartComponent } from './components/cart/cart.component';
     MaterialenLijstComponent,
     LoginComponent,
     NavbarComponent,
+    ReserveringAfhandelenComponent
     CartComponent
   ],
   imports: [
@@ -78,6 +80,7 @@ import { CartComponent } from './components/cart/cart.component';
   ],
   providers: [
     MaterialenService,
+    ReserveringService,
     AuthService,
     NavbarService,
     AngularFireAuth,
