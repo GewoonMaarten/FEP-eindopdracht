@@ -41,6 +41,7 @@ import { MaterialenLijstComponent } from './components/materialen-lijst/material
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ReserveringAfhandelenComponent } from './components/reservering-afhande
     LoginComponent,
     NavbarComponent,
     ReserveringAfhandelenComponent
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +75,8 @@ import { ReserveringAfhandelenComponent } from './components/reservering-afhande
     MatTabsModule
   ],
   entryComponents: [
-    LoginComponent
+    LoginComponent,
+    CartComponent
   ],
   providers: [
     MaterialenService,
