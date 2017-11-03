@@ -1,4 +1,5 @@
 export class Materiaal {
+    $key: number;
     aantal: number;
     afbeelding: string;
     naam: string;

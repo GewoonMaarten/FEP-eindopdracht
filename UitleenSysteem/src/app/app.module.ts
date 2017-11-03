@@ -40,14 +40,15 @@ import { Ng2DropdownModule } from 'ng2-material-dropdown';
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MaterialenLijstComponent,
     LoginComponent,
-    NavbarComponent
-
+    NavbarComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +73,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatTabsModule
   ],
   entryComponents: [
-    LoginComponent
+    LoginComponent,
+    CartComponent
   ],
   providers: [
     MaterialenService,

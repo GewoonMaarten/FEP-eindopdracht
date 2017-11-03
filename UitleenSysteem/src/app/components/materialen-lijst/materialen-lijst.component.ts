@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { Subscription } from 'rxjs/Subscription';
+
 import { Materiaal} from '../../models/materiaal';
 
 import { MaterialenService } from '../../services/materialen.service';
@@ -32,6 +34,10 @@ export class MaterialenLijstComponent implements OnInit {
 
   activeMateriaal: number;
 
+  materiaalCart: Materiaal[] = [];
+  private subscription: Subscription;
+  
+
   constructor(private materialenService: MaterialenService,
     private route: ActivatedRoute,
     private router: Router,
@@ -51,6 +57,7 @@ export class MaterialenLijstComponent implements OnInit {
       const totalPages = Math.ceil(materialen.length / this.pageSize);
       this.pages = Array.from(Array(totalPages),(x,i)=>i);
     });
+    
   }
 
   private getMaterialen(key?) {
@@ -66,6 +73,20 @@ export class MaterialenLijstComponent implements OnInit {
       console.log(this.materialen);
       this.nextKey = _.get(materialen[this.pageSize], '$key');
     });
+  }
+
+  addToCart(key, value) {
+
+    this.materialen.forEach(x => {
+      if(x.$key == key){
+        let addMateriaal = Object.assign({},x);
+        addMateriaal.aantal = value;
+        this.materiaalCart.push(addMateriaal);
+
+        this.nav.addToCart(this.materiaalCart);
+      }
+    })
+    console.log(this.materiaalCart);
   }
 
   /* Pagination */
