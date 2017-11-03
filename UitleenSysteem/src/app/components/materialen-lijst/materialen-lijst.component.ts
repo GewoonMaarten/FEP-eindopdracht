@@ -64,7 +64,7 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.materialenSubscription.unsubscribe();
   }
-
+  /** Haal een lijst met materialen op waarvan het eerste materiaal het materiaal is met de key. */
   private getMaterialen(key?) {
 
     this.materialenService.getMaterialenByPage(this.pageSize, key, "inventaris")
@@ -79,14 +79,14 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
     });
   }
 
-  /* Pagination */
+  /** Next page */
   onNext() {
     this.prevKeys.push(_.first(this.materialen)['$key']);
     this.getMaterialen(this.nextKey);
 
     this.router.navigate(['/materiaal', this.activePage + 2]);
   }
-
+  /** previous page */
   onPrev() {
     const prevKey = _.last(this.prevKeys);
     this.prevKeys = _.dropRight(this.prevKeys);
@@ -94,20 +94,19 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
     this.router.navigate(['/materiaal', this.activePage]);
   }
-
+  /** changepage */
   changePage(page){
     this.nextKey = (page * this.pageSize).toString();
     this.prevKeys = Array.from(new Array(page),(val,index) => (index * this.pageSize).toString() );
     this.getMaterialen(this.nextKey);
   }
 
-  /* Collapse */
-
+  /** Toggle materaal card */
   collapse(id){
     this.activeMateriaal = this.activeMateriaal == id ? undefined : id;
   }
 
-  //Delete
+  /** Delete materiaal*/
   delete(id: number){
     this.materialenService.deleteMateriaal(id, "inventaris");
   }

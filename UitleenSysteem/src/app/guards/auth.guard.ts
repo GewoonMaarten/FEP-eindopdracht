@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 
 
-
+//Route guard alleen voor users die ingelogd zijn.
 @Injectable()
 export class AuthGuard implements CanActivate {
 

@@ -20,11 +20,14 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth,
               private db: AngularFireDatabase,
               private router: Router) {
+    // haal de authstate op en gebruik het id om een user op te halen
+    // uit de realtime database.
 
     this.afAuth.authState
       .switchMap(auth => {
         if (auth) {
-          return this.db.object<User>('users/' + auth.uid).valueChanges();
+          return this.db.object<User>('users/' + auth.uid)
+            .valueChanges();
         } else {
           return Observable.of(null);
         }
@@ -37,8 +40,11 @@ export class AuthService {
       });
 
   }
-
-
+  /**
+   * login function
+   * @param {string} email
+   * @param {string} password
+   * */
   login(email: string, password: string) {
 
     this.afAuth.auth
@@ -49,7 +55,7 @@ export class AuthService {
       .catch(error => console.log(error));
   }
 
-
+  /** Signout */
   signOut() {
     this.afAuth.auth.signOut();
     this.router.navigate(['/login']);

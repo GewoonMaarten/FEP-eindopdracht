@@ -26,8 +26,8 @@ export const routes: Routes = [
   },
 
   /* Moet onderaan blijven */
-  // {
-  //   path: '**',
-  //   redirectTo: 'login'
-  // },
+  {
+    path: '**',
+    redirectTo: 'login'
+  },
 ];

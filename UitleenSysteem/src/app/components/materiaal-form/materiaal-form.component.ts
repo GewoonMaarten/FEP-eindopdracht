@@ -46,7 +46,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
         url: ''
       }),
       omschrijving: '',
-      aangemaaktDatum: this.currentDate()
+      aangemaaktDatum: MateriaalFormComponent.currentDate()
     });
 
     let naamControl = this.materiaalForm.controls['naam'] as FormControl;
@@ -95,13 +95,13 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
     this.naamControlSubscription.unsubscribe();
     //this.afbeeldingSubscription.unsubscribe();
   }
-
+  /** Filter op naam */
   private filterNames(val: string, namen: string[]): string[]  {
     return namen.filter(option =>
       option.toLowerCase().indexOf(val.toLowerCase()) === 0
     );
   }
-
+  /** Verander de afbeelding naar een nieuwe */
   fileChange(event): void{
     const files: FileList = event.target.files;
     if(files.length > 0){
@@ -138,10 +138,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  private currentDate(): Date{
-    return new Date();
-  }
-
+  /** verwijder de afbeelding. */
   deleteAfbeelding(){
     this.firebaseStorageService.deleteFile(this.materiaalForm.value.afbeelding.naam);
     this.materiaalForm.patchValue({
@@ -151,7 +148,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  /** update of add een nieuw materiaal. */
  submit(){
     if(this.isUpdate){
       this.materialenService.updateMateriaal(this.materiaalId, this.materiaalForm.value as Materiaal);
@@ -163,4 +160,8 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  /** Haal de datum op*/
+  private static currentDate(): Date{
+    return new Date();
+  }
 }

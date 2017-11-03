@@ -1,4 +1,10 @@
-export function formatDate(date) {
+
+/**
+ * formateerd een datum nummer naar een string.
+ * @param {Date} date
+ * @return {string}
+ * */
+export function formatDate(date): string {
   let monthNames = [
     "January", "February", "March",
     "April", "May", "June", "July",

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+
+/**
+ * Service om de navbar zichtbaar of onzichtbaar te maken.
+ * */
 @Injectable()
 export class NavbarService {
   visible: boolean;

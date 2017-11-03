@@ -1,3 +1,7 @@
+/*
+* Materialen service: Een service voor het ophalen, toevoegen, updaten en verwijderen
+* van materialen in catalogus of inventaris.
+* */
 import { Injectable } from '@angular/core';
 import {AngularFireDatabase, QueryFn} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
@@ -15,15 +19,20 @@ export class MaterialenService {
   private rootPath: string = '/materialen';
 
   constructor(private auth: AuthService,
-              private db: AngularFireDatabase){
+              private db: AngularFireDatabase) {
 
+    //Krijg de rollen van user voor authorizatie.
     auth.user.map(user => {
-      // Set an array of user roles, ie ['admin', 'author', ...]
       return this.userRoles = _.keys(_.get(user, 'roles'));
     })
-    .subscribe();
+      .subscribe();
   }
 
+  /**
+   * Haalt een observable op met een lijst van materialen.
+   * @param {string} status - naam van de status bijv. inventaris of catalogus.
+   * @return {Observable<Materiaal[]>}
+   * */
   public getMaterialen(status: string): Observable<Materiaal[]> {
     return this.db.list(`${this.rootPath}/${status}`)
       .snapshotChanges()
@@ -41,7 +50,13 @@ export class MaterialenService {
 
       });
   }
-
+  /**
+   * Zoekt materialen.
+   * @param {string} start - het begin van de string.
+   * @param {string} end - einde van de string.
+   * @param {string} status - naam van de status bijv. inventaris of catalogus.
+   * @return {Observable<Materiaal[]>}
+   * */
   public searchMaterialen(start: string, end: string, status: string): Observable<Materiaal[]>{
     console.log(start+" "+ end);
 
@@ -65,7 +80,13 @@ export class MaterialenService {
 
       });
   }
-
+  /**
+   * Paginator voor de materialen.
+   * @param {number} pageSize - Het aantal materialen per paginas.
+   * @param {string} key - De eerste key van de lijst.
+   * @param {string} status - naam van de status bijv. inventaris of catalogus.
+   * @return {Observable<Materiaal[]>}
+   * */
   public getMaterialenByPage(pageSize: number, key: string, status: string): Observable<Materiaal[]> {
 
     return this.db.list(`${this.rootPath}/${status}`, ref =>
@@ -87,7 +108,11 @@ export class MaterialenService {
 
       });
   }
-
+  /**
+   * Geeft een lijst met namen van materialen.
+   * @param {string} status - naam van de status bijv. inventaris of catalogus.
+   * @return {Observable<string[]>}
+   * */
   public getMateralenNaam(status: string): Observable<string[]>{
     return this.db.list<Materiaal[]>(`${this.rootPath}/${status}`)
       .snapshotChanges()
@@ -104,7 +129,23 @@ export class MaterialenService {
       });
   }
 
+  /**
+   * Een enkel materiaal ophalen.
+   * @param {number} id - het id van het materiaal.
+   * @return {Observable<Materiaal>}
+   * */
+  public getMateriaalById(id: number): Observable<Materiaal>{
+    return this.db.object<Materiaal>(`${this.rootPath}/${id}`).valueChanges();
+  }
+
+  /**
+   * Toevoegen van materialen aan de database.
+   * @param {Materiaal} materaal - het materiaal object om te uploaden.
+   * @param {string} status - naam van de status bijv. inventaris of catalogus.
+   * */
   public addMateriaal(materiaal: Materiaal, status: string) {
+
+    if(!this.isBeheerder) return;
 
     materiaal.aanmaakDatum = formatDate(new Date);
     materiaal.status = "inventaris";
@@ -112,16 +153,28 @@ export class MaterialenService {
     this.db.list<Materiaal>(`${this.rootPath}/${status}`)
       .push(materiaal);
   }
-
+  /**
+   * Updaten van een materiaal.
+   * @param {number} id - Het id van het materiaal.
+   * @param {Materiaal} materiaal - Het materiaal object om te uploaden.
+   * */
   public updateMateriaal(id: number, materiaal: Materiaal) {
+    if(!this.isBeheerder) return;
+
     this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`)
       .update(materiaal)
       .then(_ => {return true;})
       .catch(error => {return false;});
   }
 
-
+  /**
+   * Verwijderen van materiaal. Als het materiaal verwijdert wordt uit de
+   * inventaris, wordt het ook verwijdert uit de catalogus.
+   * @param {number} id - Het id van het materiaal.
+   * @param {string} status - naam van de status bijv. inventaris of catalogus.
+   * */
   public deleteMateriaal(id: number, status: string){
+    if(!this.isBeheerder) return;
 
     this.db.object<Materiaal>(`${this.rootPath}/catalogus/${id}`)
       .remove();
@@ -132,12 +185,10 @@ export class MaterialenService {
     }
   }
 
-  public getMateriaalById(id: number): Observable<Materiaal>{
-    return this.db.object<Materiaal>(`${this.rootPath}/${id}`).valueChanges();
-  }
-
   // Authorization
-
+  /**
+   * Checkt of de user
+   * */
   get isBeheerder(): boolean {
     const allowedRoles = ['beheerder'];
     return !_.isEmpty(_.intersection(allowedRoles, this.userRoles));

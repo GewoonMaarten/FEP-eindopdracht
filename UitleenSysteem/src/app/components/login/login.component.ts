@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
               private authService: AuthService,
               private nav: NavbarService) {}
 
+  /** Maak een login form aan */
   ngOnInit(): void {
     this.nav.hide();
 
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.loginForm.addControl('email', this.emailFormControl);
     this.loginForm.addControl('password', this.passwordFormControl);
   }
-
+  /** Login */
   onSubmit(value:string): void{
     const formModel = this.loginForm.value;
 
