@@ -1,6 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { Subscription } from 'rxjs/Subscription';
+
 import { Materiaal} from '../../models/materiaal';
 
 import { MaterialenService } from '../../services/materialen.service';
@@ -36,6 +38,7 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
   totalMaterialen: number;
 
   materialenSubscription: Subscription;
+  materiaalCart: Materiaal[] = [];
 
   constructor(private materialenService: MaterialenService,
     private route: ActivatedRoute,
@@ -59,6 +62,7 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
       const totalPages = Math.ceil(this.totalMaterialen / this.pageSize);
       this.pages = Array.from(Array(totalPages),(x,i)=>i);
     });
+    
   }
 
   ngOnDestroy(): void {
@@ -77,6 +81,20 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
       this.nextKey = _.get(materialen[this.pageSize], '$key');
     });
+  }
+
+  addToCart(key, value) {
+
+    this.materialen.forEach(x => {
+      if(x.$key == key){
+        let addMateriaal = Object.assign({},x);
+        addMateriaal.aantal = value;
+        this.materiaalCart.push(addMateriaal);
+
+        this.nav.addToCart(this.materiaalCart);
+      }
+    })
+    console.log(this.materiaalCart);
   }
 
   /** Next page */

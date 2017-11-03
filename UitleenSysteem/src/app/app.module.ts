@@ -18,6 +18,7 @@ import 'firebase/storage';
 import { environment } from '../environments/environment';
 
 import { MaterialenService } from './services/materialen.service';
+import { ReserveringService } from './services/reservering.service';
 import { AuthService } from './services/auth.service';
 import { NavbarService } from './services/navbar.service';
 import { FirebaseStorageService } from './services/firebase-storage.service';
@@ -43,6 +44,8 @@ import { MaterialenLijstComponent } from './components/materialen-lijst/material
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
+import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,8 @@ import { MateriaalFormComponent } from './components/materiaal-form/materiaal-fo
     LoginComponent,
     NavbarComponent,
     MateriaalFormComponent,
+    ReserveringAfhandelenComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -74,10 +79,12 @@ import { MateriaalFormComponent } from './components/materiaal-form/materiaal-fo
     MatSelectModule
   ],
   entryComponents: [
-    LoginComponent
+    LoginComponent,
+    CartComponent
   ],
   providers: [
     MaterialenService,
+    ReserveringService,
     AuthService,
     NavbarService,
     FirebaseStorageService,
