@@ -1,0 +1,49 @@
+.container {
+  width: 50%;
+  margin: auto;
+}
+
+.form-materiaal {
+  display: grid;
+  width: 100%;
+  margin: auto;
+  grid-template-columns: 10px auto 10px;
+  grid-template-rows: repeat(2, 1fr) repeat(2, auto) 100px;
+}
+
+.form-naam{
+  grid-area: 1 / 2;
+  justify-self: center;
+  width: 50%;
+}
+
+.form-aantal {
+  grid-area: 2 / 2;
+  justify-self: center;
+  width: 50%;
+}
+
+.form-file {
+  grid-area: 3 / 2;
+  justify-self: center;
+  width: 50%;
+}
+
+.form-omschrijving {
+  grid-area: 4 / 2;
+  justify-self: center;
+  width: 50%;
+}
+
+.form-button-container {
+  grid-area: 5 / 2 / 5 / 3;
+  justify-self: right;
+}
+
+
+.bevestiging-tabel-leftcol {
+  width: 30%;
+}
+.afbeelding-preview {
+  max-width: 80%;
+}

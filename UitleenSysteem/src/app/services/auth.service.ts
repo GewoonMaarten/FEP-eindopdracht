@@ -15,18 +15,21 @@ import {Subject} from "rxjs/Subject";
 export class AuthService {
 
   //private user: User;
-  user: Subject<User> = new Subject();
+  user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
   constructor(private afAuth: AngularFireAuth,
               private db: AngularFireDatabase,
               private router: Router) {
+    // haal de authstate op en gebruik het id om een user op te halen
+    // uit de realtime database.
 
     this.afAuth.authState
       .switchMap(auth => {
         if (auth) {
-          return this.db.object<User>('users/' + auth.uid).valueChanges()
+          return this.db.object<User>('users/' + auth.uid)
+            .valueChanges();
         } else {
-          return Observable.of(null)
+          return Observable.of(null);
         }
       })
       .subscribe(user => {
@@ -36,22 +39,23 @@ export class AuthService {
 
       });
 
-
   }
-
-
+  /**
+   * login function
+   * @param {string} email
+   * @param {string} password
+   * */
   login(email: string, password: string) {
 
     this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log("Succesfull login!");
         this.router.navigate(['/materiaal/1']);
       })
       .catch(error => console.log(error));
   }
 
-
+  /** Signout */
   signOut() {
     this.afAuth.auth.signOut();
     this.router.navigate(['/login']);

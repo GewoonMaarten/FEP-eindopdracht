@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -13,13 +13,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
 import {NavbarService} from "../../services/navbar.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'materialen-lijst',
   templateUrl: './materialen-lijst.component.html',
   styleUrls: ['./materialen-lijst.component.css']
 })
-export class MaterialenLijstComponent implements OnInit {
+export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
   showSpinner: boolean = true;
 
@@ -34,16 +35,17 @@ export class MaterialenLijstComponent implements OnInit {
 
   activeMateriaal: number;
 
+  totalMaterialen: number;
+
+  materialenSubscription: Subscription;
   materiaalCart: Materiaal[] = [];
-  private subscription: Subscription;
-  
 
   constructor(private materialenService: MaterialenService,
     private route: ActivatedRoute,
     private router: Router,
     private nav: NavbarService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.nav.show();
 
@@ -53,16 +55,23 @@ export class MaterialenLijstComponent implements OnInit {
       this.changePage(this.page);
     });
 
-    this.materialenService.getMaterialen().subscribe(materialen => {
-      const totalPages = Math.ceil(materialen.length / this.pageSize);
+    this.materialenSubscription = this.materialenService.getMaterialen("inventaris").subscribe(materialen => {
+
+      this.totalMaterialen = materialen.length;
+
+      const totalPages = Math.ceil(this.totalMaterialen / this.pageSize);
       this.pages = Array.from(Array(totalPages),(x,i)=>i);
     });
     
   }
 
+  ngOnDestroy(): void {
+    this.materialenSubscription.unsubscribe();
+  }
+  /** Haal een lijst met materialen op waarvan het eerste materiaal het materiaal is met de key. */
   private getMaterialen(key?) {
-    console.log("next: ", this.nextKey);
-    this.materialenService.getMaterialenByPage(this.pageSize, key)
+
+    this.materialenService.getMaterialenByPage(this.pageSize, key, "inventaris")
     .subscribe(materialen => {
       this.showSpinner = false;
 
@@ -70,7 +79,6 @@ export class MaterialenLijstComponent implements OnInit {
 
       this.materialen = _.slice(materialen, 0, this.pageSize);
 
-      console.log(this.materialen);
       this.nextKey = _.get(materialen[this.pageSize], '$key');
     });
   }
@@ -89,14 +97,14 @@ export class MaterialenLijstComponent implements OnInit {
     console.log(this.materiaalCart);
   }
 
-  /* Pagination */
+  /** Next page */
   onNext() {
     this.prevKeys.push(_.first(this.materialen)['$key']);
     this.getMaterialen(this.nextKey);
 
     this.router.navigate(['/materiaal', this.activePage + 2]);
   }
-
+  /** previous page */
   onPrev() {
     const prevKey = _.last(this.prevKeys);
     this.prevKeys = _.dropRight(this.prevKeys);
@@ -104,17 +112,20 @@ export class MaterialenLijstComponent implements OnInit {
 
     this.router.navigate(['/materiaal', this.activePage]);
   }
-
+  /** changepage */
   changePage(page){
     this.nextKey = (page * this.pageSize).toString();
     this.prevKeys = Array.from(new Array(page),(val,index) => (index * this.pageSize).toString() );
-    console.log("changepage next: ", this.nextKey);
     this.getMaterialen(this.nextKey);
   }
 
-  /* Collapse */
-
+  /** Toggle materaal card */
   collapse(id){
     this.activeMateriaal = this.activeMateriaal == id ? undefined : id;
+  }
+
+  /** Delete materiaal*/
+  delete(id: number){
+    this.materialenService.deleteMateriaal(id, "inventaris");
   }
 }

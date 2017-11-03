@@ -10,21 +10,20 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 
 
-
+//Route guard alleen voor users die ingelogd zijn.
 @Injectable()
 export class AuthGuard implements CanActivate {
 
   constructor(private auth: AuthService,
-              private afAuth: AngularFireAuth,
               private router: Router){}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean{
 
-    return this.afAuth.authState
+    return this.auth.user
       .take(1)
-      .map(authState => !!authState)
+      .map(user => !!user)
       .do(authenticated => {
         if (!authenticated) {
           this.router.navigate(['/login']);
