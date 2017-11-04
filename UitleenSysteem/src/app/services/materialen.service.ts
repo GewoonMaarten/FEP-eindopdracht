@@ -131,11 +131,11 @@ export class MaterialenService {
 
   /**
    * Een enkel materiaal ophalen.
-   * @param {number} id - het id van het materiaal.
+   * @param {string} id - het id van het materiaal.
    * @return {Observable<Materiaal>}
    * */
-  public getMateriaalById(id: number): Observable<Materiaal>{
-    return this.db.object<Materiaal>(`${this.rootPath}/${id}`).valueChanges();
+  public getMateriaalById(id: string): Observable<Materiaal>{
+    return this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`).valueChanges();
   }
 
   /**

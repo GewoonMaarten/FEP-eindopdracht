@@ -36,7 +36,8 @@ import {
   MatProgressBarModule,
   MatAutocompleteModule,
   MatStepperModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDialogModule
 } from '@angular/material';
 
 
@@ -46,6 +47,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
 import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
 import { CartComponent } from './components/cart/cart.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,8 @@ import { CartComponent } from './components/cart/cart.component';
     MatProgressBarModule,
     MatAutocompleteModule,
     MatStepperModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
   entryComponents: [
     LoginComponent,
@@ -91,7 +94,8 @@ import { CartComponent } from './components/cart/cart.component';
     AngularFireAuth,
     AuthGuard,
     DocentGuard,
-    BeheerderGuard
+    BeheerderGuard,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

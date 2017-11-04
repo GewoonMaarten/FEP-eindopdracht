@@ -1,46 +1,93 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {Materiaal} from "../../models/materiaal";
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Materiaal, Reservering } from "../../models/index";
 import { Subscription } from 'rxjs/Subscription';
-import {NavbarService} from "../../services/navbar.service";
-
+import { MaterialenService, ReserveringService } from '../../services/index'
 
 @Component({
   selector: 'cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent {
   subscription: Subscription;
-  public cartje : Materiaal [] = [];
-  test = "TEST";
+  confirmStep1: boolean = false;
+  confirmStep2: boolean = false;
+  materiaalCart: Reservering [] =[];
+  materialenInCart: Materiaal[] = [];
 
   constructor(
-    public nav: NavbarService,
-    public dialogRef: MatDialogRef<CartComponent>) {
-  }
-  
-  ngOnInit() {
-    // this.getCart().subscribe(_ => {
-    //   console.log('ngOnit after getCart() ' + this.cartje);
-    // });
-    this.cartje = this.nav.getCart();
-  }
-  getCart() {
-    // return this.nav.getCart().map((data) => { 
-    //   //hier gaat nog iets fout: UITZOEKEN!!!!!!!
-    //   console.log('cartje ' + data);
-    //   this.cartje = data;
-    //   console.log('this.cartje ' + this.cartje);
+    public materialenService: MaterialenService,
+    public reserveringSerivce: ReserveringService,
+    public dialogRef: MatDialogRef<CartComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Reservering[]) {
 
-    //   //hier dus!!!!!!!^^^^
-    // });
+    this.confirmStep1 = false;
+    this.confirmStep1 = false;
+
+    this.materiaalCart = data;
+
+    this.materiaalCart.forEach(x => {
+      this.materialenService.getMateriaalById(x.materiaal_id).subscribe(materiaal => {
+
+        //add the $key, because it doesn't get returned
+        let addMateriaal = materiaal;
+        addMateriaal.$key = x.materiaal_id;
+
+        this.materialenInCart.push(materiaal);  
+      });
+    });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-  rand(){
-    console.log(this.cartje);
+
+  checkRemove(key) {
+    this.materiaalCart.forEach(x => {
+      if (x.materiaal_id == key) {
+        x.aantal = Number(x.aantal) - 1;
+        this.pushToService();        
+      }
+    });
+  }
+
+  checkAdd(key) {
+    this.materiaalCart.forEach(x => {
+      if (x.materiaal_id == key) {
+        x.aantal = Number(x.aantal) + 1;
+        this.pushToService();        
+      }
+    });
+  }
+
+  deleteReservering(key) {
+    //delete Reservering from Cart
+    this.materiaalCart.forEach(x => {
+      if (x.materiaal_id == key) {
+        var index = this.materiaalCart.indexOf(x);
+        this.materiaalCart.splice(index, 1);
+        this.pushToService();        
+      }
+    });
+
+    //delete Materiaal from materialenInCart
+    this.materialenInCart.forEach(x => {
+      if (x.$key == key) {
+        var index = this.materialenInCart.indexOf(x);
+        this.materialenInCart.splice(index, 1);
+      }
+    });
+  }
+
+  confirmReservering() {
+    if (this.reserveringSerivce.addReservering()) {
+      this.onNoClick()
+    }
+  }
+
+  pushToService():void {
+    //push new Cart to reserveringsService
+    this.reserveringSerivce.addToCart(this.materiaalCart);
   }
 }

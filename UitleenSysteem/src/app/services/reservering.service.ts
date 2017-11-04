@@ -1,28 +1,54 @@
 import { Injectable } from '@angular/core';
-import {AngularFireDatabase, QueryFn} from 'angularfire2/database';
+import { AngularFireDatabase, QueryFn } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 
-import { Reservering } from '../models/reservering';
+import { Reservering } from '../models/index';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class ReserveringService {
-    constructor(private db: AngularFireDatabase){ }
+  private subject = new Subject<any>();
+  private reserveringen: Reservering[] = [];
 
-    getReserveringen (): Observable<Reservering[]> {
-        return this.db.list('reservering')
-        .snapshotChanges()
-        .map(action => {
+  constructor(private db: AngularFireDatabase) { }
 
-          let reserveringen = [];
+  addToCart(reservering: Reservering[]) {
+    this.reserveringen = reservering;
+    this.subject.next(reservering);
+  }
 
-          action.forEach(el => {
-            const $key = el.key;
-            const data = { $key, ...el.payload.val()};
-            reserveringen.push(data);
-          });
+  getCart(): Observable<Reservering[]> {
+    return this.subject.asObservable();
+  }
 
-          return reserveringen;
+  clearCart() {
+    this.subject.next([]);
+  }
 
+  getReserveringen(): Observable<Reservering[]> {
+    return this.db.list('reservering')
+      .snapshotChanges()
+      .map(action => {
+
+        let reserveringen = [];
+
+        action.forEach(el => {
+          const $key = el.key;
+          const data = { $key, ...el.payload.val() };
+          reserveringen.push(data);
         });
-    }
+
+        return reserveringen;
+
+      });
+  }
+
+  addReservering() {
+    this.reserveringen.forEach(x => {
+      this.db.list('reservering').push(x);
+    });
+    this.clearCart();
+    
+    return true;
+  }
 }
