@@ -12,15 +12,24 @@ export class ReserveringService {
 
   constructor(private db: AngularFireDatabase) { }
 
+  /**
+   * Toevoegen van Reservering[]
+   * @param {Reservering[]} reservering - De Reservering array welke moet worden bijgehouden door de service.
+   * */
   addToCart(reservering: Reservering[]) {
     this.reserveringen = reservering;
     this.subject.next(reservering);
   }
 
+  /**
+   * De Cart ophalen
+   * @return {Observable<Reservering[]>}
+   * */
   getCart(): Observable<Reservering[]> {
     return this.subject.asObservable();
   }
 
+  /** De Cart legen */
   clearCart() {
     this.subject.next([]);
   }
@@ -43,6 +52,7 @@ export class ReserveringService {
       });
   }
 
+  /** Reservering toevoegen */
   addReservering() {
     this.reserveringen.forEach(x => {
       this.db.list('reservering').push(x);

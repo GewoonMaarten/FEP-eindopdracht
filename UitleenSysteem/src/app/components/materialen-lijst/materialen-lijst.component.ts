@@ -90,17 +90,20 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
       });
   }
 
+  /** Voeg het materiaal en aantal toe aan de Cart
+   *  en wijzig daarbij de observable, zodat de NavbarComponent het aantal verandert
+   */
   addToCart(key, addAantal) {
 
     this.materialen.forEach(x => {
       if (x.$key == key) {
 
-        //raise aantal if exists in materiaalCart
+        //raise aantal als exists in materiaalCart
         let exists = false;
         let outOfOrder = false;
-        
+
         this.materiaalCart.forEach(y => {
-          //check if new reserveringsaantal is'nt bigger then beschikbaaraantal
+          //check of new reserveringsaantal niet >= beschikbaaraantal
           if (x.$key == y.materiaal_id && Number(y.aantal) + Number(addAantal) >= x.aantal) outOfOrder = true;
 
           if (x.$key == y.materiaal_id && !outOfOrder) {
@@ -109,27 +112,26 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
           }
         });
 
-        //or add new Reservering to materiaalCart
+        //voeg anders een nieuwe Reservering toe aan materiaalCart
         if (!exists && !outOfOrder) {
           let newReservering = new Reservering();
           this.auth.getUserUid().subscribe(userid => newReservering.user_uid = userid);
-          
+
           newReservering.aantal = addAantal;
           newReservering.materiaal_id = x.$key;
           let now = new Date();
           newReservering.aanmaakdatum = this.datePipe.transform(now, 'dd-MM-yyyy'); //whatever format you need. 
-          
-          now.setMonth(now.getMonth() + 1); 
+
+          now.setMonth(now.getMonth() + 1);
           newReservering.einddatum = this.datePipe.transform(now, 'dd-MM-yyyy'); //whatever format you need. 
 
           this.materiaalCart.push(newReservering);
         }
 
-        //add changes to reserveringsService
+        //wijzig de Cart in de service
         this.reserveringService.addToCart(this.materiaalCart);
       }
     });
-
   }
 
   /** Next page */

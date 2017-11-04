@@ -20,17 +20,19 @@ export class CartComponent {
     public materialenService: MaterialenService,
     public reserveringSerivce: ReserveringService,
     public dialogRef: MatDialogRef<CartComponent>,
+    //data binnengekomen via de NavbarComponent
     @Inject(MAT_DIALOG_DATA) public data: Reservering[]) {
 
     this.confirmStep1 = false;
-    this.confirmStep1 = false;
+    this.confirmStep2 = false;
 
     this.materiaalCart = data;
 
+    //haal de materialen op welke gereserveerd zijn
     this.materiaalCart.forEach(x => {
       this.materialenService.getMateriaalById(x.materiaal_id).subscribe(materiaal => {
 
-        //add the $key, because it doesn't get returned
+        //voeg de $key toe, omdat deze niet wordt gereturned
         let addMateriaal = materiaal;
         addMateriaal.$key = x.materiaal_id;
 
@@ -39,10 +41,12 @@ export class CartComponent {
     });
   }
 
+  /** sluiten van de dialog */  
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /** aantal verlagen*/  
   checkRemove(key) {
     this.materiaalCart.forEach(x => {
       if (x.materiaal_id == key) {
@@ -52,6 +56,7 @@ export class CartComponent {
     });
   }
 
+  /** aantal verhogen  */  
   checkAdd(key) {
     this.materiaalCart.forEach(x => {
       if (x.materiaal_id == key) {
@@ -61,8 +66,9 @@ export class CartComponent {
     });
   }
 
+  /** verwijderen van Reservering */  
   deleteReservering(key) {
-    //delete Reservering from Cart
+    //delete Reservering van Cart
     this.materiaalCart.forEach(x => {
       if (x.materiaal_id == key) {
         var index = this.materiaalCart.indexOf(x);
@@ -71,7 +77,7 @@ export class CartComponent {
       }
     });
 
-    //delete Materiaal from materialenInCart
+    //delete Materiaal van materialenInCart
     this.materialenInCart.forEach(x => {
       if (x.$key == key) {
         var index = this.materialenInCart.indexOf(x);
@@ -80,14 +86,15 @@ export class CartComponent {
     });
   }
 
+  /** bevestigen van Reservering */  
   confirmReservering() {
     if (this.reserveringSerivce.addReservering()) {
       this.onNoClick()
     }
   }
 
+  /** push Cart naar reserveringsService */
   pushToService():void {
-    //push new Cart to reserveringsService
     this.reserveringSerivce.addToCart(this.materiaalCart);
   }
 }
