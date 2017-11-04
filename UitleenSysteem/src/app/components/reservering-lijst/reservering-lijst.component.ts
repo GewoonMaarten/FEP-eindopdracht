@@ -7,22 +7,21 @@ import { Observable } from 'rxjs/Observable';
 import { Reservering } from '../../models/reservering';
 
 @Component({
-  selector: 'reservering-afhandelen',
-  templateUrl: './reservering-afhandelen.component.html',
-  styleUrls: ['./reservering-afhandelen.component.css']
+  selector: 'reservering-lijst',
+  templateUrl: './reservering-lijst.component.html',
+  styleUrls: ['./reservering-lijst.component.css']
 })
-export class ReserveringAfhandelenComponent {
+export class ReserveringLijstComponent {
 
   items: Reservering[];
 
-  constructor(db: AngularFireDatabase,
-    private reserveringService: ReserveringService) {
+  constructor(private reserveringService: ReserveringService) {
       this.reserveringService.getReserveringen().subscribe(reserveringen => {
         this.items = reserveringen;
       });
   }
 
   selectReservering(reservering: Reservering) {
-    console.log("We gaan deze reservering ophalen: " + reservering.aanmaakdatum)
+    this.reserveringService.getReservering(reservering['$key']);
   }
 }

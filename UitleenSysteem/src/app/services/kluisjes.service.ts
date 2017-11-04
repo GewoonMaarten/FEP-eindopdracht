@@ -2,31 +2,29 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, QueryFn, AngularFireObject, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 
-import { Reservering } from '../models/reservering';
+import { Kluisje } from '../models/kluisje';
 
 @Injectable()
-export class ReserveringService {
+export class KluisjesService {
     constructor(private db: AngularFireDatabase){ }
+    
     groups: AngularFireList<any>;
-    getReserveringen(): Observable<Reservering[]> {
-        return this.db.list('reservering')
+
+    getKluisjes(): Observable<Kluisje[]> {
+        return this.db.list('kluisjes')
         .snapshotChanges()
         .map(action => {
 
-          let reserveringen = [];
+          let kluisjes = [];
 
           action.forEach(el => {
             const $key = el.key;
             const data = { $key, ...el.payload.val()};
-            reserveringen.push(data);
+            kluisjes.push(data);
           });
 
-          return reserveringen;
+          return kluisjes;
 
         });
-    }
-
-    getReservering(key: string): Observable<Reservering> {
-      return this.db.object<Reservering>(`/reservering/${key}`).valueChanges();
     }
 }

@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
 import { LoginComponent } from './components/login/login.component';
-import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
+import { ReserveringLijstComponent } from './components/reservering-lijst/reservering-lijst.component';
+import { ReserveringFormComponent } from './components/reservering-form/reservering-form.component';
 
 import {AuthGuard} from "./guards/auth.guard";
 import {DocentGuard} from "./guards/docent.guard";
@@ -23,7 +24,12 @@ export const routes: Routes = [
   },
   {
     path: 'reservering/afhandelen',
-    component: ReserveringAfhandelenComponent,
+    component: ReserveringLijstComponent,
+    //canActivate: [AuthGuard]
+  },
+  {
+    path: 'reservering/afhandelen/form',
+    component: ReserveringFormComponent,
     //canActivate: [AuthGuard]
   }
 ];
