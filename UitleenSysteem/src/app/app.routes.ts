@@ -28,7 +28,7 @@ export const routes: Routes = [
     //canActivate: [AuthGuard]
   },
   {
-    path: 'reservering/afhandelen/form',
+    path: 'reservering/afhandelen/form/:key',
     component: ReserveringFormComponent,
     //canActivate: [AuthGuard]
   }

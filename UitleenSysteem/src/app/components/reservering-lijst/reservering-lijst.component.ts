@@ -23,7 +23,8 @@ export class ReserveringLijstComponent implements OnInit{
 
   constructor(private reserveringService: ReserveringService,
               private materialenService: MaterialenService,
-              private userService: UserService) {
+              private userService: UserService,
+              private router: Router) {
     
    }
    
@@ -36,7 +37,9 @@ export class ReserveringLijstComponent implements OnInit{
             (materiaal) => {
               this.userService.getUserById(reservering.user_uid).subscribe(
                 (user) => {
-                  this.allElements.push({ 
+                  console.log(reservering)
+                  this.allElements.push({
+                  'key': reservering['$key'],
                   'materiaal_naam': materiaal.naam,
                   'aantal': reservering.aantal,
                   'student_naam': user.naam,
@@ -55,6 +58,11 @@ export class ReserveringLijstComponent implements OnInit{
   selectReservering(reservering: Reservering) {
     this.reserveringService.getReservering(reservering['$key']);
   }
+
+  selectRow(row) {
+    this.router.navigate(['reservering/afhandelen/form/', row.key]);
+    console.log(row);
+  }
 }
 
 export class ReserveringsLijstDataSource extends DataSource<any> {
@@ -70,6 +78,7 @@ export class ReserveringsLijstDataSource extends DataSource<any> {
 }
 
 export interface reservering {
+  key: number,
   materiaal_naam: string;
   aantal: number;
   student_naam: string;

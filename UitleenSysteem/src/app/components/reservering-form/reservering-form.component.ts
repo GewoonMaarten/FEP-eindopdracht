@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 
 import { Kluisje } from "../../models/kluisje";
 import { KluisjesService } from "../../services/kluisjes.service";
@@ -27,9 +27,14 @@ export class ReserveringFormComponent implements OnInit {
 
   constructor(private kluisjesService: KluisjesService,
               private _formBuilder: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      console.log(params['key']);
+    });
+
     this.kluisjesService.getKluisjes().subscribe(
       (res) => {
         this.kluisjes = res;
