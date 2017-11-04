@@ -32,6 +32,10 @@ export class ReserveringFormComponent implements OnInit {
   materiaal: Materiaal;
   user: User;
 
+  materiaalNaam: string;
+  studentNaam: string;
+  studentNummer: string;
+
   displayedColumns = ['materiaal_naam', 'aantal', 'student_naam', 'student_nummer', 'einddatum', 'aanmaakdatum'];
   dataSource: ReserveringsLijstDataSource | null;
 
@@ -90,6 +94,10 @@ export class ReserveringFormComponent implements OnInit {
       kluisnummer: '',
       opmerking: ''
     })
+
+    this.materiaalNaam = this.materiaal.naam;
+    this.studentNaam = this.user.naam;
+    this.studentNummer = this.user.studentnummer.toString();
   }
 
   initializeTable() {

@@ -115,35 +115,47 @@
 
     <mat-step>
       <ng-template matStepLabel>Bevestiging</ng-template>
-      <table class="form-reservering">
-        <tr>
-          <td class="bevestiging-tabel-leftcol"><b>Aantal</b></td>
-          <td>{{reserveringForm.value.aantal}}</td>
-        </tr>
-        <tr>
-          <td class="bevestiging-tabel-leftcol"><b>Pincode</b></td>
-          <td>{{reserveringForm.value.pincode}}</td>
-        </tr>
-        <tr>
-          <td class="bevestiging-tabel-leftcol"><b>Kluisnummer</b></td>
-          <td>{{reserveringForm.value.kluisnummer}}</td>
-        </tr>
-        <tr>
-          <td class="bevestiging-tabel-leftcol"><b>Opmerking</b></td>
-          <td>{{reserveringForm.value.opmerking}}</td>
-        </tr>
-      </table>
+      <div class="secondstep-reservering">
+        <div class="step2-header">
+          <h1>{{materiaalNaam}}</h1>
+          <h3>{{studentNaam}}</h3>
+          <h3>{{studentNummer}}</h3>
+          <hr />
+        </div>
 
-      <div class="form-button-container">
-        <button mat-raised-button
-                matStepperPrevious>
-          Terug
-        </button>
-        <button mat-raised-button (click)="submit()">
-          <span *ngIf="!isUpdate">Bevestigen</span>
-        </button>
+        <div class="step2-table">
+          <table>
+            <tr>
+              <td class="bevestiging-tabel-leftcol"><b>Aantal</b></td>
+              <td>{{reserveringForm.value.aantal}}</td>
+            </tr>
+            <tr>
+              <td class="bevestiging-tabel-leftcol"><b>Pincode</b></td>
+              <td>{{reserveringForm.value.pincode}}</td>
+            </tr>
+            <tr>
+              <td class="bevestiging-tabel-leftcol"><b>Kluisnummer</b></td>
+              <td>{{reserveringForm.value.kluisnummer}}</td>
+            </tr>
+            <tr>
+              <td class="bevestiging-tabel-leftcol"><b>Opmerking</b></td>
+              <td>{{reserveringForm.value.opmerking}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="form-button-container">
+          <button mat-raised-button
+                  matStepperPrevious>
+            Terug
+          </button>
+          <button mat-raised-button
+                  color="primary"
+                  (click)="submit()">
+            Bevestigen
+          </button>
+        </div>
       </div>
-
     </mat-step>
   </mat-horizontal-stepper>
 </div>

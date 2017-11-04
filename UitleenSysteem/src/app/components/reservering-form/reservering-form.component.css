@@ -11,6 +11,14 @@
     grid-template-rows: repeat(2, 1fr) repeat(2, auto) 100px;
   }
 
+  .secondstep-reservering {
+    display: grid;
+    width: 100%;
+    margin: auto;
+    grid-template-columns: 10px auto 10px;
+    grid-template-rows: repeat(2, 1fr) repeat(2, auto) 100px;
+  }
+
   .form-status{
     grid-area: 1 / 2;
     justify-self: center;
@@ -46,6 +54,15 @@
     justify-self: right;
   }
   
+  .step2-header {
+    grid-area: 1 / 2;
+    width: 100%;
+  }
+
+  .step2-table {
+    grid-area: 2 / 2;
+    width: 100%;
+  }
   
   .bevestiging-tabel-leftcol {
     width: 30%;
