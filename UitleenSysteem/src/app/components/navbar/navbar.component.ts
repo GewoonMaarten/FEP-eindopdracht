@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {NavbarService} from "../../services/navbar.service";
-import {AuthService} from "../../services/auth.service";
-import {User} from "../../models/user";
-import {Subject} from "rxjs/Subject";
+import { NavbarService, AuthService, ReserveringService } from "../../services/index";
+import { Reservering, User } from '../../models/index';
+import { Subject } from "rxjs/Subject";
+import { MatDialog } from '@angular/material';
+import { CartComponent } from "../cart/cart.component";
 
 @Component({
   selector: 'app-navbar',
@@ -10,16 +11,34 @@ import {Subject} from "rxjs/Subject";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
   user: Subject<User> = new Subject();
+  materiaalCart: Reservering[] = [];
 
-  constructor(public nav: NavbarService, public auth: AuthService) { }
-
-  ngOnInit() {
-    this.user = this.auth.user
+  constructor(public nav: NavbarService,
+    public dialog: MatDialog,
+    public auth: AuthService,
+    public reserveringService: ReserveringService) {
+    this.reserveringService.getCart().subscribe(data => {
+      this.materiaalCart = data;
+    });
   }
 
+  ngOnInit() {
+    this.user = this.auth.user;
+  }
+
+  // Logout
   public logout(): void {
     this.auth.signOut();
+  }
+
+  showCart() {
+    let dialogRef = this.dialog.open(CartComponent, {
+      data: this.materiaalCart
+    });
+  }
+
+  showReserveringen() {
+    console.log("reserveringen")
   }
 }

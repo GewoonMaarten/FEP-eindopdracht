@@ -1,0 +1,114 @@
+<div class="container">
+  <h1 class="mat-title materialen-title">Materialen Toevoegen</h1>
+  <hr />
+
+  <mat-horizontal-stepper [linear]="true">
+    <mat-step [stepControl]="materiaalForm">
+      <form [formGroup]="materiaalForm" novalidate class="form-materiaal">
+
+        <ng-template matStepLabel>Materiaal gegevens</ng-template>
+
+        <mat-form-field class="form-naam">
+          <input type="text" placeholder="Naam"
+                 aria-label="Naam"
+                 matInput formControlName="naam"
+                 [matAutocomplete]="auto"
+                 required>
+
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+
+        </mat-form-field>
+
+        <mat-form-field class="form-aantal">
+          <input type="number" placeholder="Aantal"
+                 aria-label="Aantal" matInput
+                 min="0" formControlName="aantal"
+                 required/>
+        </mat-form-field>
+
+        <div class="form-file">
+        <input type="file"
+               (change)="fileChange($event)"
+               placeholder="Bladeren"
+               accept="image/*"
+        />
+
+          <img class="afbeelding-preview" src="{{materiaalForm.value.afbeelding?.url}}">
+          <button mat-icon-button
+                  color="warn"
+                  (click)="deleteAfbeelding()"
+                  *ngIf="materiaalForm.value.afbeelding.url">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <mat-form-field class="form-omschrijving">
+        <textarea matInput placeholder="Omschrijving"
+                  formControlName="omschrijving"
+                  maxlength="150"
+                  #omschrijving>
+        </textarea>
+          <mat-hint align="end">{{omschrijving.value.length}} / 150</mat-hint>
+        </mat-form-field>
+
+        <div class="form-button-container">
+          <button mat-raised-button
+                  routerLink="/materiaal/1">
+            Annuleren
+          </button>
+
+          <button mat-raised-button
+                  color="primary"
+                  matStepperNext>
+            Verder
+          </button>
+        </div>
+
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Bevestiging</ng-template>
+
+
+      <table>
+        <tr>
+          <td class="bevestiging-tabel-leftcol"><b>Naam</b></td>
+          <td>{{materiaalForm.value.naam}}</td>
+        </tr>
+        <tr>
+          <td class="bevestiging-tabel-leftcol"><b>Aantal</b></td>
+          <td>{{materiaalForm.value.aantal}}</td>
+        </tr>
+        <tr>
+          <td class="bevestiging-tabel-leftcol"><b>Omschrijving</b></td>
+          <td>{{materiaalForm.value.omschrijving}}</td>
+        </tr>
+        <tr>
+          <td class="bevestiging-tabel-leftcol"><b>Afbeelding</b></td>
+          <td><img src={{materiaalForm.value.afbeelding.url}} class="afbeelding-preview" /></td>
+        </tr>
+      </table>
+
+
+      <button mat-raised-button
+              matStepperPrevious>
+        Terug
+      </button>
+
+      <button mat-raised-button (click)="submit()">
+        <span *ngIf="!isUpdate">Toevoegen</span>
+        <span *ngIf="isUpdate">Update</span>
+      </button>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+  <p>Form value: {{ materiaalForm.value | json }}</p>
+  <p>Is update: {{isUpdate}}</p>
+
+
+
+</div>

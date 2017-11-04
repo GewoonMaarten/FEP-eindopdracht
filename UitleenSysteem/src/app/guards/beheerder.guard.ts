@@ -7,6 +7,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 
+//Route guard alleen toeganglijk voor users met als rol beheerder
 @Injectable()
 export class BeheerderGuard implements CanActivate {
   constructor(private auth: AuthService,

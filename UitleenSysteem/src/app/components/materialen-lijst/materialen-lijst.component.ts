@@ -1,23 +1,25 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Materiaal} from '../../models/materiaal';
+import { Subscription } from 'rxjs/Subscription';
 
-import { MaterialenService } from '../../services/materialen.service';
+import { Materiaal, Reservering } from '../../models/index';
+
+import { MaterialenService, NavbarService, ReserveringService, AuthService } from '../../services/index';
 
 import * as _ from 'lodash';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
-import {NavbarService} from "../../services/navbar.service";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'materialen-lijst',
   templateUrl: './materialen-lijst.component.html',
   styleUrls: ['./materialen-lijst.component.css']
 })
-export class MaterialenLijstComponent implements OnInit {
+export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
   showSpinner: boolean = true;
 
@@ -32,12 +34,20 @@ export class MaterialenLijstComponent implements OnInit {
 
   activeMateriaal: number;
 
+  totalMaterialen: number;
+
+  materialenSubscription: Subscription;
+  materiaalCart: Reservering[] = [];
+
   constructor(private materialenService: MaterialenService,
     private route: ActivatedRoute,
     private router: Router,
-    private nav: NavbarService) {}
+    private nav: NavbarService,
+    private reserveringService: ReserveringService,
+    private auth: AuthService,
+    private datePipe: DatePipe) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.nav.show();
 
@@ -47,35 +57,91 @@ export class MaterialenLijstComponent implements OnInit {
       this.changePage(this.page);
     });
 
-    this.materialenService.getMaterialen().subscribe(materialen => {
-      const totalPages = Math.ceil(materialen.length / this.pageSize);
-      this.pages = Array.from(Array(totalPages),(x,i)=>i);
+    this.materialenSubscription = this.materialenService.getMaterialen("inventaris").subscribe(materialen => {
+
+      this.totalMaterialen = materialen.length;
+
+      const totalPages = Math.ceil(this.totalMaterialen / this.pageSize);
+      this.pages = Array.from(Array(totalPages), (x, i) => i);
     });
+
+    //keep the cart up-to-date
+    this.reserveringService.getCart().subscribe(data => {
+      this.materiaalCart = data;
+    });
+
   }
 
+  ngOnDestroy(): void {
+    this.materialenSubscription.unsubscribe();
+  }
+  /** Haal een lijst met materialen op waarvan het eerste materiaal het materiaal is met de key. */
   private getMaterialen(key?) {
-    console.log("next: ", this.nextKey);
-    this.materialenService.getMaterialenByPage(this.pageSize, key)
-    .subscribe(materialen => {
-      this.showSpinner = false;
 
-      this.activePage = this.prevKeys.length;
+    this.materialenService.getMaterialenByPage(this.pageSize, key, "inventaris")
+      .subscribe(materialen => {
+        this.showSpinner = false;
 
-      this.materialen = _.slice(materialen, 0, this.pageSize);
+        this.activePage = this.prevKeys.length;
 
-      console.log(this.materialen);
-      this.nextKey = _.get(materialen[this.pageSize], '$key');
+        this.materialen = _.slice(materialen, 0, this.pageSize);
+
+        this.nextKey = _.get(materialen[this.pageSize], '$key');
+      });
+  }
+
+  /** Voeg het materiaal en aantal toe aan de Cart
+   *  en wijzig daarbij de observable, zodat de NavbarComponent het aantal verandert
+   */
+  addToCart(key, addAantal) {
+
+    this.materialen.forEach(x => {
+      if (x.$key == key) {
+
+        //raise aantal als exists in materiaalCart
+        let exists = false;
+        let outOfOrder = false;
+
+        this.materiaalCart.forEach(y => {
+          //check of new reserveringsaantal niet >= beschikbaaraantal
+          if (x.$key == y.materiaal_id && Number(y.aantal) + Number(addAantal) >= x.aantal) outOfOrder = true;
+
+          if (x.$key == y.materiaal_id && !outOfOrder) {
+            exists = true;
+            y.aantal = Number(y.aantal) + Number(addAantal);
+          }
+        });
+
+        //voeg anders een nieuwe Reservering toe aan materiaalCart
+        if (!exists && !outOfOrder) {
+          let newReservering = new Reservering();
+          this.auth.getUserUid().subscribe(userid => newReservering.user_uid = userid);
+
+          newReservering.aantal = addAantal;
+          newReservering.materiaal_id = x.$key;
+          let now = new Date();
+          newReservering.aanmaakdatum = this.datePipe.transform(now, 'dd-MM-yyyy'); //whatever format you need. 
+
+          now.setMonth(now.getMonth() + 1);
+          newReservering.einddatum = this.datePipe.transform(now, 'dd-MM-yyyy'); //whatever format you need. 
+
+          this.materiaalCart.push(newReservering);
+        }
+
+        //wijzig de Cart in de service
+        this.reserveringService.addToCart(this.materiaalCart);
+      }
     });
   }
 
-  /* Pagination */
+  /** Next page */
   onNext() {
     this.prevKeys.push(_.first(this.materialen)['$key']);
     this.getMaterialen(this.nextKey);
 
     this.router.navigate(['/materiaal', this.activePage + 2]);
   }
-
+  /** previous page */
   onPrev() {
     const prevKey = _.last(this.prevKeys);
     this.prevKeys = _.dropRight(this.prevKeys);
@@ -83,17 +149,20 @@ export class MaterialenLijstComponent implements OnInit {
 
     this.router.navigate(['/materiaal', this.activePage]);
   }
-
-  changePage(page){
+  /** changepage */
+  changePage(page) {
     this.nextKey = (page * this.pageSize).toString();
-    this.prevKeys = Array.from(new Array(page),(val,index) => (index * this.pageSize).toString() );
-    console.log("changepage next: ", this.nextKey);
+    this.prevKeys = Array.from(new Array(page), (val, index) => (index * this.pageSize).toString());
     this.getMaterialen(this.nextKey);
   }
 
-  /* Collapse */
-
-  collapse(id){
+  /** Toggle materaal card */
+  collapse(id) {
     this.activeMateriaal = this.activeMateriaal == id ? undefined : id;
+  }
+
+  /** Delete materiaal*/
+  delete(id: number) {
+    this.materialenService.deleteMateriaal(id, "inventaris");
   }
 }
