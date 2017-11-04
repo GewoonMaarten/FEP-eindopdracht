@@ -33,9 +33,6 @@ export class ReserveringFormComponent implements OnInit {
     this.kluisjesService.getKluisjes().subscribe(
       (res) => {
         this.kluisjes = res;
-        this.kluisjes.forEach(element => {
-          console.log(element.kluisnummer);
-        });
       }
     )
 
@@ -53,6 +50,11 @@ export class ReserveringFormComponent implements OnInit {
   }
 
   submit() {
+    // we moeten er nu voor zorgen dat het materiaal de status uitgeleend krijgt en
+    // dat de reservering de status afgehandeld krijgt
+
+    
+
     console.log("JOOOO WE GAAN SUBMITTENNNN")
   }
 }

@@ -8,6 +8,8 @@ import { Materiaal } from '../models/materiaal';
 @Injectable()
 export class MaterialenService {
 
+  private rootPath: string = '/materialen';
+
     constructor(private db: AngularFireDatabase){ }
 
     public getMaterialen(): Observable<Materiaal[]> {
@@ -48,6 +50,10 @@ export class MaterialenService {
         return materialen;
 
         });
+    }
+
+    public getMateriaalById(id: number): Observable<Materiaal>{
+      return this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`).valueChanges();
     }
 
 }

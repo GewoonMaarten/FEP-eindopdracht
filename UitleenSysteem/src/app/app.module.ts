@@ -18,6 +18,7 @@ import { ReserveringService } from './services/reservering.service';
 import { AuthService } from './services/auth.service';
 import { NavbarService } from './services/navbar.service';
 import { KluisjesService } from './services/kluisjes.service';
+import { UserService } from './services/user.service';
 
 import { AuthGuard } from "./guards/auth.guard";
 import { DocentGuard } from "./guards/docent.guard";
@@ -33,7 +34,8 @@ import {
   MatAutocompleteModule,
   MatStepperModule,
   MatSelectModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule
 } from '@angular/material';
 import { Ng2DropdownModule } from 'ng2-material-dropdown';
 
@@ -74,7 +76,8 @@ import { ReserveringFormComponent } from './components/reservering-form/reserver
     MatAutocompleteModule,
     MatStepperModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule
   ],
   entryComponents: [
     LoginComponent,
@@ -86,6 +89,7 @@ import { ReserveringFormComponent } from './components/reservering-form/reserver
     AuthService,
     NavbarService,
     KluisjesService,
+    UserService,
     AngularFireAuth,
     AuthGuard,
     DocentGuard,

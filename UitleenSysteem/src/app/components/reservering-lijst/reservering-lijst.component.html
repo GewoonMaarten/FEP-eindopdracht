@@ -8,26 +8,49 @@
             <hr />
         </div>
 
-        <div class="reservering-afhandelen">
-            <table class="responstable">
-                <tr class='row'>
-                    <th class='col'>Materiaal</th>
-                    <th class='col'>Hoeveelheid</th>
-                    <th class='col'>Student</th>
-                    <th class='col'>Studentnummer</th>
-                    <th class='col'>Einddatum</th>
-                    <th class='col'>Aangemaakt op</th>
-                </tr>
-                <tr class='row' *ngFor="let reservering of items; let i = index" (click)="selectReservering(reservering)" >
-                    <td class='col'>{{reservering.materiaal_id}}</td>
-                    <td class='col'>{{reservering.aantal}}</td>
-                    <td class='col'>Hier komt een studentnaam</td>
-                    <td class='col'>Hier komt een studnummer</td>
-                    <td class='col'>{{reservering.einddatum}}</td>
-                    <td class='col'>{{reservering.aanmaakdatum}}</td>
-                </tr>
-            </table>
-        </div>
+        <div class="reservering-afhandelen mat-elevation-z8">
+                <mat-table #table [dataSource]="dataSource">
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="materiaal_naam">
+                    <mat-header-cell *matHeaderCellDef> Materiaal </mat-header-cell>
+                    <mat-cell *matCellDef="let elements"> {{elements.materiaal_naam}} </mat-cell>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="aantal">
+                    <mat-header-cell *matHeaderCellDef> Aantal </mat-header-cell>
+                    <mat-cell *matCellDef="let elements"> {{elements.aantal}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="student_naam">
+                    <mat-header-cell *matHeaderCellDef> Studentnaam </mat-header-cell>
+                    <mat-cell *matCellDef="let elements"> {{elements.student_naam}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="student_nummer">
+                    <mat-header-cell *matHeaderCellDef> Studentnummer </mat-header-cell>
+                    <mat-cell *matCellDef="let elements"> {{elements.student_nummer}} </mat-cell>
+                  </ng-container>
+              
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="einddatum">
+                    <mat-header-cell *matHeaderCellDef> Einddatum </mat-header-cell>
+                    <mat-cell *matCellDef="let elements"> {{elements.einddatum}} </mat-cell>
+                  </ng-container>
+              
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="aanmaakdatum">
+                    <mat-header-cell *matHeaderCellDef> Aanmaakdatum </mat-header-cell>
+                    <mat-cell *matCellDef="let elements"> {{elements.aanmaakdatum}} </mat-cell>
+                  </ng-container>
+              
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+              </div>
 
     </div>
 </div>
