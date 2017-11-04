@@ -26,7 +26,7 @@ export class ReserveringService {
         });
     }
 
-    getReservering(key: string): Observable<Reservering> {
+    getReserveringById(key: string): Observable<Reservering> {
       return this.db.object<Reservering>(`/reservering/${key}`).valueChanges();
     }
 }

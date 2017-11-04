@@ -9,48 +9,46 @@
         </div>
 
         <div class="reservering-afhandelen mat-elevation-z8">
-                <mat-table #table [dataSource]="dataSource" class="test">
+          <mat-table #table [dataSource]="dataSource">
+            <!-- Materiaal Column -->
+            <ng-container matColumnDef="materiaal_naam">
+              <mat-header-cell *matHeaderCellDef> Materiaal </mat-header-cell>
+              <mat-cell *matCellDef="let elements"> {{elements.materiaal_naam}} </mat-cell>
+            </ng-container>
+        
+            <!-- Aantal Column -->
+            <ng-container matColumnDef="aantal">
+              <mat-header-cell *matHeaderCellDef> Aantal </mat-header-cell>
+              <mat-cell *matCellDef="let elements"> {{elements.aantal}} </mat-cell>
+            </ng-container>
 
-                  <!-- Materiaal Column -->
-                  <ng-container matColumnDef="materiaal_naam">
-                    <mat-header-cell *matHeaderCellDef> Materiaal </mat-header-cell>
-                    <mat-cell *matCellDef="let elements"> {{elements.materiaal_naam}} </mat-cell>
-                  </ng-container>
-              
-                  <!-- Aantal Column -->
-                  <ng-container matColumnDef="aantal">
-                    <mat-header-cell *matHeaderCellDef> Aantal </mat-header-cell>
-                    <mat-cell *matCellDef="let elements"> {{elements.aantal}} </mat-cell>
-                  </ng-container>
+            <!-- Studentnaam Column -->
+            <ng-container matColumnDef="student_naam">
+              <mat-header-cell *matHeaderCellDef> Studentnaam </mat-header-cell>
+              <mat-cell *matCellDef="let elements"> {{elements.student_naam}} </mat-cell>
+            </ng-container>
 
-                  <!-- Studentnaam Column -->
-                  <ng-container matColumnDef="student_naam">
-                    <mat-header-cell *matHeaderCellDef> Studentnaam </mat-header-cell>
-                    <mat-cell *matCellDef="let elements"> {{elements.student_naam}} </mat-cell>
-                  </ng-container>
-
-                  <!-- Studentnummer Column -->
-                  <ng-container matColumnDef="student_nummer">
-                    <mat-header-cell *matHeaderCellDef> Studentnummer </mat-header-cell>
-                    <mat-cell *matCellDef="let elements"> {{elements.student_nummer}} </mat-cell>
-                  </ng-container>
-              
-                  <!-- Einddatum Column -->
-                  <ng-container matColumnDef="einddatum">
-                    <mat-header-cell *matHeaderCellDef> Einddatum </mat-header-cell>
-                    <mat-cell *matCellDef="let elements"> {{elements.einddatum}} </mat-cell>
-                  </ng-container>
-              
-                  <!-- Aanmaakdatum Column -->
-                  <ng-container matColumnDef="aanmaakdatum">
-                    <mat-header-cell *matHeaderCellDef> Aanmaakdatum </mat-header-cell>
-                    <mat-cell *matCellDef="let elements"> {{elements.aanmaakdatum}} </mat-cell>
-                  </ng-container>
-              
-                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                  <mat-row class="tablerow" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
-                </mat-table>
-              </div>
-
+            <!-- Studentnummer Column -->
+            <ng-container matColumnDef="student_nummer">
+              <mat-header-cell *matHeaderCellDef> Studentnummer </mat-header-cell>
+              <mat-cell *matCellDef="let elements"> {{elements.student_nummer}} </mat-cell>
+            </ng-container>
+        
+            <!-- Einddatum Column -->
+            <ng-container matColumnDef="einddatum">
+              <mat-header-cell *matHeaderCellDef> Einddatum </mat-header-cell>
+              <mat-cell *matCellDef="let elements"> {{elements.einddatum}} </mat-cell>
+            </ng-container>
+        
+            <!-- Aanmaakdatum Column -->
+            <ng-container matColumnDef="aanmaakdatum">
+              <mat-header-cell *matHeaderCellDef> Aanmaakdatum </mat-header-cell>
+              <mat-cell *matCellDef="let elements"> {{elements.aanmaakdatum}} </mat-cell>
+            </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row class="tablerow" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+          </mat-table>
+        </div>
     </div>
 </div>

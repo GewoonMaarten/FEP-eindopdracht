@@ -19,7 +19,7 @@ export class ReserveringLijstComponent implements OnInit{
 
   displayedColumns = ['materiaal_naam', 'aantal', 'student_naam', 'student_nummer', 'einddatum', 'aanmaakdatum'];
   dataSource: ReserveringsLijstDataSource | null;
-  allElements: reservering[];
+  allElements: ReserveringTable[];
 
   constructor(private reserveringService: ReserveringService,
               private materialenService: MaterialenService,
@@ -37,17 +37,23 @@ export class ReserveringLijstComponent implements OnInit{
             (materiaal) => {
               this.userService.getUserById(reservering.user_uid).subscribe(
                 (user) => {
-                  console.log(reservering)
-                  this.allElements.push({
-                  'key': reservering['$key'],
-                  'materiaal_naam': materiaal.naam,
-                  'aantal': reservering.aantal,
-                  'student_naam': user.naam,
-                  'student_nummer': user.studentnummer,
-                  'einddatum': reservering.einddatum,
-                  'aanmaakdatum': reservering.aanmaakdatum
+                  var canContinue: boolean = true;
+                  this.allElements.forEach(element => {
+                    if(element.key == reservering['$key']) canContinue = false;
                   });
-                  this.dataSource = new ReserveringsLijstDataSource(this.allElements);             
+                  
+                  if(canContinue) {
+                    this.allElements.push({
+                    'key': reservering['$key'],
+                    'materiaal_naam': materiaal.naam,
+                    'aantal': reservering.aantal,
+                    'student_naam': user.naam,
+                    'student_nummer': user.studentnummer,
+                    'einddatum': reservering.einddatum,
+                    'aanmaakdatum': reservering.aanmaakdatum
+                    });
+                    this.dataSource = new ReserveringsLijstDataSource(this.allElements);
+                  }     
                 });
             }
           );
@@ -56,7 +62,7 @@ export class ReserveringLijstComponent implements OnInit{
  }
 
   selectReservering(reservering: Reservering) {
-    this.reserveringService.getReservering(reservering['$key']);
+    this.reserveringService.getReserveringById(reservering['$key']);
   }
 
   selectRow(row) {
@@ -66,18 +72,18 @@ export class ReserveringLijstComponent implements OnInit{
 }
 
 export class ReserveringsLijstDataSource extends DataSource<any> {
-  constructor(private elements: reservering[]) {
+  constructor(private elements: ReserveringTable[]) {
     super();
   }
 
-  connect(): Observable<reservering[]> {
+  connect(): Observable<ReserveringTable[]> {
     return Observable.of(this.elements);
   }
 
   disconnect() {}
 }
 
-export interface reservering {
+export interface ReserveringTable {
   key: number,
   materiaal_naam: string;
   aantal: number;
