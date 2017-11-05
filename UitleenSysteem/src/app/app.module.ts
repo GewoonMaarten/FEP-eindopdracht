@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 
@@ -17,13 +18,15 @@ import 'firebase/storage';
 
 import { environment } from '../environments/environment';
 
-import { MaterialenService } from './services/materialen.service';
-import { ReserveringService } from './services/reservering.service';
-import { AuthService } from './services/auth.service';
-import { NavbarService } from './services/navbar.service';
-import { FirebaseStorageService } from './services/firebase-storage.service';
-import { KluisjesService } from './services/kluisjes.service';
-import { UserService } from './services/user.service';
+import { 
+  MaterialenService,
+  ReserveringService,
+  AuthService.
+  NavbarService,
+  FirebaseStorageService,
+  KluisjesService,
+  UserService 
+} from './services/index';
 
 import { AuthGuard } from './guards/auth.guard';
 import { DocentGuard } from './guards/docent.guard';
@@ -53,9 +56,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { AddToCatalogusComponent } from './components/catalogus/add-to-catalogus/add-to-catalogus.component';
 import { AddToCatalogusFormComponent } from './components/catalogus/add-to-catalogus-form/add-to-catalogus-form.component';
 import { CatalogusListComponent } from './components/catalogus/catalogus-list/catalogus-list.component';
-import { DatePipe } from '@angular/common';
 import { ReserveringLijstComponent } from './components/reservering-lijst/reservering-lijst.component';
 import { ReserveringFormComponent } from './components/reservering-form/reservering-form.component';
+import { MijnReserveringLijstComponent } from './components/mijnReservering-lijst/mijnReservering-lijst.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +72,8 @@ import { ReserveringFormComponent } from './components/reservering-form/reserver
     AddToCatalogusFormComponent,
     CatalogusListComponent,
     ReserveringLijstComponent,
-    ReserveringFormComponent
+    ReserveringFormComponent,
+    MijnReserveringLijstComponent
   ],
   imports: [
     BrowserModule,

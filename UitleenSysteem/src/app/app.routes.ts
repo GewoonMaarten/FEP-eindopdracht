@@ -8,6 +8,7 @@ import { AddToCatalogusFormComponent } from './components/catalogus/add-to-catal
 import { CatalogusListComponent } from './components/catalogus/catalogus-list/catalogus-list.component';
 import { ReserveringLijstComponent } from './components/reservering-lijst/reservering-lijst.component';
 import { ReserveringFormComponent } from './components/reservering-form/reservering-form.component';
+import { MijnReserveringLijstComponent } from './components/mijnReservering-lijst/mijnReservering-lijst.component';
 
 import {AuthGuard} from './guards/auth.guard';
 import {DocentGuard} from './guards/docent.guard';
@@ -36,6 +37,11 @@ export const routes: Routes = [
   {
     path: 'reservering/afhandelen/:key',
     component: ReserveringFormComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'mijnReservering',
+    component: MijnReserveringLijstComponent,
     canActivate: [AuthGuard]
   },
   {

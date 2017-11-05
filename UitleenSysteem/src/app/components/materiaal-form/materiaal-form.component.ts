@@ -1,13 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {MaterialenService} from '../../services/materialen.service';
-import { FirebaseStorageService } from '../../services/firebase-storage.service';
-import {Observable} from 'rxjs/Observable';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MaterialenService, FirebaseStorageService } from '../../services/index';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
-import {Subscription} from 'rxjs/Subscription';
-import {Materiaal} from '../../models/materiaal';
-import {Afbeelding} from '../../models/afbeelding';
+import { Subscription } from 'rxjs/Subscription';
+import { Materiaal, Afbeelding } from '../../models/index';
 import * as firebase from 'firebase';
 
 @Component({
@@ -30,9 +28,9 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
   upload: Afbeelding;
 
   constructor(private materialenService: MaterialenService,
-              private firebaseStorageService: FirebaseStorageService,
-              private _formBuilder: FormBuilder,
-              private router: Router) { }
+    private firebaseStorageService: FirebaseStorageService,
+    private _formBuilder: FormBuilder,
+    private router: Router) { }
 
   ngOnInit(): void {
     // Form
@@ -54,7 +52,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
       .startWith(null)
       .subscribe(value => {
 
-        this.materialenService.searchMaterialen(value, value +'\uf8ff', 'inventaris')
+        this.materialenService.searchMaterialen(value, value + '\uf8ff', 'inventaris')
           .take(1)
           .subscribe(materialen => {
             const materiaal = materialen[0] as Materiaal;
@@ -76,7 +74,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
               this.isUpdate = false;
             }
           });
-    });
+      });
 
     // Auto complete
     this.namen = this.materialenService.getMateralenNaam('inventaris')
@@ -94,7 +92,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
   }
 
   /** Filter op naam */
-  private filterNames(val: string, namen: string[]): string[]  {
+  private filterNames(val: string, namen: string[]): string[] {
     return namen.filter(option =>
       option.toLowerCase().indexOf(val.toLowerCase()) === 0
     );
@@ -115,25 +113,25 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
       const uploadTask = this.firebaseStorageService.uploadFile(this.upload);
 
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-          snapshot =>  {
-            // upload in progress
-          },
-          error => {
-            // upload failed
-          },
-          () => {
-            // upload success
-            this.upload.url = uploadTask.snapshot.downloadURL;
-            this.upload.naam = this.upload.file.name;
+        snapshot => {
+          // upload in progress
+        },
+        error => {
+          // upload failed
+        },
+        () => {
+          // upload success
+          this.upload.url = uploadTask.snapshot.downloadURL;
+          this.upload.naam = this.upload.file.name;
 
-            this.materiaalForm.patchValue({
-              afbeelding: {
-                url: this.upload.url,
-                naam: this.upload.naam
-              }
-            });
-          }
-        );
+          this.materiaalForm.patchValue({
+            afbeelding: {
+              url: this.upload.url,
+              naam: this.upload.naam
+            }
+          });
+        }
+      );
     }
   }
 
@@ -149,7 +147,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
   }
 
   /** update of add een nieuw materiaal. */
- submit() {
+  submit() {
     if (this.isUpdate) {
       this.materialenService.updateMateriaal(this.materiaalId, this.materiaalForm.value as Materiaal);
       this.router.navigate(['/materiaal/1']);
@@ -161,7 +159,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
   }
 
   /** Haal de datum op*/
-  private static currentDate(): Date{
+  private static currentDate(): Date {
     return new Date();
   }
 }

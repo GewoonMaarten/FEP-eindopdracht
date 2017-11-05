@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarService, AuthService, ReserveringService } from '../../services/index';
+import { NavbarService, AuthService, ReserveringService, MaterialenService } from '../../services/index';
 import { Reservering, User } from '../../models/index';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog } from '@angular/material';
 import { CartComponent } from '../cart/cart.component';
-
-import { MaterialenService } from '../../services/materialen.service';
 
 @Component({
   selector: 'app-navbar',

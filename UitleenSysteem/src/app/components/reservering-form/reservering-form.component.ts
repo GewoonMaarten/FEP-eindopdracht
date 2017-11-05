@@ -2,15 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 
-import { Kluisje } from '../../models/kluisje';
-import { Reservering } from '../../models/reservering';
-import { Materiaal } from '../../models/materiaal';
-import { User } from '../../models/user';
+import { Kluisje, Reservering, Materiaal, User } from '../../models/index';
 
-import { KluisjesService } from '../../services/kluisjes.service';
-import { ReserveringService } from '../../services/reservering.service';
-import { MaterialenService } from '../../services/materialen.service';
-import { UserService } from '../../services/user.service';
+import { KluisjesService, ReserveringService, MaterialenService, UserService } from '../../services/index';
 
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';

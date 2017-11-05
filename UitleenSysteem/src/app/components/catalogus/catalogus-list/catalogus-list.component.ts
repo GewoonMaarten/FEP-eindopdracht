@@ -1,13 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Materiaal} from '../../../models/materiaal';
-import { MaterialenService } from '../../../services/materialen.service';
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
-import {NavbarService} from '../../../services/navbar.service';
-import {Subscription} from 'rxjs/Subscription';
+import { NavbarService, MaterialenService, ReserveringService, AuthService } from '../../../services/index';
+import { Subscription } from 'rxjs/Subscription';
+import { Reservering, Materiaal } from '../../../models/index';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-catalogus-list',
@@ -33,10 +33,15 @@ export class CatalogusListComponent implements OnInit, OnDestroy {
 
   materialenSubscription: Subscription;
 
+  materiaalCart: Reservering[] = [];  
+
   constructor(private materialenService: MaterialenService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private nav: NavbarService) { }
+    private route: ActivatedRoute,
+    private router: Router,
+    private nav: NavbarService,
+    private reserveringService: ReserveringService,
+    private auth: AuthService,
+    private datePipe: DatePipe) { }
 
   ngOnInit(): void {
 
@@ -55,6 +60,11 @@ export class CatalogusListComponent implements OnInit, OnDestroy {
       const totalPages = Math.ceil(this.totalMaterialen / this.pageSize);
       this.pages = Array.from(Array(totalPages), (x, i) => i);
     });
+
+    // keep the cart up-to-date
+    this.reserveringService.getCart().subscribe(data => {
+      this.materiaalCart = data;
+    });
   }
 
   ngOnDestroy(): void {
@@ -63,14 +73,63 @@ export class CatalogusListComponent implements OnInit, OnDestroy {
 
   private getMaterialen(key?) {
     this.materialenService.getMaterialenByPage(this.pageSize, key, 'catalogus')
-    .subscribe(materialen => {
-      this.showSpinner = false;
+      .subscribe(materialen => {
+        this.showSpinner = false;
 
-      this.activePage = this.prevKeys.length;
+        this.activePage = this.prevKeys.length;
 
-      this.materialen = _.slice(materialen, 0, this.pageSize);
+        this.materialen = _.slice(materialen, 0, this.pageSize);
 
-      this.nextKey = _.get(materialen[this.pageSize], '$key');
+        this.nextKey = _.get(materialen[this.pageSize], '$key');
+      });
+  }
+
+  /** Voeg het materiaal en aantal toe aan de Cart
+  *  en wijzig daarbij de observable, zodat de NavbarComponent het aantal verandert
+  */
+  addToCart(key, addAantal) {
+
+    this.materialen.forEach(x => {
+      if (x.$key === key) {
+
+        // raise aantal als exists in materiaalCart
+        let exists = false;
+        let outOfOrder = false;
+
+        this.materiaalCart.forEach(y => {
+          // check of new reserveringsaantal niet >= beschikbaaraantal
+          if (x.$key === y.materiaal_id && Number(y.aantal) + Number(addAantal) >= x.aantal) {
+            outOfOrder = true;
+          }
+
+          if (x.$key === y.materiaal_id && !outOfOrder) {
+            exists = true;
+            y.aantal = Number(y.aantal) + Number(addAantal);
+          }
+        });
+
+        // voeg anders een nieuwe Reservering toe aan materiaalCart
+        if (!exists && !outOfOrder) {
+          const newReservering = new Reservering();
+          this.auth.getUserUid().subscribe(userid => newReservering.user_uid = userid);
+
+          newReservering.aantal = addAantal;
+          newReservering.materiaal_id = x.$key;
+          const now = new Date();
+          newReservering.aanmaakdatum = this.datePipe.transform(now, 'dd-MM-yyyy'); // whatever format you need.
+
+          now.setMonth(now.getMonth() + 1);
+          newReservering.einddatum = this.datePipe.transform(now, 'dd-MM-yyyy'); // whatever format you need.
+
+          newReservering.status = 'aangemaakt';
+          newReservering.opmerking = '';
+
+          this.materiaalCart.push(newReservering);
+        }
+
+        // wijzig de Cart in de service
+        this.reserveringService.addToCart(this.materiaalCart);
+      }
     });
   }
 
@@ -92,7 +151,7 @@ export class CatalogusListComponent implements OnInit, OnDestroy {
 
   changePage(page) {
     this.nextKey = (page * this.pageSize).toString();
-    this.prevKeys = Array.from(new Array(page), (val, index) => (index * this.pageSize).toString() );
+    this.prevKeys = Array.from(new Array(page), (val, index) => (index * this.pageSize).toString());
     this.getMaterialen(this.nextKey);
   }
 

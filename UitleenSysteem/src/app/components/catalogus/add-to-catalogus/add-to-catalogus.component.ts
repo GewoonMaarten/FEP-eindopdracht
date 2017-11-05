@@ -1,4 +1,3 @@
-
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -8,8 +7,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import * as _ from 'lodash';
 
-import { Materiaal} from '../../../models/materiaal';
-import { MaterialenService } from '../../../services/materialen.service';
+import { Materiaal} from '../../../models/index';
+import { MaterialenService } from '../../../services/index';
 
 @Component({
   selector: 'app-add-to-catalogus',
