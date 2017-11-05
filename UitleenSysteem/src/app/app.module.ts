@@ -21,7 +21,7 @@ import { environment } from '../environments/environment';
 import { 
   MaterialenService,
   ReserveringService,
-  AuthService.
+  AuthService,
   NavbarService,
   FirebaseStorageService,
   KluisjesService,

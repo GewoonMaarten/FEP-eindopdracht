@@ -43,7 +43,6 @@ export class AddToCatalogusComponent {
      } else {
       this.materialenService.selectedMaterialen.push(data);
     }
-    console.log('selectedMaterialen: ', this.materialenService.selectedMaterialen);
   }
 }
 

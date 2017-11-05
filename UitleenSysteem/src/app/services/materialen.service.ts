@@ -62,7 +62,6 @@ export class MaterialenService {
    * @return {Observable<Materiaal[]>}
    * */
   public searchMaterialen(start: string, end: string, status: string): Observable<Materiaal[]>{
-    console.log(start + ' ' + end);
 
     return this.db.list<Materiaal>(`${this.rootPath}/${status}`, ref =>
       ref.orderByChild('naam')

@@ -40,7 +40,6 @@ export class MijnReserveringLijstComponent implements OnInit {
               (materiaal) => {
                 this.auth.getUserUid().subscribe(user_id => {
                   if (reservering.user_uid === user_id) {
-                    console.log(reservering.user_uid, user_id)
                     reserveringen.push(this.mapTableData(reservering, materiaal));
                     if (status === 'aangemaakt') { this.dataSource = new MijnReserveringsLijstDataSource(reserveringen); }
                     if (status === 'afgehandeld') { this.afgehandeldDataSource = new MijnReserveringsLijstDataSource(reserveringen); }

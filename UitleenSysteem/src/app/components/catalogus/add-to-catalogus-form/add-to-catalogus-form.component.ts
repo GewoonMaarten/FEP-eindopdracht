@@ -77,7 +77,6 @@ export class AddToCatalogusFormComponent implements OnInit {
 
     // update inventaris
     this.inventarisMaterialen.forEach(element => {
-      console.log('inventarisMateriaal: ', element);
       const key = element.$key;
       delete element['$key'];
       this.materialenService.updateMateriaal(key, element as Materiaal);
