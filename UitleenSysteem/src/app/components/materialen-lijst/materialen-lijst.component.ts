@@ -99,7 +99,9 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
         this.materiaalCart.forEach(y => {
           // check of new reserveringsaantal niet >= beschikbaaraantal
-          if (x.$key === y.materiaal_id && Number(y.aantal) + Number(addAantal) >= x.aantal) outOfOrder = true;
+          if (x.$key === y.materiaal_id && Number(y.aantal) + Number(addAantal) >= x.aantal) {
+            outOfOrder = true;
+          }
 
           if (x.$key === y.materiaal_id && !outOfOrder) {
             exists = true;
@@ -119,6 +121,9 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
           now.setMonth(now.getMonth() + 1);
           newReservering.einddatum = this.datePipe.transform(now, 'dd-MM-yyyy'); // whatever format you need.
+
+          newReservering.status = 'aangemaakt';
+          newReservering.opmerking = '';
 
           this.materiaalCart.push(newReservering);
         }
