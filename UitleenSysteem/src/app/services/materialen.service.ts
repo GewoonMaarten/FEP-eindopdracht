@@ -143,6 +143,15 @@ export class MaterialenService {
   }
 
   /**
+   * Een enkel materiaal ophalen.
+   * @param {string} id - het id van het materiaal.
+   * @return {Observable<Materiaal>}
+   * */
+  public getMateriaalFromCatalogusById(id: string): Observable<Materiaal> {
+    return this.db.object<Materiaal>(`${this.rootPath}/catalogus/${id}`).valueChanges();
+  }
+
+  /**
    * Toevoegen van materialen aan de database.
    * @param {Materiaal} materaal - het materiaal object om te uploaden.
    * @param {string} status - naam van de status bijv. inventaris of catalogus.
@@ -183,7 +192,7 @@ export class MaterialenService {
    * @param {number} id - Het id van het materiaal.
    * @param {string} status - naam van de status bijv. inventaris of catalogus.
    * */
-  public deleteMateriaal(id: number, status: string){
+  public deleteMateriaal(id: number, status: string) {
     if (!this.isBeheerder) return;
 
     this.db.object<Materiaal>(`${this.rootPath}/catalogus/${id}`)
@@ -195,7 +204,8 @@ export class MaterialenService {
     }
   }
 
-  public updateMateriaalInCatalogus(id: number, materiaal: Materiaal) {
+  public updateMateriaalInCatalogus(id: string, materiaal: Materiaal) {
+    delete materiaal.$key;
     this.db.object<Materiaal>(`${this.rootPath}/catalogus/${id}`)
       .update(materiaal)
       .then(_ => true)

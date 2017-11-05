@@ -39,7 +39,7 @@ export class ReserveringLijstComponent implements OnInit {
         const reserveringen: ReserveringTable[] = [];
         res.forEach(reservering => {
           if (reservering.status === status) {
-            this.materialenService.getMateriaalById(reservering.materiaal_id).subscribe(
+            this.materialenService.getMateriaalFromCatalogusById(reservering.materiaal_id).subscribe(
               (materiaal) => {
                 this.userService.getUserById(reservering.user_uid).subscribe(
                   (user) => {

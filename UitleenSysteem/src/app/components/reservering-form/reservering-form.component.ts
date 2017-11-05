@@ -18,6 +18,7 @@ import {Subscription} from 'rxjs/Subscription';
 import * as firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ReserveringsLijstDataSource, ReserveringTable } from '../reservering-lijst/reservering-lijst.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'reservering-form',
@@ -27,7 +28,7 @@ import { ReserveringsLijstDataSource, ReserveringTable } from '../reservering-li
 export class ReserveringFormComponent implements OnInit {
 
   reserveringForm: FormGroup;
-  kluisjes: Kluisje[];
+  kluisjes: Kluisje[] = [];
   reservering: Reservering;
   materiaal: Materiaal;
   user: User;
@@ -63,7 +64,11 @@ export class ReserveringFormComponent implements OnInit {
 
     this.kluisjesService.getKluisjes().subscribe(
       (res) => {
-        this.kluisjes = res;
+        res.forEach(element => {
+          if (element.status === 'beschikbaar') {
+            this.kluisjes.push(element);
+          }
+        });
       }
     );
 
@@ -72,9 +77,10 @@ export class ReserveringFormComponent implements OnInit {
         (reservering) => {
           this.reservering = reservering;
           this.reservering['$key'] = params['key'];
-          this.materialenService.getMateriaalById(this.reservering.materiaal_id).subscribe(
+          this.materialenService.getMateriaalFromCatalogusById(this.reservering.materiaal_id).subscribe(
             (materiaal) => {
               this.materiaal = materiaal;
+              this.materiaal['$key'] = this.reservering.materiaal_id;
               this.userService.getUserById(this.reservering.user_uid).subscribe(
                 (user) => {
                   this.user = user;
@@ -92,7 +98,7 @@ export class ReserveringFormComponent implements OnInit {
       aantal: this.reservering.aantal,
       pincode: this.generatePincode(),
       kluisnummer: '',
-      opmerking: ''
+      opmerking: this.reservering.opmerking
     });
 
     this.materiaalNaam = this.materiaal.naam;
@@ -138,10 +144,11 @@ export class ReserveringFormComponent implements OnInit {
 
     this.reservering.status = 'afgehandeld';
     this.reservering.opmerking = this.reserveringForm.value['opmerking'];
+    this.reservering.aantal = this.reserveringForm.value['aantal'];
     this.reserveringService.updateReservering(this.reservering['$key'], this.reservering);
 
     this.materiaal.aantal = this.materiaal.aantal - this.reserveringForm.value['aantal'];
-    this.materialenService.updateMateriaalInCatalogus(this.materiaal.$key, this.materiaal);
+    this.materialenService.updateMateriaalInCatalogus(this.materiaal['$key'], this.materiaal);
 
     this.router.navigate(['reservering/']);
   }

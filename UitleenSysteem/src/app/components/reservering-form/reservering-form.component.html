@@ -12,7 +12,7 @@
             <mat-header-cell *matHeaderCellDef> Materiaal </mat-header-cell>
             <mat-cell *matCellDef="let elements"> {{elements.materiaal_naam}} </mat-cell>
           </ng-container>
-      
+
           <!-- Aantal Column -->
           <ng-container matColumnDef="aantal">
             <mat-header-cell *matHeaderCellDef> Aantal </mat-header-cell>
@@ -30,19 +30,19 @@
             <mat-header-cell *matHeaderCellDef> Studentnummer </mat-header-cell>
             <mat-cell *matCellDef="let elements"> {{elements.student_nummer}} </mat-cell>
           </ng-container>
-      
+
           <!-- Einddatum Column -->
           <ng-container matColumnDef="einddatum">
             <mat-header-cell *matHeaderCellDef> Einddatum </mat-header-cell>
             <mat-cell *matCellDef="let elements"> {{elements.einddatum}} </mat-cell>
           </ng-container>
-      
+
           <!-- Aanmaakdatum Column -->
           <ng-container matColumnDef="aanmaakdatum">
             <mat-header-cell *matHeaderCellDef> Aanmaakdatum </mat-header-cell>
             <mat-cell *matCellDef="let elements"> {{elements.aanmaakdatum}} </mat-cell>
           </ng-container>
-      
+
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
@@ -54,10 +54,10 @@
         <ng-template matStepLabel>Reservering afhandelen</ng-template>
 
         <mat-form-field class="form-status">
-          <mat-select formControlName="status" 
+          <mat-select formControlName="status"
                       placeholder="Status"
                       aria-label="Status"
-                      formControlName="status" 
+                      formControlName="status"
                       required>
             <mat-option *ngFor="let singleStatus of status" [value]="singleStatus.value">
                 {{ singleStatus.viewValue }}
@@ -69,7 +69,7 @@
           <input type="number" placeholder="Aantal"
                   aria-label="Aantal"
                   matInput formControlName="aantal"
-                  required>  
+                  required>
         </mat-form-field>
 
         <mat-form-field class="form-pincode">
@@ -99,7 +99,7 @@
 
         <div class="form-button-container">
           <button mat-raised-button
-                  routerLink="/reservering/afhandelen">
+                  routerLink="/reservering">
             Annuleren
           </button>
 
