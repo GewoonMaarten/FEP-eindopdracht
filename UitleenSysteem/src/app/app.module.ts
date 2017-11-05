@@ -22,6 +22,8 @@ import { ReserveringService } from './services/reservering.service';
 import { AuthService } from './services/auth.service';
 import { NavbarService } from './services/navbar.service';
 import { FirebaseStorageService } from './services/firebase-storage.service';
+import { KluisjesService } from './services/kluisjes.service';
+import { UserService } from './services/user.service';
 
 import { AuthGuard } from "./guards/auth.guard";
 import { DocentGuard } from "./guards/docent.guard";
@@ -37,21 +39,23 @@ import {
   MatAutocompleteModule,
   MatStepperModule,
   MatSelectModule,
-  MatTableModule,
   MatCheckboxModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule,
+  MatTabsModule
 } from '@angular/material';
-
 
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
-import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
 import { CartComponent } from './components/cart/cart.component';
 import { AddToCatalogusComponent } from './components/catalogus/add-to-catalogus/add-to-catalogus.component';
 import { AddToCatalogusFormComponent } from './components/catalogus/add-to-catalogus-form/add-to-catalogus-form.component';
 import { CatalogusListComponent } from './components/catalogus/catalogus-list/catalogus-list.component';
+import { DatePipe } from '@angular/common';
+import { ReserveringLijstComponent } from './components/reservering-lijst/reservering-lijst.component';
+import { ReserveringFormComponent } from './components/reservering-form/reservering-form.component';
 
 @NgModule({
   declarations: [
@@ -60,11 +64,12 @@ import { CatalogusListComponent } from './components/catalogus/catalogus-list/ca
     LoginComponent,
     NavbarComponent,
     MateriaalFormComponent,
-    ReserveringAfhandelenComponent,
     CartComponent,
     AddToCatalogusComponent,
     AddToCatalogusFormComponent,
-    CatalogusListComponent
+    CatalogusListComponent,
+    ReserveringLijstComponent,
+    ReserveringFormComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +93,9 @@ import { CatalogusListComponent } from './components/catalogus/catalogus-list/ca
     MatSelectModule,
     MatTableModule,
     MatCheckboxModule,
-    MatDialogModule 
+    MatDialogModule,
+    MatTableModule,
+    MatTabsModule
   ],
   entryComponents: [
     LoginComponent,
@@ -100,10 +107,13 @@ import { CatalogusListComponent } from './components/catalogus/catalogus-list/ca
     AuthService,
     NavbarService,
     FirebaseStorageService,
+    KluisjesService,
+    UserService,
     AngularFireAuth,
     AuthGuard,
     DocentGuard,
-    BeheerderGuard
+    BeheerderGuard,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

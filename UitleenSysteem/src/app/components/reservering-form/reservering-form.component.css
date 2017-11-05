@@ -1,0 +1,72 @@
+.container {
+    width: 50%;
+    margin: auto;
+  }
+  
+  .form-reservering {
+    display: grid;
+    width: 100%;
+    margin: auto;
+    grid-template-columns: 10px auto 10px;
+    grid-template-rows: repeat(2, 1fr) repeat(2, auto) 100px;
+  }
+
+  .secondstep-reservering {
+    display: grid;
+    width: 100%;
+    margin: auto;
+    grid-template-columns: 10px auto 10px;
+    grid-template-rows: repeat(2, 1fr) repeat(2, auto) 100px;
+  }
+
+  .form-status{
+    grid-area: 1 / 2;
+    justify-self: center;
+    width: 50%;
+  }
+  
+  .form-aantal{
+    grid-area: 2 / 2;
+    justify-self: center;
+    width: 50%;
+  }
+  
+  .form-pincode {
+    grid-area: 3 / 2;
+    justify-self: center;
+    width: 50%;
+  }
+  
+  .form-kluisnummer {
+    grid-area: 4 / 2;
+    justify-self: center;
+    width: 50%;
+  }
+  
+  .form-opmerking {
+    grid-area: 5 / 2;
+    justify-self: center;
+    width: 50%;
+  }
+  
+  .form-button-container {
+    grid-area: 6 / 2 / 6 / 3;
+    justify-self: right;
+  }
+  
+  .step2-header {
+    grid-area: 1 / 2;
+    width: 100%;
+  }
+
+  .step2-table {
+    grid-area: 2 / 2;
+    width: 100%;
+  }
+  
+  .bevestiging-tabel-leftcol {
+    width: 30%;
+  }
+  .afbeelding-preview {
+    max-width: 80%;
+  }
