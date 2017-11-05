@@ -84,7 +84,7 @@
           aria-label="Kluisnummer" matInput
           min="0" formControlName="kluisnummer"
           required>
-            <mat-option *ngFor="let kluisje of kluisjes" [value]="kluisje.kluisnummer">{{ kluisje.kluisnummer }}</mat-option>
+            <mat-option *ngFor="let kluisje of kluisjes" [value]="kluisje.$key">{{ kluisje.kluisnummer }}</mat-option>
           </mat-select>
         </mat-form-field>
 

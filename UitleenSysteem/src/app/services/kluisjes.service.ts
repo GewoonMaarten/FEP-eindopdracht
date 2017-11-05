@@ -9,9 +9,10 @@ export class KluisjesService {
     constructor(private db: AngularFireDatabase){ }
     
     groups: AngularFireList<any>;
+    private rootPath: string = '/kluisjes';
 
     getKluisjes(): Observable<Kluisje[]> {
-        return this.db.list('kluisjes')
+        return this.db.list(`${this.rootPath}`)
         .snapshotChanges()
         .map(action => {
 
@@ -27,4 +28,13 @@ export class KluisjesService {
 
         });
     }
+
+  public updateKluisje(id: string, kluisje: Kluisje) {
+    delete kluisje['$key']
+    this.db.object<Kluisje>(`${this.rootPath}/${id}`)
+      .update(kluisje)
+      .then(_ => {return true;})
+      .catch(error => {return false;});
+  }
+
 }

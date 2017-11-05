@@ -67,7 +67,6 @@ export class ReserveringLijstComponent implements OnInit{
 
   selectRow(row) {
     this.router.navigate(['reservering/afhandelen/form/', row.key]);
-    console.log(row);
   }
 }
 

@@ -56,4 +56,10 @@ export class MaterialenService {
       return this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`).valueChanges();
     }
 
+    public updateMateriaalInCatalogus(id: number, materiaal: Materiaal) {
+      this.db.object<Materiaal>(`${this.rootPath}/catalogus/${id}`)
+        .update(materiaal)
+        .then(_ => {return true;})
+        .catch(error => {return false;});
+    }
 }

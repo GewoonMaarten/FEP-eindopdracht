@@ -6,10 +6,13 @@ import { Reservering } from '../models/reservering';
 
 @Injectable()
 export class ReserveringService {
+  groups: AngularFireList<any>;
+  rootPath: string = "/reservering";
+
     constructor(private db: AngularFireDatabase){ }
-    groups: AngularFireList<any>;
+    
     getReserveringen(): Observable<Reservering[]> {
-        return this.db.list('reservering')
+        return this.db.list(`${this.rootPath}`)
         .snapshotChanges()
         .map(action => {
 
@@ -27,6 +30,14 @@ export class ReserveringService {
     }
 
     getReserveringById(key: string): Observable<Reservering> {
-      return this.db.object<Reservering>(`/reservering/${key}`).valueChanges();
+      return this.db.object<Reservering>(`${this.rootPath}/${key}`).valueChanges();
+    }
+
+    public updateReservering(id: string, reservering: Reservering) {
+      delete reservering['$key']
+      this.db.object<Reservering>(`${this.rootPath}/${id}`)
+        .update(reservering)
+        .then(_ => {return true;})
+        .catch(error => {return false;});
     }
 }

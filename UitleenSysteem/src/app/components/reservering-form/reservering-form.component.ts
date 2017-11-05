@@ -71,6 +71,7 @@ export class ReserveringFormComponent implements OnInit {
       this.reserveringService.getReserveringById(params['key']).subscribe(
         (reservering) => {
           this.reservering = reservering;
+          this.reservering['$key'] = params['key'];
           this.materialenService.getMateriaalById(this.reservering.materiaal_id).subscribe(
             (materiaal) => {
               this.materiaal = materiaal; 
@@ -118,11 +119,30 @@ export class ReserveringFormComponent implements OnInit {
   }
 
   submit() {
-    // we moeten er nu voor zorgen dat het materiaal de status uitgeleend krijgt en
-    // dat de reservering de status afgehandeld krijgt
+    // okay we gaan het volgende doen:
+    // 1. Kluisje krijgt status bezet
+    // 2. Reservering krijgt status afgehandeld
+    // 3. Materiaal moeten we ff het geselecteerde aantal afhalen
 
-    
+    var kluisje: Kluisje = null;
+    this.kluisjes.forEach(element => {
+      console.log(element)
+      if (element['$key'] == this.reserveringForm.value['kluisnummer']) kluisje = element;
+    });
 
-    console.log("JOOOO WE GAAN SUBMITTENNNN")
+    if(kluisje != null) {
+      kluisje.status = "bezet";
+      kluisje.pincode = this.reserveringForm.value['pincode'];
+      this.kluisjesService.updateKluisje(this.reserveringForm.value['kluisnummer'], kluisje);
+    }
+
+    this.reservering.status = "afgerond";
+    this.reservering.opmerking = this.reserveringForm.value['opmerking'];
+    this.reserveringService.updateReservering(this.reservering['$key'], this.reservering);
+
+    this.materiaal.aantal = this.materiaal.aantal - this.reserveringForm.value['aantal'];
+    this.materialenService.updateMateriaalInCatalogus(this.materiaal.$key, this.materiaal);
+
+    this.router.navigate(['reservering/afhandelen/']);
   }
 }
