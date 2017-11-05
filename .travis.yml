@@ -24,5 +24,7 @@ before_script:
 - npm install
 - ng build
 
+
 script: 
 - ng test --single-run
+

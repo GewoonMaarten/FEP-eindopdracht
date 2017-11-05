@@ -58,3 +58,9 @@ typings/
 .env
 
 .idea
+# temporary files
+*.tmp
+
+# Word temporary
+~$*.doc*
+
