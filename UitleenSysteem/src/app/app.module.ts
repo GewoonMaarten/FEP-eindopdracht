@@ -35,7 +35,8 @@ import {
   MatStepperModule,
   MatSelectModule,
   MatDialogModule,
-  MatTableModule
+  MatTableModule,
+  MatTabsModule
 } from '@angular/material';
 import { Ng2DropdownModule } from 'ng2-material-dropdown';
 
@@ -77,7 +78,8 @@ import { ReserveringFormComponent } from './components/reservering-form/reserver
     MatStepperModule,
     MatSelectModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
+    MatTabsModule
   ],
   entryComponents: [
     LoginComponent,

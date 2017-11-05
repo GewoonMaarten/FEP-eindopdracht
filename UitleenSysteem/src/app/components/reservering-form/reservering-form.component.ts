@@ -126,7 +126,6 @@ export class ReserveringFormComponent implements OnInit {
 
     var kluisje: Kluisje = null;
     this.kluisjes.forEach(element => {
-      console.log(element)
       if (element['$key'] == this.reserveringForm.value['kluisnummer']) kluisje = element;
     });
 
@@ -136,7 +135,7 @@ export class ReserveringFormComponent implements OnInit {
       this.kluisjesService.updateKluisje(this.reserveringForm.value['kluisnummer'], kluisje);
     }
 
-    this.reservering.status = "afgerond";
+    this.reservering.status = "afgehandeld";
     this.reservering.opmerking = this.reserveringForm.value['opmerking'];
     this.reserveringService.updateReservering(this.reservering['$key'], this.reservering);
 
