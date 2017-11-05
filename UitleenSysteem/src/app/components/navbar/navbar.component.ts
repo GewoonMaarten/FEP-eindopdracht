@@ -5,6 +5,8 @@ import { Subject } from "rxjs/Subject";
 import { MatDialog } from '@angular/material';
 import { CartComponent } from "../cart/cart.component";
 
+import { MaterialenService } from '../../services/materialen.service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -17,7 +19,8 @@ export class NavbarComponent implements OnInit {
   constructor(public nav: NavbarService,
     public dialog: MatDialog,
     public auth: AuthService,
-    public reserveringService: ReserveringService) {
+    public reserveringService: ReserveringService,
+    public materialenService : MaterialenService) {
     this.reserveringService.getCart().subscribe(data => {
       this.materiaalCart = data;
     });

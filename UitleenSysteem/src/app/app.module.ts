@@ -39,6 +39,7 @@ import {
   MatAutocompleteModule,
   MatStepperModule,
   MatSelectModule,
+  MatCheckboxModule,
   MatDialogModule,
   MatTableModule,
   MatTabsModule
@@ -49,6 +50,9 @@ import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
 import { CartComponent } from './components/cart/cart.component';
+import { AddToCatalogusComponent } from './components/catalogus/add-to-catalogus/add-to-catalogus.component';
+import { AddToCatalogusFormComponent } from './components/catalogus/add-to-catalogus-form/add-to-catalogus-form.component';
+import { CatalogusListComponent } from './components/catalogus/catalogus-list/catalogus-list.component';
 import { DatePipe } from '@angular/common';
 import { ReserveringLijstComponent } from './components/reservering-lijst/reservering-lijst.component';
 import { ReserveringFormComponent } from './components/reservering-form/reservering-form.component';
@@ -61,6 +65,9 @@ import { ReserveringFormComponent } from './components/reservering-form/reserver
     NavbarComponent,
     MateriaalFormComponent,
     CartComponent,
+    AddToCatalogusComponent,
+    AddToCatalogusFormComponent,
+    CatalogusListComponent,
     ReserveringLijstComponent,
     ReserveringFormComponent
   ],
@@ -84,6 +91,8 @@ import { ReserveringFormComponent } from './components/reservering-form/reserver
     MatAutocompleteModule,
     MatStepperModule,
     MatSelectModule,
+    MatTableModule,
+    MatCheckboxModule,
     MatDialogModule,
     MatTableModule,
     MatTabsModule

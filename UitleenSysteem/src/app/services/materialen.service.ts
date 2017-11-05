@@ -16,6 +16,10 @@ import {formatDate} from "../helpers/dateFormater";
 export class MaterialenService {
 
   userRoles: Array<string>;
+  // materialenInInventaris : AngularFireList<any>;
+  materialenInCatalogus : Materiaal[];
+  selectedMaterialen = [];
+
   private rootPath: string = '/materialen';
 
   constructor(private auth: AuthService,
@@ -153,7 +157,13 @@ export class MaterialenService {
     this.db.list<Materiaal>(`${this.rootPath}/${status}`)
       .push(materiaal);
   }
-  /**
+
+  public addMateriaalInCatalogus(materiaal : Materiaal ){
+    this.db.list<Materiaal>(`${this.rootPath}/catalogus`)
+      .push(materiaal);
+  }
+
+    /**
    * Updaten van een materiaal.
    * @param {number} id - Het id van het materiaal.
    * @param {Materiaal} materiaal - Het materiaal object om te uploaden.
@@ -167,7 +177,7 @@ export class MaterialenService {
       .catch(error => {return false;});
   }
 
-  /**
+   /**
    * Verwijderen van materiaal. Als het materiaal verwijdert wordt uit de
    * inventaris, wordt het ook verwijdert uit de catalogus.
    * @param {number} id - Het id van het materiaal.

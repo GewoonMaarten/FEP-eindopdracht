@@ -1,0 +1,27 @@
+
+.container {
+    display: grid;
+    min-width: 300px;
+    margin: 4% 20%;
+}
+.materialen {
+    border-top: 1px solid #646464;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+.aantal {
+    border: 1px solid #646464;
+    width: 18%;
+}
+.labels {
+    justify-self: left;
+    text-align: right;
+    width: 90%;
+}
+.data * {
+    margin-bottom: 16px; 
+}
+.button-row {
+    margin-top: 20px;
+    justify-self: right;
+}

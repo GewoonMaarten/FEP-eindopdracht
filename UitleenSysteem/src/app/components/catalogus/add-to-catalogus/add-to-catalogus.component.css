@@ -1,0 +1,22 @@
+
+.container {
+    display: grid;
+    min-width: 300px;
+    margin: 4% 20%;
+}
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    min-width: 300px;
+}
+  
+.mat-table {
+    overflow: auto;
+    max-height: 500px;
+}
+.button-row {
+    margin-top: 20px;
+    float: right;
+}
