@@ -143,6 +143,6 @@ export class ReserveringFormComponent implements OnInit {
     this.materiaal.aantal = this.materiaal.aantal - this.reserveringForm.value['aantal'];
     this.materialenService.updateMateriaalInCatalogus(this.materiaal.$key, this.materiaal);
 
-    this.router.navigate(['reservering/afhandelen/']);
+    this.router.navigate(['reservering/']);
   }
 }

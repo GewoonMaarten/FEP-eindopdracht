@@ -29,12 +29,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'reservering/afhandelen',
+    path: 'reservering',
     component: ReserveringLijstComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'reservering/afhandelen/form/:key',
+    path: 'reservering/afhandelen/:key',
     component: ReserveringFormComponent,
     canActivate: [AuthGuard]
   },

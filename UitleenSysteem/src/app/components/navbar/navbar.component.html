@@ -1,8 +1,3 @@
-<!--<div class="header-container" >-->
-<!--<img alt="Magazijn Achtergrond" class="background-image" />-->
-<!--<div class="logo-container"></div>-->
-<!--<img src="../../../assets/images/hu-logo.svg" alt="HU logo" class="logo" />-->
-<!--</div>-->
 <div *ngIf="nav.visible">
   <header>
     <div class="background"></div>
@@ -15,6 +10,8 @@
       <button mat-button routerLink="/materiaal/:page"
               *ngIf="materialenService.isBeheerder">Inventaris</button>
       <button mat-button routerLink="/materiaal/catalogus/:page">Catalogus</button>
+      <button mat-button routerLink="/reservering"
+              *ngIf="materialenService.isBeheerder">Reserveringen</button>
       <span class="spacer"></span>
       <span class="spacer"></span>
       <span class="spacer"></span>

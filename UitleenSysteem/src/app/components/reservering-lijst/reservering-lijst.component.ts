@@ -10,7 +10,6 @@ import { Reservering } from '../../models/reservering';
 import { Materiaal } from '../../models/materiaal';
 import { User } from '../../models/user';
 import { DataSource } from '@angular/cdk/collections';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'reservering-lijst',
@@ -72,7 +71,7 @@ export class ReserveringLijstComponent implements OnInit {
   }
 
   selectRow(row) {
-    this.router.navigate(['reservering/afhandelen/form/', row.key]);
+    this.router.navigate(['reservering/afhandelen/', row.key]);
   }
 }
 
