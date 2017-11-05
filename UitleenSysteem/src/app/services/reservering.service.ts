@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, QueryFn } from 'angularfire2/database';
+import { AngularFireDatabase, QueryFn, AngularFireObject, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 
 import { Reservering } from '../models/index';
@@ -9,6 +9,8 @@ import { Subject } from 'rxjs';
 export class ReserveringService {
   private subject = new Subject<any>();
   private reserveringen: Reservering[] = [];
+  groups: AngularFireList<any>;
+  rootPath: string = "/reservering";
 
   constructor(private db: AngularFireDatabase) { }
 
@@ -60,5 +62,17 @@ export class ReserveringService {
     this.clearCart();
     
     return true;
+  }
+
+  getReserveringById(key: string): Observable<Reservering> {
+    return this.db.object<Reservering>(`${this.rootPath}/${key}`).valueChanges();
+  }
+
+  public updateReservering(id: string, reservering: Reservering) {
+    delete reservering['$key']
+    this.db.object<Reservering>(`${this.rootPath}/${id}`)
+      .update(reservering)
+      .then(_ => {return true;})
+      .catch(error => {return false;});
   }
 }

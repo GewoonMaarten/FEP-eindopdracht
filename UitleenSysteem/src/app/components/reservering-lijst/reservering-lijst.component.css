@@ -50,3 +50,8 @@
 .responstable, th, td {
     border: 1px solid black
 }
+
+.tablerow:hover {
+    background-color: rgb(151, 151, 151);
+    cursor: pointer;
+}

@@ -22,6 +22,8 @@ import { ReserveringService } from './services/reservering.service';
 import { AuthService } from './services/auth.service';
 import { NavbarService } from './services/navbar.service';
 import { FirebaseStorageService } from './services/firebase-storage.service';
+import { KluisjesService } from './services/kluisjes.service';
+import { UserService } from './services/user.service';
 
 import { AuthGuard } from "./guards/auth.guard";
 import { DocentGuard } from "./guards/docent.guard";
@@ -37,17 +39,19 @@ import {
   MatAutocompleteModule,
   MatStepperModule,
   MatSelectModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule,
+  MatTabsModule
 } from '@angular/material';
-
 
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
-import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DatePipe } from '@angular/common';
+import { ReserveringLijstComponent } from './components/reservering-lijst/reservering-lijst.component';
+import { ReserveringFormComponent } from './components/reservering-form/reservering-form.component';
 
 @NgModule({
   declarations: [
@@ -56,8 +60,9 @@ import { DatePipe } from '@angular/common';
     LoginComponent,
     NavbarComponent,
     MateriaalFormComponent,
-    ReserveringAfhandelenComponent,
-    CartComponent
+    CartComponent,
+    ReserveringLijstComponent,
+    ReserveringFormComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +84,9 @@ import { DatePipe } from '@angular/common';
     MatAutocompleteModule,
     MatStepperModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatTabsModule
   ],
   entryComponents: [
     LoginComponent,
@@ -91,6 +98,8 @@ import { DatePipe } from '@angular/common';
     AuthService,
     NavbarService,
     FirebaseStorageService,
+    KluisjesService,
+    UserService,
     AngularFireAuth,
     AuthGuard,
     DocentGuard,

@@ -8,6 +8,7 @@ export class User {
   uid: string;
   email: string;
   naam:  string;
+  studentnummer: number;
   roles:  Roles;
 
   klas?: string;

@@ -4,4 +4,6 @@ export class Reservering {
     einddatum: string;
     materiaal_id: string;
     user_uid: string;
+    status: string;
+    opmerking: string;
 }
