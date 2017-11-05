@@ -54,6 +54,8 @@ export class AddToCatalogusFormComponent implements OnInit {
         // Loopen door alle materialen in de catalogus        
         for (let i = 0; i < this.allMaterialenInCatalogus.length; i++) {
           if (this.allMaterialenInCatalogus[i].naam == gm.naam) {
+            gm.aantal = gm.aantal + this.allMaterialenInCatalogus[i].aantal;
+            gm.$key = this.allMaterialenInCatalogus[i].$key;
             found = true;
           } 
         }        
