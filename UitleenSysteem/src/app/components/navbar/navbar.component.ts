@@ -9,6 +9,8 @@ import {MaterialenLijstComponent} from "../materialen-lijst/materialen-lijst.com
 import {MatDialog} from '@angular/material';
 import { CartComponent } from "../cart/cart.component";
 
+import { MaterialenService } from '../../services/materialen.service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -19,7 +21,7 @@ export class NavbarComponent implements OnInit {
   cart: Materiaal [];
   user: Subject<User> = new Subject();
 
-  constructor(public nav: NavbarService, public dialog: MatDialog, public auth: AuthService) { }
+  constructor(public nav: NavbarService, public dialog: MatDialog, public auth: AuthService, public materialenService : MaterialenService) { }
 
   ngOnInit() {
     this.user = this.auth.user;

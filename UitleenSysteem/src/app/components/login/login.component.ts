@@ -22,9 +22,6 @@ export class LoginComponent implements OnInit {
   emailFormControl: FormControl;
   passwordFormControl: FormControl;
 
-
-
-
   constructor(public afAuth: AngularFireAuth,
               private fb: FormBuilder,
               private authService: AuthService,

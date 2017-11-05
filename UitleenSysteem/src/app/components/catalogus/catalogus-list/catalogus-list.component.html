@@ -1,30 +1,18 @@
 <div class="container">
-
+    
     <div class="content">
 
       <div class="header">
         <h1 class="mat-title materialen-title">Materialen</h1>
-        <a [routerLink]="['/reservering/afhandelen']">Ff snel naar reserverring afhandelen</a>
 
         <span class="spacer"></span>
-
-        <!-- <div class="voorraad-selector">
-          <mat-select placeholder="Voorraad">
-            <mat-option value="catalogus" selected>
-              Catalogus
-            </mat-option>
-            <mat-option value="inventaris">
-              Inventaris
-            </mat-option>
-          </mat-select>
-        </div> -->
 
         <button mat-raised-button
                 color="primary"
                 class="page-btn margin-10"
                 *ngIf="materialenService.isBeheerder"
-                routerLink="/materiaal/form">
-          <mat-icon class="mat-24">mode_edit</mat-icon>
+                routerLink="/toevoegen-aan-catalogus">
+          <mat-icon class="mat-24">add</mat-icon>
         </button>
 
         <mat-form-field class="margin-10">
@@ -82,9 +70,12 @@
 
               <div class="reserveer-materiaal" *ngIf="materiaal.$key == activeMateriaal">
                   <mat-form-field class="full-width hoeveelheid">
-                      <input matInput #aantaltoevoegen type="number" maxlength="2" min="1" max={{materiaal.aantal}} value="1" placeholder="aantal"/>
+
+                      <input matInput type="number" maxlength="2"
+                              min="1" max={{materiaal.aantal}} value="1" placeholder="aantal"/>
+
                   </mat-form-field>
-                  <button class="full-width toevoegen" mat-raised-button color="accent" (click)="addToCart(materiaal.$key, aantaltoevoegen.value)">Toevoegen</button>
+                  <button class="full-width toevoegen" mat-raised-button color="accent">Toevoegen</button>
               </div>
           </div>
       </div>
@@ -92,3 +83,5 @@
     </div>
 </div>
 <p>{{nextKey}}</p>
+
+    

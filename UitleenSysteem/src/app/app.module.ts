@@ -36,7 +36,10 @@ import {
   MatProgressBarModule,
   MatAutocompleteModule,
   MatStepperModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTableModule,
+  MatCheckboxModule,
+  MatDialogModule
 } from '@angular/material';
 
 
@@ -46,6 +49,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
 import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
 import { CartComponent } from './components/cart/cart.component';
+import { AddToCatalogusComponent } from './components/catalogus/add-to-catalogus/add-to-catalogus.component';
+import { AddToCatalogusFormComponent } from './components/catalogus/add-to-catalogus-form/add-to-catalogus-form.component';
+import { CatalogusListComponent } from './components/catalogus/catalogus-list/catalogus-list.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +61,10 @@ import { CartComponent } from './components/cart/cart.component';
     NavbarComponent,
     MateriaalFormComponent,
     ReserveringAfhandelenComponent,
-    CartComponent
+    CartComponent,
+    AddToCatalogusComponent,
+    AddToCatalogusFormComponent,
+    CatalogusListComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +85,10 @@ import { CartComponent } from './components/cart/cart.component';
     MatProgressBarModule,
     MatAutocompleteModule,
     MatStepperModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatDialogModule 
   ],
   entryComponents: [
     LoginComponent,

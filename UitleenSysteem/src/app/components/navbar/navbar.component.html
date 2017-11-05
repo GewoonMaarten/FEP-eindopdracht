@@ -12,7 +12,11 @@
   <nav>
     <mat-toolbar color="primary">
 
-      <span class="spacer"></span>
+      <span class="half-spacer"></span>
+      <button mat-button 
+              routerLink="/materiaal/:page"
+              *ngIf="materialenService.isBeheerder">Inventaris</button>
+      <button mat-button routerLink="/materiaal/catalogus/:page">Catalogus</button>
       <span class="spacer"></span>
       <span class="spacer"></span>
       <span class="spacer"></span>

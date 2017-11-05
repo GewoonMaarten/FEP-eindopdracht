@@ -4,6 +4,9 @@ import { MaterialenLijstComponent } from './components/materialen-lijst/material
 import { LoginComponent } from './components/login/login.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
 import { ReserveringAfhandelenComponent } from './components/reservering-afhandelen/reservering-afhandelen.component';
+import { AddToCatalogusComponent } from './components/catalogus/add-to-catalogus/add-to-catalogus.component';
+import { AddToCatalogusFormComponent } from './components/catalogus/add-to-catalogus-form/add-to-catalogus-form.component';
+import { CatalogusListComponent } from './components/catalogus/catalogus-list/catalogus-list.component';
 
 import {AuthGuard} from "./guards/auth.guard";
 import {DocentGuard} from "./guards/docent.guard";
@@ -29,7 +32,22 @@ export const routes: Routes = [
     component: ReserveringAfhandelenComponent,
     //canActivate: [AuthGuard]
   },
-  
+  {
+    path: 'materiaal/catalogus/:page',
+    component: CatalogusListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'toevoegen-aan-catalogus',
+    component: AddToCatalogusComponent,
+    canActivate: [AuthGuard, BeheerderGuard]
+  },
+  {
+    path: 'toevoegen-aan-catalogus-formulier',
+    component: AddToCatalogusFormComponent,
+    canActivate: [AuthGuard, BeheerderGuard]
+  },
+
   /* Moet onderaan blijven */
   {
     path: '**',
