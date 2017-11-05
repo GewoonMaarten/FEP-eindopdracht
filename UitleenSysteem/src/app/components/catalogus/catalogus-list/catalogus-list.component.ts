@@ -1,17 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Materiaal} from '../../../models/materiaal';
-
 import { MaterialenService } from '../../../services/materialen.service';
-
 import * as _ from 'lodash';
-
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
-import {NavbarService} from "../../../services/navbar.service";
-import {Subscription} from "rxjs/Subscription";
+import {NavbarService} from '../../../services/navbar.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-catalogus-list',
@@ -20,10 +16,10 @@ import {Subscription} from "rxjs/Subscription";
 })
 export class CatalogusListComponent implements OnInit, OnDestroy {
 
-  showSpinner: boolean = true;
+  showSpinner = true;
 
   materialen: Materiaal[];
-  pageSize: number = 12;
+  pageSize = 12;
   nextKey: any;
   prevKeys: any[] = [];
 
@@ -52,12 +48,12 @@ export class CatalogusListComponent implements OnInit, OnDestroy {
       this.changePage(this.page);
     });
 
-    this.materialenSubscription = this.materialenService.getMaterialen("catalogus").subscribe(materialen => {
+    this.materialenSubscription = this.materialenService.getMaterialen('catalogus').subscribe(materialen => {
 
       this.totalMaterialen = materialen.length;
 
       const totalPages = Math.ceil(this.totalMaterialen / this.pageSize);
-      this.pages = Array.from(Array(totalPages),(x,i)=>i);
+      this.pages = Array.from(Array(totalPages), (x, i) => i);
     });
   }
 
@@ -66,8 +62,7 @@ export class CatalogusListComponent implements OnInit, OnDestroy {
   }
 
   private getMaterialen(key?) {
-
-    this.materialenService.getMaterialenByPage(this.pageSize, key, "catalogus")
+    this.materialenService.getMaterialenByPage(this.pageSize, key, 'catalogus')
     .subscribe(materialen => {
       this.showSpinner = false;
 
@@ -95,20 +90,20 @@ export class CatalogusListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/materiaal', this.activePage]);
   }
 
-  changePage(page){
+  changePage(page) {
     this.nextKey = (page * this.pageSize).toString();
-    this.prevKeys = Array.from(new Array(page),(val,index) => (index * this.pageSize).toString() );
+    this.prevKeys = Array.from(new Array(page), (val, index) => (index * this.pageSize).toString() );
     this.getMaterialen(this.nextKey);
   }
 
   /* Collapse */
 
-  collapse(id){
-    this.activeMateriaal = this.activeMateriaal == id ? undefined : id;
+  collapse(id) {
+    this.activeMateriaal = this.activeMateriaal === id ? undefined : id;
   }
 
-  //Delete
-  delete(id: number){
-    this.materialenService.deleteMateriaal(id, "catalogus");
+  // Delete
+  delete(id: number) {
+    this.materialenService.deleteMateriaal(id, 'catalogus');
   }
 }

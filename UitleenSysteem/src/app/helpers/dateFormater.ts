@@ -5,16 +5,16 @@
  * @return {string}
  * */
 export function formatDate(date): string {
-  let monthNames = [
-    "January", "February", "March",
-    "April", "May", "June", "July",
-    "August", "September", "October",
-    "November", "December"
+  const monthNames = [
+    'January', 'February', 'March',
+    'April', 'May', 'June', 'July',
+    'August', 'September', 'October',
+    'November', 'December'
   ];
 
-  let day = date.getDate();
-  let monthIndex = date.getMonth();
-  let year = date.getFullYear();
+  const day = date.getDate();
+  const monthIndex = date.getMonth();
+  const year = date.getFullYear();
 
   return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }

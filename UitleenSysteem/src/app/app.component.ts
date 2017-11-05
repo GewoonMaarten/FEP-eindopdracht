@@ -4,8 +4,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
-import { Materiaal } from "./models/materiaal";
-import {Router} from "@angular/router";
+import { Materiaal } from './models/materiaal';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
   }
 
 }

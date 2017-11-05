@@ -8,11 +8,11 @@ import { User } from '../models/user';
 @Injectable()
 export class UserService {
 
-  private rootPath: string = '/users';
+  private rootPath = '/users';
 
-    constructor(private db: AngularFireDatabase){ }
+    constructor(private db: AngularFireDatabase) { }
 
-    public getUserById(id: string): Observable<User>{
+    public getUserById(id: string): Observable<User> {
       return this.db.object<User>(`${this.rootPath}/${id}`).valueChanges();
     }
 

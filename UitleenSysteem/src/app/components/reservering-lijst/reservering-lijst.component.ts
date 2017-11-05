@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavbarService } from "../../services/navbar.service";
+import { NavbarService } from '../../services/navbar.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ReserveringService } from '../../services/reservering.service';
 import { MaterialenService } from '../../services/materialen.service';
@@ -17,7 +17,7 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './reservering-lijst.component.html',
   styleUrls: ['./reservering-lijst.component.css']
 })
-export class ReserveringLijstComponent implements OnInit{
+export class ReserveringLijstComponent implements OnInit {
 
   displayedColumns = ['materiaal_naam', 'aantal', 'student_naam', 'student_nummer', 'einddatum', 'aanmaakdatum'];
   dataSource: ReserveringsLijstDataSource | null;
@@ -27,35 +27,35 @@ export class ReserveringLijstComponent implements OnInit{
               private materialenService: MaterialenService,
               private userService: UserService,
               private router: Router) { }
-   
-   ngOnInit(){
-    this.getReserveringenDataByStatus("afgehandeld")
 
-    this.getReserveringenDataByStatus("aangemaakt")  
+   ngOnInit() {
+    this.getReserveringenDataByStatus('afgehandeld');
+
+    this.getReserveringenDataByStatus('aangemaakt');
   }
 
   getReserveringenDataByStatus(status: string) {
     this.reserveringService.getReserveringen().subscribe(
       (res) => {
-        var reserveringen: ReserveringTable[] = [];
+        const reserveringen: ReserveringTable[] = [];
         res.forEach(reservering => {
-          if(reservering.status == status) {
+          if (reservering.status === status) {
             this.materialenService.getMateriaalById(reservering.materiaal_id).subscribe(
               (materiaal) => {
                 this.userService.getUserById(reservering.user_uid).subscribe(
                   (user) => {
                     reserveringen.push(this.mapTableData(reservering, materiaal, user));
-                    if(status == "aangemaakt") this.dataSource = new ReserveringsLijstDataSource(reserveringen);
-                    if(status == "afgehandeld") this.afgehandeldDataSource = new ReserveringsLijstDataSource(reserveringen);
+                    if (status === 'aangemaakt') {this.dataSource = new ReserveringsLijstDataSource(reserveringen); }
+                    if (status === 'afgehandeld') {this.afgehandeldDataSource = new ReserveringsLijstDataSource(reserveringen); }
                   });
                 });
-          };
+          }
         });
       }
     );
   }
 
-  mapTableData(reservering: Reservering, materiaal: Materiaal, user: User) : ReserveringTable {
+  mapTableData(reservering: Reservering, materiaal: Materiaal, user: User): ReserveringTable {
     return {
       'key': reservering['$key'],
       'materiaal_naam': materiaal.naam,
@@ -92,7 +92,7 @@ export class ReserveringsLijstDataSource extends DataSource<any> {
 }
 
 export interface ReserveringTable {
-  key: number,
+  key: number;
   materiaal_naam: string;
   aantal: number;
   student_naam: string;

@@ -7,25 +7,25 @@ import {AngularFireDatabase, QueryFn} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 
 import { Materiaal } from '../models/materiaal';
-import {AuthService} from "./auth.service";
+import {AuthService} from './auth.service';
 
 import * as _ from 'lodash';
-import {formatDate} from "../helpers/dateFormater";
+import {formatDate} from '../helpers/dateFormater';
 
 @Injectable()
 export class MaterialenService {
 
   userRoles: Array<string>;
   // materialenInInventaris : AngularFireList<any>;
-  materialenInCatalogus : Materiaal[];
+  materialenInCatalogus: Materiaal[];
   selectedMaterialen = [];
 
-  private rootPath: string = '/materialen';
+  private rootPath = '/materialen';
 
   constructor(private auth: AuthService,
               private db: AngularFireDatabase) {
 
-    //Krijg de rollen van user voor authorizatie.
+    // Krijg de rollen van user voor authorizatie.
     auth.user.map(user => {
       return this.userRoles = _.keys(_.get(user, 'roles'));
     })
@@ -42,7 +42,7 @@ export class MaterialenService {
       .snapshotChanges()
       .map(action => {
 
-        let materialen = [];
+        const materialen = [];
 
         action.forEach(el => {
           const $key = el.key;
@@ -62,7 +62,7 @@ export class MaterialenService {
    * @return {Observable<Materiaal[]>}
    * */
   public searchMaterialen(start: string, end: string, status: string): Observable<Materiaal[]>{
-    console.log(start+" "+ end);
+    console.log(start + ' ' + end);
 
     return this.db.list<Materiaal>(`${this.rootPath}/${status}`, ref =>
       ref.orderByChild('naam')
@@ -72,7 +72,7 @@ export class MaterialenService {
       ).snapshotChanges()
       .map(action => {
 
-        let materialen = [];
+        const materialen = [];
 
         action.forEach(el => {
           const $key = el.key;
@@ -100,7 +100,7 @@ export class MaterialenService {
       ).snapshotChanges()
       .map(action => {
 
-        let materialen = [];
+        const materialen = [];
 
         action.forEach(el => {
           const $key = el.key;
@@ -117,12 +117,12 @@ export class MaterialenService {
    * @param {string} status - naam van de status bijv. inventaris of catalogus.
    * @return {Observable<string[]>}
    * */
-  public getMateralenNaam(status: string): Observable<string[]>{
+  public getMateralenNaam(status: string): Observable<string[]> {
     return this.db.list<Materiaal[]>(`${this.rootPath}/${status}`)
       .snapshotChanges()
       .map(action => {
 
-        let namen: string[] = [];
+        const namen: string[] = [];
 
         action.forEach(el => {
           const materiaal = el.payload.val() as Materiaal;
@@ -138,7 +138,7 @@ export class MaterialenService {
    * @param {string} id - het id van het materiaal.
    * @return {Observable<Materiaal>}
    * */
-  public getMateriaalById(id: string): Observable<Materiaal>{
+  public getMateriaalById(id: string): Observable<Materiaal> {
     return this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`).valueChanges();
   }
 
@@ -149,16 +149,16 @@ export class MaterialenService {
    * */
   public addMateriaal(materiaal: Materiaal, status: string) {
 
-    if(!this.isBeheerder) return;
+    if (!this.isBeheerder) return;
 
     materiaal.aanmaakDatum = formatDate(new Date);
-    materiaal.status = "inventaris";
+    materiaal.status = 'inventaris';
 
     this.db.list<Materiaal>(`${this.rootPath}/${status}`)
       .push(materiaal);
   }
 
-  public addMateriaalInCatalogus(materiaal : Materiaal ){
+  public addMateriaalInCatalogus(materiaal: Materiaal ) {
     this.db.list<Materiaal>(`${this.rootPath}/catalogus`)
       .push(materiaal);
   }
@@ -169,12 +169,12 @@ export class MaterialenService {
    * @param {Materiaal} materiaal - Het materiaal object om te uploaden.
    * */
   public updateMateriaal(id: number, materiaal: Materiaal) {
-    if(!this.isBeheerder) return;
+    if (!this.isBeheerder) return;
 
     this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`)
       .update(materiaal)
-      .then(_ => {return true;})
-      .catch(error => {return false;});
+      .then(_ => true)
+      .catch(error => false);
   }
 
    /**
@@ -184,12 +184,12 @@ export class MaterialenService {
    * @param {string} status - naam van de status bijv. inventaris of catalogus.
    * */
   public deleteMateriaal(id: number, status: string){
-    if(!this.isBeheerder) return;
+    if (!this.isBeheerder) return;
 
     this.db.object<Materiaal>(`${this.rootPath}/catalogus/${id}`)
       .remove();
 
-    if (status === 'inventaris'){
+    if (status === 'inventaris') {
       this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`)
         .remove();
     }
@@ -198,8 +198,8 @@ export class MaterialenService {
   public updateMateriaalInCatalogus(id: number, materiaal: Materiaal) {
     this.db.object<Materiaal>(`${this.rootPath}/catalogus/${id}`)
       .update(materiaal)
-      .then(_ => {return true;})
-      .catch(error => {return false;});
+      .then(_ => true)
+      .catch(error => false);
   }
 
   // Authorization

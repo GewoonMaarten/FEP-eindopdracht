@@ -1,7 +1,7 @@
 export interface Roles {
   student?: boolean;
   docent?: boolean;
-  beheerder?: boolean
+  beheerder?: boolean;
 }
 
 export class User {
@@ -13,7 +13,7 @@ export class User {
 
   klas?: string;
 
-  constructor(authData){
+  constructor(authData) {
     this.naam = authData.naam;
     this.email = authData.email;
     this.roles = authData.roles;

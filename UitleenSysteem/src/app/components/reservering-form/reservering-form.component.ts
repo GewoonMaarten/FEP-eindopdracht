@@ -1,21 +1,21 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 
-import { Kluisje } from "../../models/kluisje";
-import { Reservering } from "../../models/reservering";
-import { Materiaal } from "../../models/materiaal";
-import { User } from "../../models/user";
+import { Kluisje } from '../../models/kluisje';
+import { Reservering } from '../../models/reservering';
+import { Materiaal } from '../../models/materiaal';
+import { User } from '../../models/user';
 
-import { KluisjesService } from "../../services/kluisjes.service";
-import { ReserveringService } from "../../services/reservering.service";
-import { MaterialenService } from "../../services/materialen.service";
-import { UserService } from "../../services/user.service";
+import { KluisjesService } from '../../services/kluisjes.service';
+import { ReserveringService } from '../../services/reservering.service';
+import { MaterialenService } from '../../services/materialen.service';
+import { UserService } from '../../services/user.service';
 
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/operator/startWith";
-import {Subscription} from "rxjs/Subscription";
-import * as firebase from "firebase";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/startWith';
+import {Subscription} from 'rxjs/Subscription';
+import * as firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ReserveringsLijstDataSource, ReserveringTable } from '../reservering-lijst/reservering-lijst.component';
 
@@ -60,12 +60,12 @@ export class ReserveringFormComponent implements OnInit {
       kluisnummer: ['', Validators.required],
       opmerking: ''
     });
-    
+
     this.kluisjesService.getKluisjes().subscribe(
       (res) => {
         this.kluisjes = res;
       }
-    )
+    );
 
     this.route.params.subscribe(params => {
       this.reserveringService.getReserveringById(params['key']).subscribe(
@@ -74,7 +74,7 @@ export class ReserveringFormComponent implements OnInit {
           this.reservering['$key'] = params['key'];
           this.materialenService.getMateriaalById(this.reservering.materiaal_id).subscribe(
             (materiaal) => {
-              this.materiaal = materiaal; 
+              this.materiaal = materiaal;
               this.userService.getUserById(this.reservering.user_uid).subscribe(
                 (user) => {
                   this.user = user;
@@ -82,7 +82,6 @@ export class ReserveringFormComponent implements OnInit {
                   this.setReserveringData();
                 });
           });
-          
         });
     });
   }
@@ -94,7 +93,7 @@ export class ReserveringFormComponent implements OnInit {
       pincode: this.generatePincode(),
       kluisnummer: '',
       opmerking: ''
-    })
+    });
 
     this.materiaalNaam = this.materiaal.naam;
     this.studentNaam = this.user.naam;
@@ -102,7 +101,7 @@ export class ReserveringFormComponent implements OnInit {
   }
 
   initializeTable() {
-    var item: ReserveringTable = {
+    const item: ReserveringTable = {
       'key': this.reservering['$key'],
       'materiaal_naam': this.materiaal.naam,
       'aantal': this.reservering.aantal,
@@ -124,18 +123,20 @@ export class ReserveringFormComponent implements OnInit {
     // 2. Reservering krijgt status afgehandeld
     // 3. Materiaal moeten we ff het geselecteerde aantal afhalen
 
-    var kluisje: Kluisje = null;
+    let kluisje: Kluisje = null;
     this.kluisjes.forEach(element => {
-      if (element['$key'] == this.reserveringForm.value['kluisnummer']) kluisje = element;
+      if (element['$key'] === this.reserveringForm.value['kluisnummer']) {
+        kluisje = element;
+      }
     });
 
-    if(kluisje != null) {
-      kluisje.status = "bezet";
+    if (kluisje != null) {
+      kluisje.status = 'bezet';
       kluisje.pincode = this.reserveringForm.value['pincode'];
       this.kluisjesService.updateKluisje(this.reserveringForm.value['kluisnummer'], kluisje);
     }
 
-    this.reservering.status = "afgehandeld";
+    this.reservering.status = 'afgehandeld';
     this.reservering.opmerking = this.reserveringForm.value['opmerking'];
     this.reserveringService.updateReservering(this.reservering['$key'], this.reservering);
 

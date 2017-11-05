@@ -9,9 +9,9 @@ import { CatalogusListComponent } from './components/catalogus/catalogus-list/ca
 import { ReserveringLijstComponent } from './components/reservering-lijst/reservering-lijst.component';
 import { ReserveringFormComponent } from './components/reservering-form/reservering-form.component';
 
-import {AuthGuard} from "./guards/auth.guard";
-import {DocentGuard} from "./guards/docent.guard";
-import { BeheerderGuard } from "./guards/beheerder.guard"
+import {AuthGuard} from './guards/auth.guard';
+import {DocentGuard} from './guards/docent.guard';
+import { BeheerderGuard } from './guards/beheerder.guard';
 
 export const routes: Routes = [
   {
@@ -31,12 +31,12 @@ export const routes: Routes = [
   {
     path: 'reservering/afhandelen',
     component: ReserveringLijstComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'reservering/afhandelen/form/:key',
     component: ReserveringFormComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'materiaal/catalogus/:page',

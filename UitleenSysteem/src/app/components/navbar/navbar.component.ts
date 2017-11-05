@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarService, AuthService, ReserveringService } from "../../services/index";
+import { NavbarService, AuthService, ReserveringService } from '../../services/index';
 import { Reservering, User } from '../../models/index';
-import { Subject } from "rxjs/Subject";
+import { Subject } from 'rxjs/Subject';
 import { MatDialog } from '@angular/material';
-import { CartComponent } from "../cart/cart.component";
+import { CartComponent } from '../cart/cart.component';
 
 import { MaterialenService } from '../../services/materialen.service';
 
@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
     public dialog: MatDialog,
     public auth: AuthService,
     public reserveringService: ReserveringService,
-    public materialenService : MaterialenService) {
+    public materialenService: MaterialenService) {
     this.reserveringService.getCart().subscribe(data => {
       this.materiaalCart = data;
     });
@@ -36,12 +36,8 @@ export class NavbarComponent implements OnInit {
   }
 
   showCart() {
-    let dialogRef = this.dialog.open(CartComponent, {
+    const dialogRef = this.dialog.open(CartComponent, {
       data: this.materiaalCart
     });
-  }
-
-  showReserveringen() {
-    console.log("reserveringen")
   }
 }

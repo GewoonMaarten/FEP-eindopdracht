@@ -2,11 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
-import { routes } from "./app.routes";
+import { routes } from './app.routes';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -25,11 +25,11 @@ import { FirebaseStorageService } from './services/firebase-storage.service';
 import { KluisjesService } from './services/kluisjes.service';
 import { UserService } from './services/user.service';
 
-import { AuthGuard } from "./guards/auth.guard";
-import { DocentGuard } from "./guards/docent.guard";
-import { BeheerderGuard } from "./guards/beheerder.guard";
+import { AuthGuard } from './guards/auth.guard';
+import { DocentGuard } from './guards/docent.guard';
+import { BeheerderGuard } from './guards/beheerder.guard';
 
-//Angular material components
+// Angular material components
 import {
   MatToolbarModule,
   MatIconModule,
@@ -46,7 +46,7 @@ import {
 } from '@angular/material';
 
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
-import { LoginComponent } from "./components/login/login.component";
+import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
 import { CartComponent } from './components/cart/cart.component';
@@ -82,7 +82,7 @@ import { ReserveringFormComponent } from './components/reservering-form/reserver
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    //Angular material components
+    // Angular material components
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

@@ -1,16 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-
-import {MaterialenService} from "../../services/materialen.service";
+import {MaterialenService} from '../../services/materialen.service';
 import { FirebaseStorageService } from '../../services/firebase-storage.service';
-
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/operator/startWith";
-import {Subscription} from "rxjs/Subscription";
-import {Materiaal} from "../../models/materiaal";
-import {Afbeelding} from "../../models/afbeelding";
-import * as firebase from "firebase";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/startWith';
+import {Subscription} from 'rxjs/Subscription';
+import {Materiaal} from '../../models/materiaal';
+import {Afbeelding} from '../../models/afbeelding';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-materiaal-form',
@@ -22,7 +20,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
   materiaalId: number;
   naamControlSubscription: Subscription;
 
-  isUpdate: boolean = false;
+  isUpdate = false;
 
   filteredOptions: Observable<string[]>;
   namen: Subscription;
@@ -36,8 +34,8 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
               private _formBuilder: FormBuilder,
               private router: Router) { }
 
-  ngOnInit():void {
-    //Form
+  ngOnInit(): void {
+    // Form
     this.materiaalForm = this._formBuilder.group({
       naam: ['', Validators.required],
       aantal: ['', Validators.required],
@@ -49,19 +47,19 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
       aangemaaktDatum: MateriaalFormComponent.currentDate()
     });
 
-    let naamControl = this.materiaalForm.controls['naam'] as FormControl;
+    const naamControl = this.materiaalForm.controls['naam'] as FormControl;
 
-    //Auto fill
+    // Auto fill
     this.naamControlSubscription = naamControl.valueChanges
       .startWith(null)
       .subscribe(value => {
 
-        this.materialenService.searchMaterialen(value, value+"\uf8ff", "inventaris")
+        this.materialenService.searchMaterialen(value, value +'\uf8ff', 'inventaris')
           .take(1)
           .subscribe(materialen => {
             const materiaal = materialen[0] as Materiaal;
 
-            if (materiaal && naamControl.value === materiaal.naam){
+            if (materiaal && naamControl.value === materiaal.naam) {
 
               this.isUpdate = true;
               this.materiaalId = materiaal.$key;
@@ -80,8 +78,8 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
           });
     });
 
-    //Auto complete
-    this.namen = this.materialenService.getMateralenNaam("inventaris")
+    // Auto complete
+    this.namen = this.materialenService.getMateralenNaam('inventaris')
       .subscribe(namen => {
         this.filteredOptions = naamControl.valueChanges
           .startWith(null)
@@ -93,27 +91,28 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.namen.unsubscribe();
     this.naamControlSubscription.unsubscribe();
-    //this.afbeeldingSubscription.unsubscribe();
   }
+
   /** Filter op naam */
   private filterNames(val: string, namen: string[]): string[]  {
     return namen.filter(option =>
       option.toLowerCase().indexOf(val.toLowerCase()) === 0
     );
   }
+
   /** Verander de afbeelding naar een nieuwe */
-  fileChange(event): void{
+  fileChange(event): void {
     const files: FileList = event.target.files;
-    if(files.length > 0){
+    if (files.length > 0) {
       const file: File = files[0];
 
-      if(this.materiaalForm.value.afbeelding.naam != '' && file.name !== this.materiaalForm.value.afbeelding.naam){
+      if (this.materiaalForm.value.afbeelding.naam !== '' && file.name !== this.materiaalForm.value.afbeelding.naam) {
         this.firebaseStorageService.deleteFile(this.materiaalForm.value.afbeelding.naam);
       }
 
       this.upload = new Afbeelding(file);
 
-      let uploadTask = this.firebaseStorageService.uploadFile(this.upload);
+      const uploadTask = this.firebaseStorageService.uploadFile(this.upload);
 
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
           snapshot =>  {
@@ -139,7 +138,7 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
   }
 
   /** verwijder de afbeelding. */
-  deleteAfbeelding(){
+  deleteAfbeelding() {
     this.firebaseStorageService.deleteFile(this.materiaalForm.value.afbeelding.naam);
     this.materiaalForm.patchValue({
       afbeelding: {
@@ -148,15 +147,16 @@ export class MateriaalFormComponent implements OnInit, OnDestroy {
       }
     });
   }
-  /** update of add een nieuw materiaal. */
- submit(){
-    if(this.isUpdate){
-      this.materialenService.updateMateriaal(this.materiaalId, this.materiaalForm.value as Materiaal);
-      this.router.navigate(['/materiaal/1'])
 
-    } else if(!this.isUpdate){
+  /** update of add een nieuw materiaal. */
+ submit() {
+    if (this.isUpdate) {
+      this.materialenService.updateMateriaal(this.materiaalId, this.materiaalForm.value as Materiaal);
+      this.router.navigate(['/materiaal/1']);
+
+    } else if (!this.isUpdate) {
       this.materialenService.addMateriaal(this.materiaalForm.value as Materiaal, 'inventaris');
-      this.router.navigate(['/materiaal/1'])
+      this.router.navigate(['/materiaal/1']);
     }
   }
 

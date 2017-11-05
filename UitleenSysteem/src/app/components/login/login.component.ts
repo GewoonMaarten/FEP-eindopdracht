@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
-import {AuthService} from "../../services/auth.service";
-import {NavbarService} from "../../services/navbar.service";
+import {AuthService} from '../../services/auth.service';
+import {NavbarService} from '../../services/navbar.service';
 
 @Component({
   selector: 'login',
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     this.loginForm.addControl('password', this.passwordFormControl);
   }
   /** Login */
-  onSubmit(value:string): void{
+  onSubmit(value: string): void {
     const formModel = this.loginForm.value;
 
     this.authService.login(formModel.email, formModel.password);

@@ -6,35 +6,31 @@ import { Kluisje } from '../models/kluisje';
 
 @Injectable()
 export class KluisjesService {
-    constructor(private db: AngularFireDatabase){ }
-    
-    groups: AngularFireList<any>;
-    private rootPath: string = '/kluisjes';
+  groups: AngularFireList<any>;
+  private rootPath = '/kluisjes';
 
-    getKluisjes(): Observable<Kluisje[]> {
-        return this.db.list(`${this.rootPath}`)
-        .snapshotChanges()
-        .map(action => {
+  constructor(private db: AngularFireDatabase) { }
 
-          let kluisjes = [];
+  getKluisjes(): Observable<Kluisje[]> {
+      return this.db.list(`${this.rootPath}`)
+      .snapshotChanges()
+      .map(action => {
+        const kluisjes = [];
 
-          action.forEach(el => {
-            const $key = el.key;
-            const data = { $key, ...el.payload.val()};
-            kluisjes.push(data);
-          });
-
-          return kluisjes;
-
+        action.forEach(el => {
+          const $key = el.key;
+          const data = { $key, ...el.payload.val()};
+          kluisjes.push(data);
         });
-    }
-
-  public updateKluisje(id: string, kluisje: Kluisje) {
-    delete kluisje['$key']
-    this.db.object<Kluisje>(`${this.rootPath}/${id}`)
-      .update(kluisje)
-      .then(_ => {return true;})
-      .catch(error => {return false;});
+        return kluisjes;
+      });
   }
 
+  public updateKluisje(id: string, kluisje: Kluisje) {
+    delete kluisje['$key'];
+    this.db.object<Kluisje>(`${this.rootPath}/${id}`)
+      .update(kluisje)
+      .then(_ => true)
+      .catch(error => false);
+  }
 }

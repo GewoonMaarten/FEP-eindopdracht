@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { DataSource } from '@angular/cdk/collections';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import * as _ from 'lodash';
 
@@ -27,24 +27,24 @@ export class AddToCatalogusComponent {
     sla all materialen in de inventaris op in dataSource
     zodat je ze in een table kan tonen
     */
-    this.materialenService.getMaterialen("inventaris").subscribe(
+    this.materialenService.getMaterialen('inventaris').subscribe(
       (res) => {
         this.dataSource = new ExampleDataSource(res);
     });
    }
 
-  /* 
+  /*
     event listener [checkbox]
     als een row wordt geselecteert,
-    sla het materiaal op in selectedMaterialen 
+    sla het materiaal op in selectedMaterialen
   */
-  onSelect(data){
-    if(_.find(this.materialenService.selectedMaterialen, data)){
+  onSelect(data) {
+    if (_.find(this.materialenService.selectedMaterialen, data)) {
       _.pull(this.materialenService.selectedMaterialen, data);
      } else {
       this.materialenService.selectedMaterialen.push(data);
     }
-    console.log("selectedMaterialen: ", this.materialenService.selectedMaterialen);
+    console.log('selectedMaterialen: ', this.materialenService.selectedMaterialen);
   }
 }
 

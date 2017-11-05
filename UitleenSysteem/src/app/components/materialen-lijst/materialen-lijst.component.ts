@@ -1,14 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Subscription } from 'rxjs/Subscription';
-
 import { Materiaal, Reservering } from '../../models/index';
-
 import { MaterialenService, NavbarService, ReserveringService, AuthService } from '../../services/index';
-
 import * as _ from 'lodash';
-
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
@@ -21,10 +16,10 @@ import { DatePipe } from '@angular/common';
 })
 export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
-  showSpinner: boolean = true;
+  showSpinner = true;
 
   materialen: Materiaal[];
-  pageSize: number = 12;
+  pageSize = 12;
   nextKey: any;
   prevKeys: any[] = [];
 
@@ -57,7 +52,7 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
       this.changePage(this.page);
     });
 
-    this.materialenSubscription = this.materialenService.getMaterialen("inventaris").subscribe(materialen => {
+    this.materialenSubscription = this.materialenService.getMaterialen('inventaris').subscribe(materialen => {
 
       this.totalMaterialen = materialen.length;
 
@@ -65,7 +60,7 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
       this.pages = Array.from(Array(totalPages), (x, i) => i);
     });
 
-    //keep the cart up-to-date
+    // keep the cart up-to-date
     this.reserveringService.getCart().subscribe(data => {
       this.materiaalCart = data;
     });
@@ -78,7 +73,7 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
   /** Haal een lijst met materialen op waarvan het eerste materiaal het materiaal is met de key. */
   private getMaterialen(key?) {
 
-    this.materialenService.getMaterialenByPage(this.pageSize, key, "inventaris")
+    this.materialenService.getMaterialenByPage(this.pageSize, key, 'inventaris')
       .subscribe(materialen => {
         this.showSpinner = false;
 
@@ -96,39 +91,39 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
   addToCart(key, addAantal) {
 
     this.materialen.forEach(x => {
-      if (x.$key == key) {
+      if (x.$key === key) {
 
-        //raise aantal als exists in materiaalCart
+        // raise aantal als exists in materiaalCart
         let exists = false;
         let outOfOrder = false;
 
         this.materiaalCart.forEach(y => {
-          //check of new reserveringsaantal niet >= beschikbaaraantal
-          if (x.$key == y.materiaal_id && Number(y.aantal) + Number(addAantal) >= x.aantal) outOfOrder = true;
+          // check of new reserveringsaantal niet >= beschikbaaraantal
+          if (x.$key === y.materiaal_id && Number(y.aantal) + Number(addAantal) >= x.aantal) outOfOrder = true;
 
-          if (x.$key == y.materiaal_id && !outOfOrder) {
+          if (x.$key === y.materiaal_id && !outOfOrder) {
             exists = true;
             y.aantal = Number(y.aantal) + Number(addAantal);
           }
         });
 
-        //voeg anders een nieuwe Reservering toe aan materiaalCart
+        // voeg anders een nieuwe Reservering toe aan materiaalCart
         if (!exists && !outOfOrder) {
-          let newReservering = new Reservering();
+          const newReservering = new Reservering();
           this.auth.getUserUid().subscribe(userid => newReservering.user_uid = userid);
 
           newReservering.aantal = addAantal;
           newReservering.materiaal_id = x.$key;
-          let now = new Date();
-          newReservering.aanmaakdatum = this.datePipe.transform(now, 'dd-MM-yyyy'); //whatever format you need. 
+          const now = new Date();
+          newReservering.aanmaakdatum = this.datePipe.transform(now, 'dd-MM-yyyy'); // whatever format you need.
 
           now.setMonth(now.getMonth() + 1);
-          newReservering.einddatum = this.datePipe.transform(now, 'dd-MM-yyyy'); //whatever format you need. 
+          newReservering.einddatum = this.datePipe.transform(now, 'dd-MM-yyyy'); // whatever format you need.
 
           this.materiaalCart.push(newReservering);
         }
 
-        //wijzig de Cart in de service
+        // wijzig de Cart in de service
         this.reserveringService.addToCart(this.materiaalCart);
       }
     });
@@ -158,11 +153,11 @@ export class MaterialenLijstComponent implements OnInit, OnDestroy {
 
   /** Toggle materaal card */
   collapse(id) {
-    this.activeMateriaal = this.activeMateriaal == id ? undefined : id;
+    this.activeMateriaal = this.activeMateriaal === id ? undefined : id;
   }
 
   /** Delete materiaal*/
   delete(id: number) {
-    this.materialenService.deleteMateriaal(id, "inventaris");
+    this.materialenService.deleteMateriaal(id, 'inventaris');
   }
 }

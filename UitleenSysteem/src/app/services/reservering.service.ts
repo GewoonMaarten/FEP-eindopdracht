@@ -10,7 +10,7 @@ export class ReserveringService {
   private subject = new Subject<any>();
   private reserveringen: Reservering[] = [];
   groups: AngularFireList<any>;
-  rootPath: string = "/reservering";
+  rootPath = '/reservering';
 
   constructor(private db: AngularFireDatabase) { }
 
@@ -41,7 +41,7 @@ export class ReserveringService {
       .snapshotChanges()
       .map(action => {
 
-        let reserveringen = [];
+        const reserveringen = [];
 
         action.forEach(el => {
           const $key = el.key;
@@ -60,7 +60,7 @@ export class ReserveringService {
       this.db.list('reservering').push(x);
     });
     this.clearCart();
-    
+
     return true;
   }
 
@@ -69,10 +69,10 @@ export class ReserveringService {
   }
 
   public updateReservering(id: string, reservering: Reservering) {
-    delete reservering['$key']
+    delete reservering['$key'];
     this.db.object<Reservering>(`${this.rootPath}/${id}`)
       .update(reservering)
-      .then(_ => {return true;})
-      .catch(error => {return false;});
+      .then(_ => true)
+      .catch(error => false);
   }
 }

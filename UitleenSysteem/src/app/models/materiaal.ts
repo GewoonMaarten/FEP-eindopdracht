@@ -1,4 +1,4 @@
-import {Afbeelding} from "./afbeelding";
+import {Afbeelding} from './afbeelding';
 
 export class Materiaal {
   $key;
