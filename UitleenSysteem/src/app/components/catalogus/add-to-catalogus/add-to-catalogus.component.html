@@ -1,0 +1,48 @@
+
+<div class="container">
+    <div class="content">
+        <div class="header">
+            <h1 class="mat-title reservering-title">Toevoegen aan catalogus</h1>
+        </div>
+
+        <div class="divider"> <hr /> </div>
+
+        <div class="reservering-afhandelen mat-elevation-z8">
+            <mat-table #table [dataSource]="dataSource">
+                
+                <!-- checkbox Column -->
+                <ng-container matColumnDef="C.B.">
+                <mat-header-cell *matHeaderCellDef> C.B. </mat-header-cell>
+                <mat-cell *matCellDef="let elements" (click)="onSelect(elements)"> <mat-checkbox></mat-checkbox> </mat-cell>
+                </ng-container>
+            
+                <!-- Name Column -->
+                <ng-container matColumnDef="materiaal">
+                <mat-header-cell *matHeaderCellDef> Materiaal </mat-header-cell>
+                <mat-cell *matCellDef="let elements"> {{elements.naam}} </mat-cell>
+                </ng-container>
+            
+                <!-- hoeveelheid Column -->
+                <ng-container matColumnDef="hoeveelheid">
+                <mat-header-cell *matHeaderCellDef> Hoeveelheid </mat-header-cell>
+                <mat-cell *matCellDef="let elements"> {{elements.aantal}} </mat-cell>
+                </ng-container>
+            
+                <!-- aanmaakdatum Column -->
+                <ng-container matColumnDef="aanmaakdatum">
+                <mat-header-cell *matHeaderCellDef> Aanmaakdatum </mat-header-cell>
+                <mat-cell *matCellDef="let elements"> {{elements.aanmaakDatum}} </mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+
+        <div class="button-row">
+            <button mat-raised-button routerLink="/materiaal/catalogus/:page">Terug</button>
+            <button mat-raised-button color="primary"
+                    routerLink="/toevoegen-aan-catalogus-formulier">Toevoegen aan catalogus</button>
+        </div>
+    </div>
+</div>

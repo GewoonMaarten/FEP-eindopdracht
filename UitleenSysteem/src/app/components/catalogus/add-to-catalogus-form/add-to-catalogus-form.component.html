@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="header">
+      <h1 class="mat-title materialen-title">Toevoegen aan catalogus</h1>
+      <span class="spacer"></span>
+    </div>
+
+    <div class="materialen" *ngFor="let materiaal of materialenList; let i = index">
+
+        <!-- Table header/columns -->
+        <div class="labels">
+            <p>Materiaal </p>
+            <p>Hoeveelheid in inventaris </p>
+            <p>Hoeveelheid toevoegen aan catalogus </p>
+            <p>Omschrijving </p>
+        </div>
+
+        <!-- Table data -->
+        <mat-form-field class="data">
+            <input matInput value="{{materiaal.naam}}" disabled/>
+            <input matInput [(ngModel)]="inventarisMaterialen[i].aantal - geselecteerdMaterialen[i].aantal" disabled/>
+            <input matInput type="number" maxlength="2" min="1" max="{{materialenList[i].aantal}}" [(ngModel)]="geselecteerdMaterialen[i].aantal" class="aantal"/>
+            <input matInput value="{{materiaal.omschrijving}}" disabled/>
+        </mat-form-field>
+    </div>
+
+    <div class="button-row">
+      <button mat-raised-button routerLink="/toevoegen-aan-catalogus">Annuleren</button>
+      <button mat-raised-button color="primary" 
+              (click)="onSubmit()"
+              [disabled]="materialenList.length == 0">Toevoegen aan catalogus</button>
+    </div>
+
+    <!-- Testen/Debugen purposes -->
+
+    <!-- <p>materialenList: {{ materialenList | json }}</p>
+    <p>catalogusMaterialen: {{ catalogusMaterialen | json }}</p>
+    <p>inventarisMaterialen: {{ inventarisMaterialen | json }}</p>
+    <p>allMaterialenInCatalogus: {{ allMaterialenInCatalogus | json }}</p>
+    <p>count: {{ count | json }}</p> -->
+
+</div>

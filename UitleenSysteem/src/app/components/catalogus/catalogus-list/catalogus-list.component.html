@@ -1,0 +1,84 @@
+<div class="container">
+    
+    <div class="content">
+
+      <div class="header">
+        <h1 class="mat-title materialen-title">Materialen</h1>
+
+        <span class="spacer"></span>
+
+        <button mat-raised-button
+                color="primary"
+                class="page-btn margin-10"
+                *ngIf="materialenService.isBeheerder"
+                routerLink="/toevoegen-aan-catalogus">
+          <mat-icon class="mat-24">add</mat-icon>
+        </button>
+
+        <mat-form-field class="margin-10">
+          <input matInput placeholder="Zoeken" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary"
+                class="page-btn margin-10"
+                (click)="onPrev()"
+                [disabled]="!prevKeys?.length"> < </button>
+
+        <button mat-raised-button color="primary"
+                class="page-btn margin-10"
+                (click)="onNext()"
+                [disabled]="!nextKey"> > </button>
+
+      </div>
+
+      <div class="divider">
+        <hr />
+      </div>
+
+
+      <div *ngIf="showSpinner" class="loader">
+          <h3 class="mat-subheading-2">Laden...</h3>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+
+
+      <div class="materialen-items">
+          <div *ngFor="let materiaal of materialen" class="card" id={{materiaal.$key}}>
+
+              <div (click)="collapse(materiaal.$key)" class="clickable">
+
+                  <div class="header">
+                    <h3 class="mat-subheading-2">{{materiaal.naam}}</h3>
+
+                    <span class="spacer"></span>
+
+                    <button mat-icon-button class="delete-btn"
+                            (click)="delete(materiaal.$key)"
+                            *ngIf="materialenService.isBeheerder">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+
+
+                  <img alt={{materiaal.afbeelding.naam}} src={{materiaal.afbeelding.url}} width="100%"/>
+                  <p class="mat-body-1 card-omschrijving">
+                      <b>Omschrijving:</b><br/>
+                      {{materiaal.omschrijving}}
+                  </p>
+                  <p class="mat-body-1 beschikbaar">beschikbaar: <span>{{materiaal.aantal}}</span></p>
+              </div>
+
+              <div class="reserveer-materiaal" *ngIf="materiaal.$key == activeMateriaal">
+                    <mat-form-field class="full-width hoeveelheid">
+                        <input matInput #aantaltoevoegen type="number" maxlength="2" min="1" max={{materiaal.aantal}} value="1" placeholder="aantal"/>
+                    </mat-form-field>
+                    <button class="full-width toevoegen" mat-raised-button color="accent" (click)="addToCart(materiaal.$key, aantaltoevoegen.value)">Toevoegen</button>
+                </div>
+          </div>
+      </div>
+
+    </div>
+</div>
+<p>{{nextKey}}</p>
+
+    

@@ -57,8 +57,10 @@ typings/
 # dotenv environment variables file
 .env
 
+.idea
 # temporary files
 *.tmp
 
 # Word temporary
 ~$*.doc*
+

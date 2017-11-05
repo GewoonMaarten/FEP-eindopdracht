@@ -1,0 +1,52 @@
+.container {
+    display: grid;
+    width: 100%;
+
+    grid-template-columns: 25% auto 25%;
+    grid-template-areas: ". main .";
+}
+
+.content {
+    display: grid;
+    grid-area: main;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 50px 50px auto 10%;
+    grid-template-areas:
+        "header header header"
+        "divider divider divider"
+        "items items items"
+        ". paginator .";
+
+    margin-top: 50px;
+}
+
+.header {
+    grid-area: header;
+    display: flex;
+}
+
+.reservering-title {
+    width: 100px;
+}
+
+.divider {
+    grid-area: divider;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.reservering-afhandelen {
+    grid-area: items;
+    display: grid;
+    margin: 10px 0;
+}
+
+.reservering-afhandelen > table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.responstable, th, td {
+    border: 1px solid black
+}

@@ -1,0 +1,52 @@
+<div class="login">
+  <h1 class="mat-display-1" *ngIf="!confirmStep1 || materiaalCart.length == 0">
+    Winkelmandje
+  </h1>
+  <h1 class="mat-display-1" *ngIf="confirmStep2 && materiaalCart.length > 0">
+    Bevestig
+  </h1>
+  <div *ngIf="!materiaalCart[0]">
+    <h1 class="mat-title">Winkelmandje is leeg</h1>
+  </div>
+  <div *ngIf="materiaalCart[0]">
+    <table>
+      <thead class="mat-subheading-2">
+        <th>Naam</th>
+        <th>Aantal</th>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let materiaalCartItem of materiaalCart; let i = index">
+          <tr>
+            <td>
+              <span class="mat-body-1">{{materialenInCart[i]?.naam}}</span>
+            </td>
+            <td>
+              <button mat-button (click)="checkRemove(materialenInCart[i]?.$key)" [disabled]="materiaalCartItem.aantal <= 1">-</button>
+              <span class="mat-body-1">{{materiaalCartItem.aantal}}</span>
+              <button mat-button (click)="checkAdd(materialenInCart[i]?.$key)" [disabled]="materiaalCartItem.aantal >= materialenInCart[i]?.aantal">+</button>
+            </td>
+            <td>
+              <button mat-icon-button class="delete-btn" (click)="deleteReservering(materialenInCart[i]?.$key)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <div>
+      <button *ngIf="!confirmStep1" mat-raised-button (click)="confirmStep1 = !confirmStep1" (click)="confirmStep2 = !confirmStep2">
+        Reserveer
+      </button>
+    </div>
+    <div>
+      <button *ngIf="confirmStep2" mat-raised-button (click)="confirmStep1 = false" (click)="confirmStep2 = false">
+        Annuleer
+      </button>
+      <button *ngIf="confirmStep2" mat-raised-button (click)="confirmReservering()">
+        Bevestig reservering
+      </button>
+    </div>
+  </div>
+</div>

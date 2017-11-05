@@ -1,0 +1,29 @@
+<div *ngIf="nav.visible">
+  <header>
+    <div class="background"></div>
+    <div class="logo-container"></div>
+    <div class="logo"></div>
+  </header>
+  <nav>
+    <mat-toolbar color="primary">
+      <span class="half-spacer"></span>
+      <button mat-button routerLink="/materiaal/:page"
+              *ngIf="materialenService.isBeheerder">Inventaris</button>
+      <button mat-button routerLink="/materiaal/catalogus/:page">Catalogus</button>
+      <button mat-button routerLink="/reservering"
+              *ngIf="materialenService.isBeheerder">Reserveringen</button>
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+
+      <button mat-button (click)="showCart()">
+        <i class="material-icons">shopping_cart</i>{{materiaalCart.length}}</button>
+
+      <button mat-button routerLink="/mijnReservering">Mijn reserveringen</button>
+
+      <p class="mat-body-2">{{(user | async)?.email}}</p>
+      <button mat-button (click)="logout()">Logout</button>
+      <span class="spacer"></span>
+    </mat-toolbar>
+  </nav>
+</div>
