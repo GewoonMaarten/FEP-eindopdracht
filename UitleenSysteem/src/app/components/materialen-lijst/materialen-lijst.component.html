@@ -77,13 +77,6 @@
                   </p>
                   <p class="mat-body-1 beschikbaar">beschikbaar: <span>{{materiaal.aantal}}</span></p>
               </div>
-
-              <div class="reserveer-materiaal" *ngIf="materiaal.$key == activeMateriaal">
-                  <mat-form-field class="full-width hoeveelheid">
-                      <input matInput #aantaltoevoegen type="number" maxlength="2" min="1" max={{materiaal.aantal}} value="1" placeholder="aantal"/>
-                  </mat-form-field>
-                  <button class="full-width toevoegen" mat-raised-button color="accent" (click)="addToCart(materiaal.$key, aantaltoevoegen.value)">Toevoegen</button>
-              </div>
           </div>
       </div>
 

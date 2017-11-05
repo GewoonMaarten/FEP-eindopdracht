@@ -5,8 +5,8 @@ import { Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import * as _ from 'lodash';
 
-import { Materiaal} from '../../../models/materiaal';
-import { MaterialenService } from '../../../services/materialen.service';
+import { Materiaal} from '../../../models/index';
+import { MaterialenService } from '../../../services/index';
 
 @Component({
   selector: 'app-add-to-catalogus-form',

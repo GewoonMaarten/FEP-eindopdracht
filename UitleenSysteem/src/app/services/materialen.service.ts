@@ -139,7 +139,7 @@ export class MaterialenService {
    * @return {Observable<Materiaal>}
    * */
   public getMateriaalById(id: string): Observable<Materiaal> {
-    return this.db.object<Materiaal>(`${this.rootPath}/inventaris/${id}`).valueChanges();
+    return this.db.object<Materiaal>(`${this.rootPath}/catalogus/${id}`).valueChanges();
   }
 
   /**

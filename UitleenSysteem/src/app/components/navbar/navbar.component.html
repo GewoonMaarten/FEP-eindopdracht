@@ -19,7 +19,7 @@
       <button mat-button (click)="showCart()">
         <i class="material-icons">shopping_cart</i>{{materiaalCart.length}}</button>
 
-      <button mat-button (click)="showReserveringen()">Mijn reserveringen</button>
+      <button mat-button routerLink="/mijnReservering">Mijn reserveringen</button>
 
       <p class="mat-body-2">{{(user | async)?.email}}</p>
       <button mat-button (click)="logout()">Logout</button>

@@ -1,14 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavbarService } from '../../services/navbar.service';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { ReserveringService } from '../../services/reservering.service';
-import { MaterialenService } from '../../services/materialen.service';
-import { UserService } from '../../services/user.service';
+import { ReserveringService, NavbarService, MaterialenService, UserService } from '../../services/index';
 import { Observable } from 'rxjs/Observable';
-import { Reservering } from '../../models/reservering';
-import { Materiaal } from '../../models/materiaal';
-import { User } from '../../models/user';
+import { Reservering, Materiaal, User } from '../../models/index';
 import { DataSource } from '@angular/cdk/collections';
 
 @Component({
