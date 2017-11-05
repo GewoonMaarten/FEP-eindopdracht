@@ -1,9 +1,12 @@
+import {Afbeelding} from "./afbeelding";
+
 export class Materiaal {
-    $key: number;
-    aantal: number;
-    afbeelding: string;
-    naam: string;
-    status: string;
-    omschrijving: string;
-    tags: string[];
+  $key;
+  aantal: number;
+  afbeelding: Afbeelding;
+  naam: string;
+  status: string;
+  omschrijving: string;
+  aanmaakDatum: string;
+  tags: string[];
 }

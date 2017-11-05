@@ -1,12 +1,8 @@
-import { Component, OnInit, ViewChildren, Output, EventEmitter } from '@angular/core';
-import {NavbarService} from "../../services/navbar.service";
-import {AuthService} from "../../services/auth.service";
-import {User} from "../../models/user";
-import {Materiaal} from "../../models/materiaal";
-import {Subject} from "rxjs/Subject";
-import { Subscription } from 'rxjs/Subscription';
-import {MaterialenLijstComponent} from "../materialen-lijst/materialen-lijst.component";
-import {MatDialog} from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { NavbarService, AuthService, ReserveringService } from "../../services/index";
+import { Reservering, User } from '../../models/index';
+import { Subject } from "rxjs/Subject";
+import { MatDialog } from '@angular/material';
 import { CartComponent } from "../cart/cart.component";
 
 @Component({
@@ -15,31 +11,31 @@ import { CartComponent } from "../cart/cart.component";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  subscription: Subscription;
-  cart: Materiaal [];
   user: Subject<User> = new Subject();
+  materiaalCart: Reservering[] = [];
 
-  constructor(public nav: NavbarService, public dialog: MatDialog, public auth: AuthService) { }
+  constructor(public nav: NavbarService,
+    public dialog: MatDialog,
+    public auth: AuthService,
+    public reserveringService: ReserveringService) {
+    this.reserveringService.getCart().subscribe(data => {
+      this.materiaalCart = data;
+    });
+  }
 
   ngOnInit() {
     this.user = this.auth.user;
   }
 
+  // Logout
   public logout(): void {
     this.auth.signOut();
   }
 
   showCart() {
-
     let dialogRef = this.dialog.open(CartComponent, {
-            width: '40%'
-           });
-      
-          dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-          });
-    // this.visibleCart = true;
-    // console.log(this.cart);
+      data: this.materiaalCart
+    });
   }
 
   showReserveringen() {

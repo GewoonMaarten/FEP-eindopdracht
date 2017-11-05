@@ -23,15 +23,16 @@ export class LoginComponent implements OnInit {
   passwordFormControl: FormControl;
 
 
+
+
   constructor(public afAuth: AngularFireAuth,
               private fb: FormBuilder,
               private authService: AuthService,
               private nav: NavbarService) {}
 
+  /** Maak een login form aan */
   ngOnInit(): void {
     this.nav.hide();
-
-    this.authService.signOut();
 
     this.user = this.afAuth.authState;
     this.loginError = false;
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.loginForm.addControl('email', this.emailFormControl);
     this.loginForm.addControl('password', this.passwordFormControl);
   }
-
+  /** Login */
   onSubmit(value:string): void{
     const formModel = this.loginForm.value;
 

@@ -8,9 +8,29 @@
 
         <span class="spacer"></span>
 
+        <div class="voorraad-selector">
+          <mat-select placeholder="Voorraad">
+            <mat-option value="catalogus" selected>
+              Catalogus
+            </mat-option>
+            <mat-option value="inventaris">
+              Inventaris
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <button mat-raised-button
+                color="primary"
+                class="page-btn margin-10"
+                *ngIf="materialenService.isBeheerder"
+                routerLink="/materiaal/form">
+          <mat-icon class="mat-24">mode_edit</mat-icon>
+        </button>
+
         <mat-form-field class="margin-10">
           <input matInput placeholder="Zoeken" />
         </mat-form-field>
+
         <button mat-raised-button color="primary"
                 class="page-btn margin-10"
                 (click)="onPrev()"
@@ -36,15 +56,30 @@
 
       <div class="materialen-items">
           <div *ngFor="let materiaal of materialen" class="card" id={{materiaal.$key}}>
+
               <div (click)="collapse(materiaal.$key)" class="clickable">
-                  <h3 class="mat-subheading-2">{{materiaal.naam}}</h3>
-                  <img src={{materiaal.afbeelding}} width="100%"/>
+
+                  <div class="header">
+                    <h3 class="mat-subheading-2">{{materiaal.naam}}</h3>
+
+                    <span class="spacer"></span>
+
+                    <button mat-icon-button class="delete-btn"
+                            (click)="delete(materiaal.$key)"
+                            *ngIf="materialenService.isBeheerder">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+
+
+                  <img alt={{materiaal.afbeelding.naam}} src={{materiaal.afbeelding.url}} width="100%"/>
                   <p class="mat-body-1 card-omschrijving">
                       <b>Omschrijving:</b><br/>
                       {{materiaal.omschrijving}}
                   </p>
                   <p class="mat-body-1 beschikbaar">beschikbaar: <span>{{materiaal.aantal}}</span></p>
               </div>
+
               <div class="reserveer-materiaal" *ngIf="materiaal.$key == activeMateriaal">
                   <mat-form-field class="full-width hoeveelheid">
                       <input matInput #aantaltoevoegen type="number" maxlength="2" min="1" max={{materiaal.aantal}} value="1" placeholder="aantal"/>
@@ -53,15 +88,6 @@
               </div>
           </div>
       </div>
-
-        <!--<div class="materialen-paginator">-->
-            <!--<button mat-raised-button color="primary" class="page-btn" (click)="onPrev()" [disabled]="!prevKeys?.length"><</button>-->
-            <!--<a mat-button class="page-btn" *ngFor="let page of pages"-->
-                <!--[class.mat-primary]="page == activePage" [routerLink]="['/materiaal', page + 1]">-->
-                <!--{{page + 1}}-->
-            <!--</a>-->
-            <!--<button mat-raised-button color="primary" class="page-btn" (click)="onNext()" [disabled]="!nextKey">></button>-->
-        <!--</div>-->
 
     </div>
 </div>

@@ -11,12 +11,17 @@ import { routes } from "./app.routes";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { FirebaseApp } from 'angularfire2';
+
+import 'firebase/storage';
+
 import { environment } from '../environments/environment';
 
 import { MaterialenService } from './services/materialen.service';
 import { ReserveringService } from './services/reservering.service';
 import { AuthService } from './services/auth.service';
 import { NavbarService } from './services/navbar.service';
+import { FirebaseStorageService } from './services/firebase-storage.service';
 import { KluisjesService } from './services/kluisjes.service';
 import { UserService } from './services/user.service';
 
@@ -38,12 +43,13 @@ import {
   MatTableModule,
   MatTabsModule
 } from '@angular/material';
-import { Ng2DropdownModule } from 'ng2-material-dropdown';
 
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
 import { LoginComponent } from "./components/login/login.component";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
 import { CartComponent } from './components/cart/cart.component';
+import { DatePipe } from '@angular/common';
 import { ReserveringLijstComponent } from './components/reservering-lijst/reservering-lijst.component';
 import { ReserveringFormComponent } from './components/reservering-form/reservering-form.component';
 
@@ -53,6 +59,7 @@ import { ReserveringFormComponent } from './components/reservering-form/reserver
     MaterialenLijstComponent,
     LoginComponent,
     NavbarComponent,
+    MateriaalFormComponent,
     CartComponent,
     ReserveringLijstComponent,
     ReserveringFormComponent
@@ -90,12 +97,14 @@ import { ReserveringFormComponent } from './components/reservering-form/reserver
     ReserveringService,
     AuthService,
     NavbarService,
+    FirebaseStorageService,
     KluisjesService,
     UserService,
     AngularFireAuth,
     AuthGuard,
     DocentGuard,
-    BeheerderGuard
+    BeheerderGuard,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

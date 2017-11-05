@@ -2,20 +2,23 @@ import { Routes } from '@angular/router';
 
 import { MaterialenLijstComponent } from './components/materialen-lijst/materialen-lijst.component';
 import { LoginComponent } from './components/login/login.component';
+import { MateriaalFormComponent } from './components/materiaal-form/materiaal-form.component';
 import { ReserveringLijstComponent } from './components/reservering-lijst/reservering-lijst.component';
 import { ReserveringFormComponent } from './components/reservering-form/reservering-form.component';
 
 import {AuthGuard} from "./guards/auth.guard";
 import {DocentGuard} from "./guards/docent.guard";
+import { BeheerderGuard } from "./guards/beheerder.guard"
 
 export const routes: Routes = [
-  // {
-  //   path: '**',
-  //   redirectTo: 'login'
-  // },
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'materiaal/form',
+    component: MateriaalFormComponent,
+    canActivate: [AuthGuard, BeheerderGuard]
   },
   {
     path: 'materiaal/:page',
@@ -31,5 +34,12 @@ export const routes: Routes = [
     path: 'reservering/afhandelen/form/:key',
     component: ReserveringFormComponent,
     //canActivate: [AuthGuard]
-  }
+  },
+  
+  /* Moet onderaan blijven */
+  {
+    path: '**',
+    redirectTo: 'login'
+  },
+
 ];

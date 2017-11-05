@@ -12,7 +12,7 @@ export class UserService {
 
     constructor(private db: AngularFireDatabase){ }
 
-    public getUserById(id: number): Observable<User>{
+    public getUserById(id: string): Observable<User>{
       return this.db.object<User>(`${this.rootPath}/${id}`).valueChanges();
     }
 
