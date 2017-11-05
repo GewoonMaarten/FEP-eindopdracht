@@ -27,6 +27,7 @@ export class AddToCatalogusFormComponent implements OnInit {
     this.inventarisMaterialen = _.cloneDeep(this.materialenList);
     this.materialenService.selectedMaterialen = [];
 
+    // voor alle geselecteerd materialen, pas de status aan en maak een foreign key
     this.geselecteerdMaterialen.forEach(element => {
       element.aantal = 1;
       element.status = "catalogus";
@@ -35,13 +36,13 @@ export class AddToCatalogusFormComponent implements OnInit {
   }
 
   ngOnInit() { 
+    // Haal alle materialen in de catalogus.
     this.materialenService.getMaterialen("catalogus").subscribe(materialen => {
       this.allMaterialenInCatalogus = materialen;
     });
   }
 
   onSubmit(){
-    
     this.geselecteerdMaterialen.forEach(gm => {
       this.inventarisMaterialen.forEach(element2 => {
         if (gm.foreign_key == element2.$key) {
@@ -76,6 +77,7 @@ export class AddToCatalogusFormComponent implements OnInit {
 
     // update inventaris
     this.inventarisMaterialen.forEach(element => {
+      console.log("inventarisMateriaal: ", element);
       var key = element.$key;
       delete element['$key'];
       this.materialenService.updateMateriaal(key, element as Materiaal);

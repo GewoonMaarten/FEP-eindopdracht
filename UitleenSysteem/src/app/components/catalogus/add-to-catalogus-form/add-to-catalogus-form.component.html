@@ -6,6 +6,7 @@
 
     <div class="materialen" *ngFor="let materiaal of materialenList; let i = index">
 
+        <!-- Table header/columns -->
         <div class="labels">
             <p>Materiaal </p>
             <p>Hoeveelheid in inventaris </p>
@@ -13,6 +14,7 @@
             <p>Omschrijving </p>
         </div>
 
+        <!-- Table data -->
         <mat-form-field class="data">
             <input matInput value="{{materiaal.naam}}" disabled/>
             <input matInput [(ngModel)]="inventarisMaterialen[i].aantal - geselecteerdMaterialen[i].aantal" disabled/>
